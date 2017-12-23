@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[少年不识愁滋味]]></title>
+    <url>%2F2017%2F12%2F23%2Ftalk1%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <tags>
+        <tag>说说</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[购买海外云主机搭建服务器科学上网]]></title>
     <url>%2F2017%2F12%2F23%2Fvpn1%2F</url>
     <content type="text"><![CDATA[为什么要自己搭vpn 分免费和收费的两种, 免费的一般用的人都比较多, 网速也不快, 而且不稳定。收费的 vpn 的价格一般从几十元到数百元不等。而自己买个云主机的价格也就在十美金以内, 每个月送的流量基本用不完, 主机独享, 完爆收费VPN。 云主机的选择国内的主机商靠谱的是阿里、腾讯、ucloud三家, 海外节点的价格基本都要百元以上。美国比较便宜(因为延时大), 亚洲节点相对较贵, 新加坡和日本稍好, 香港因为延时最小, 价格也是最贵的。国外的云主机商有 linode, bandwagon, vultr这几家。最好的是 linode, 价格也相对贵点。 PPTP/L2TP/IPSEC/IKEV2PPTP 因为安全性原因已经被 iOS10 除去了。其他三个的跨平台支持能力都不错。 参考文档海外云主机搭建IKEV2 VPN之经验总结 + 搭建证书服务器]]></content>
