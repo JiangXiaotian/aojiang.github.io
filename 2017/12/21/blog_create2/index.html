@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="我的世界">
 <meta property="og:description" content="Hexo 安装Hexo 是一个快速、简洁且高效的博客框架, 他使用 Markdown（或其他渲染引擎）解析文章。 安装 nvm1brew install nvm 安装完后, 需要在 .bash_profile 中加入以下这行命令:1source $(brew --prefix nvm)/nvm.sh">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-22T06:13:16.000Z">
+<meta property="og:updated_time" content="2017-12-23T04:16:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个人网站搭建记录(二) -- Hexo 安装与基础设置">
 <meta name="twitter:description" content="Hexo 安装Hexo 是一个快速、简洁且高效的博客框架, 他使用 Markdown（或其他渲染引擎）解析文章。 安装 nvm1brew install nvm 安装完后, 需要在 .bash_profile 中加入以下这行命令:1source $(brew --prefix nvm)/nvm.sh">
@@ -290,7 +290,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.ao233.com/2017/12/21/blog_create2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
+      <meta itemprop="name" content="欧阳小天">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar_blog.png">
     </span>
@@ -396,6 +396,9 @@
 <p>编辑站点配置文件，新增以下内容到任意位置启用搜索:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: all</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure></p>
 <h3 id="使用-leancloud-进行页面访客统计"><a href="#使用-leancloud-进行页面访客统计" class="headerlink" title="使用 leancloud 进行页面访客统计"></a>使用 leancloud 进行页面访客统计</h3><p>在 <a href="leancloud.cn">leancloud官网</a> 增加一个应用获取 app_id 和 app_key<br>为该应用创建一个 class 名为 Counter<br>打开/theme/next/_config.yml，在如下对应位置填入 app_id 和 app_key，并将 enable 设置为true。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Show number of visitors to each article.</span><br><span class="line"># You can visit https://leancloud.cn get AppID and AppKey.</span><br><span class="line">leancloud_visitors:</span><br><span class="line">  enable: true</span><br><span class="line">  app_id: # your app_id</span><br><span class="line">  app_key: # your app_key</span><br></pre></td></tr></table></figure></p>
 <h3 id="修改内容宽度"><a href="#修改内容宽度" class="headerlink" title="修改内容宽度"></a>修改内容宽度</h3><p>编辑 themes/css/_variables/custom.styl 文件, 新增变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 修改成你期望的宽度</span><br><span class="line">content-desktop = 1000px</span><br><span class="line">// 当视窗超过 1600px 后的宽度</span><br><span class="line">content-desktop-large = 1200px</span><br></pre></td></tr></table></figure></p>
+<h3 id="增加分享"><a href="#增加分享" class="headerlink" title="增加分享"></a>增加分享</h3><p>编辑根目录下的 _config.yml 文件, 新增变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jiathis: true</span><br></pre></td></tr></table></figure></p>
+<h3 id="侧边栏增加社交链接"><a href="#侧边栏增加社交链接" class="headerlink" title="侧边栏增加社交链接"></a>侧边栏增加社交链接</h3><p>编辑根目录下的 _config.yml，新增字段 social，然后添加社交站点名称与地址即可。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">social:</span><br><span class="line">  #GitHub: https://github.com/yourname || github</span><br><span class="line">  E-Mail: mailto:aojiang.china@gmail.com || envelope</span><br><span class="line">  #Google: https://plus.google.com/yourname || google</span><br><span class="line">  #Twitter: https://twitter.com/yourname || twitter</span><br><span class="line">  #FB Page: https://www.facebook.com/yourname || facebook</span><br><span class="line">  #VK Group: https://vk.com/yourname || vk</span><br><span class="line">  #StackOverflow: https://stackoverflow.com/yourname || stack-overflow</span><br><span class="line">  #YouTube: https://youtube.com/yourname || youtube</span><br><span class="line">  #Instagram: https://instagram.com/yourname || instagram</span><br><span class="line">  #Skype: skype:yourname?call|chat || skype</span><br><span class="line"></span><br><span class="line">social_icons:</span><br><span class="line">  enable: true   // 是否使用图片</span><br><span class="line">  icons_only: false</span><br><span class="line">  transition: false</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://fontawesome.io/cheatsheet/" target="_blank" rel="noopener">图片名称参考</a></p>
 <h3 id="修改-footer"><a href="#修改-footer" class="headerlink" title="修改 footer"></a>修改 footer</h3><p>将 “由 Hexo 强力驱动 主题 NexT.Pisces” 这些自带的内容修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">themes/next/layout/_pzartials/footer.swig</span><br></pre></td></tr></table></figure></p>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档:"></a>参考文档:</h2><p><a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">GitHub Next 主题</a><br><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo 中文文档</a><br><a href="http://blog.csdn.net/heqiangflytosky/article/details/54863185" target="_blank" rel="noopener">Hexo -Next 主题优化</a><br><a href="https://www.ezlippi.com/blog/2017/02/hexo-search.html" target="_blank" rel="noopener">Hexo 博客添加站内搜索</a><br><a href="https://github.com/PaicHyperionDev/hexo-generator-search" target="_blank" rel="noopener">GitHub hexo-generator-search</a><br><a href="https://lfwen.site/2016/05/31/add-count-for-hexo-next/" target="_blank" rel="noopener">使用 leancloud 进行页面访客统计</a><br><a href="http://blog.csdn.net/lmj623565791/article/details/51319147" target="_blank" rel="noopener">如何利用 github 打造博客专属域名</a><br><a href="https://github.com/iissnan/hexo-theme-next/issues/928" target="_blank" rel="noopener">footer 修改问题</a></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>安装: nvm+git+hexo。<br>设置: 主题+语言+标签+分类+搜索+页面访客统计+搜索。</p>
@@ -462,6 +465,32 @@
 
     <div class="post-spread">
       
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
     </div>
   </div>
 
@@ -509,9 +538,9 @@
             
               <img class="site-author-image" itemprop="image"
                 src="/images/avatar_blog.png"
-                alt="" />
+                alt="欧阳小天" />
             
-              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-author-name" itemprop="name">欧阳小天</p>
               <p class="site-description motion-element" itemprop="description">愿走过半生，归来仍少年。</p>
           </div>
 
@@ -522,7 +551,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -535,7 +564,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -546,6 +575,14 @@
           
 
           <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:aojiang.china@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
             
           </div>
 
@@ -570,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-安装"><span class="nav-number">1.</span> <span class="nav-text">Hexo 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-nvm"><span class="nav-number">1.1.</span> <span class="nav-text">安装 nvm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Node-js"><span class="nav-number">1.2.</span> <span class="nav-text">安装 Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Git"><span class="nav-number">1.3.</span> <span class="nav-text">安装 Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Hexo"><span class="nav-number">1.4.</span> <span class="nav-text">安装 Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建站"><span class="nav-number">1.5.</span> <span class="nav-text">建站</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-配置"><span class="nav-number">2.</span> <span class="nav-text">Hexo 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git"><span class="nav-number">2.1.</span> <span class="nav-text">Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改主题为-Next"><span class="nav-number">2.2.</span> <span class="nav-text">更改主题为 Next</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置语言"><span class="nav-number">2.3.</span> <span class="nav-text">设置语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在菜单里增加标签栏"><span class="nav-number">2.4.</span> <span class="nav-text">在菜单里增加标签栏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在菜单里增加分类栏"><span class="nav-number">2.5.</span> <span class="nav-text">在菜单里增加分类栏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加搜索"><span class="nav-number">2.6.</span> <span class="nav-text">增加搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-leancloud-进行页面访客统计"><span class="nav-number">2.7.</span> <span class="nav-text">使用 leancloud 进行页面访客统计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改内容宽度"><span class="nav-number">2.8.</span> <span class="nav-text">修改内容宽度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改-footer"><span class="nav-number">2.9.</span> <span class="nav-text">修改 footer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">3.</span> <span class="nav-text">参考文档:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-安装"><span class="nav-number">1.</span> <span class="nav-text">Hexo 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-nvm"><span class="nav-number">1.1.</span> <span class="nav-text">安装 nvm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Node-js"><span class="nav-number">1.2.</span> <span class="nav-text">安装 Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Git"><span class="nav-number">1.3.</span> <span class="nav-text">安装 Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Hexo"><span class="nav-number">1.4.</span> <span class="nav-text">安装 Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建站"><span class="nav-number">1.5.</span> <span class="nav-text">建站</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-配置"><span class="nav-number">2.</span> <span class="nav-text">Hexo 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git"><span class="nav-number">2.1.</span> <span class="nav-text">Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改主题为-Next"><span class="nav-number">2.2.</span> <span class="nav-text">更改主题为 Next</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置语言"><span class="nav-number">2.3.</span> <span class="nav-text">设置语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在菜单里增加标签栏"><span class="nav-number">2.4.</span> <span class="nav-text">在菜单里增加标签栏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在菜单里增加分类栏"><span class="nav-number">2.5.</span> <span class="nav-text">在菜单里增加分类栏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加搜索"><span class="nav-number">2.6.</span> <span class="nav-text">增加搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-leancloud-进行页面访客统计"><span class="nav-number">2.7.</span> <span class="nav-text">使用 leancloud 进行页面访客统计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改内容宽度"><span class="nav-number">2.8.</span> <span class="nav-text">修改内容宽度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加分享"><span class="nav-number">2.9.</span> <span class="nav-text">增加分享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#侧边栏增加社交链接"><span class="nav-number">2.10.</span> <span class="nav-text">侧边栏增加社交链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改-footer"><span class="nav-number">2.11.</span> <span class="nav-text">修改 footer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">3.</span> <span class="nav-text">参考文档:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
@@ -594,7 +631,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder"></span>
+  <span class="author" itemprop="copyrightHolder">欧阳小天</span>
 
   
 </div>
