@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="我的世界">
 <meta property="og:description" content="Hexo 安装Hexo 是一个快速、简洁且高效的博客框架, 他使用 Markdown（或其他渲染引擎）解析文章。 安装 nvm1brew install nvm 安装完后, 需要在 .bash_profile 中加入以下这行命令:1source $(brew --prefix nvm)/nvm.sh">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-23T04:16:15.000Z">
+<meta property="og:updated_time" content="2017-12-23T06:51:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个人网站搭建记录(二) -- Hexo 安装与基础设置">
 <meta name="twitter:description" content="Hexo 安装Hexo 是一个快速、简洁且高效的博客框架, 他使用 Markdown（或其他渲染引擎）解析文章。 安装 nvm1brew install nvm 安装完后, 需要在 .bash_profile 中加入以下这行命令:1source $(brew --prefix nvm)/nvm.sh">
@@ -400,6 +400,7 @@
 <h3 id="侧边栏增加社交链接"><a href="#侧边栏增加社交链接" class="headerlink" title="侧边栏增加社交链接"></a>侧边栏增加社交链接</h3><p>编辑根目录下的 _config.yml，新增字段 social，然后添加社交站点名称与地址即可。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">social:</span><br><span class="line">  #GitHub: https://github.com/yourname || github</span><br><span class="line">  E-Mail: mailto:aojiang.china@gmail.com || envelope</span><br><span class="line">  #Google: https://plus.google.com/yourname || google</span><br><span class="line">  #Twitter: https://twitter.com/yourname || twitter</span><br><span class="line">  #FB Page: https://www.facebook.com/yourname || facebook</span><br><span class="line">  #VK Group: https://vk.com/yourname || vk</span><br><span class="line">  #StackOverflow: https://stackoverflow.com/yourname || stack-overflow</span><br><span class="line">  #YouTube: https://youtube.com/yourname || youtube</span><br><span class="line">  #Instagram: https://instagram.com/yourname || instagram</span><br><span class="line">  #Skype: skype:yourname?call|chat || skype</span><br><span class="line"></span><br><span class="line">social_icons:</span><br><span class="line">  enable: true   // 是否使用图片</span><br><span class="line">  icons_only: false</span><br><span class="line">  transition: false</span><br></pre></td></tr></table></figure></p>
 <p><a href="http://fontawesome.io/cheatsheet/" target="_blank" rel="noopener">图片名称参考</a></p>
 <h3 id="修改-footer"><a href="#修改-footer" class="headerlink" title="修改 footer"></a>修改 footer</h3><p>将 “由 Hexo 强力驱动 主题 NexT.Pisces” 这些自带的内容修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">themes/next/layout/_pzartials/footer.swig</span><br></pre></td></tr></table></figure></p>
+<p>5.1.0:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">thems/next/layout/_partials/footer.swig</span><br></pre></td></tr></table></figure></p>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档:"></a>参考文档:</h2><p><a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">GitHub Next 主题</a><br><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo 中文文档</a><br><a href="http://blog.csdn.net/heqiangflytosky/article/details/54863185" target="_blank" rel="noopener">Hexo -Next 主题优化</a><br><a href="https://www.ezlippi.com/blog/2017/02/hexo-search.html" target="_blank" rel="noopener">Hexo 博客添加站内搜索</a><br><a href="https://github.com/PaicHyperionDev/hexo-generator-search" target="_blank" rel="noopener">GitHub hexo-generator-search</a><br><a href="https://lfwen.site/2016/05/31/add-count-for-hexo-next/" target="_blank" rel="noopener">使用 leancloud 进行页面访客统计</a><br><a href="http://blog.csdn.net/lmj623565791/article/details/51319147" target="_blank" rel="noopener">如何利用 github 打造博客专属域名</a><br><a href="https://github.com/iissnan/hexo-theme-next/issues/928" target="_blank" rel="noopener">footer 修改问题</a></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>安装: nvm+git+hexo。<br>设置: 主题+语言+标签+分类+搜索+页面访客统计+搜索。</p>
 
@@ -551,7 +552,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -564,7 +565,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -637,19 +638,16 @@ var jiathis_config={
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
 
 
 
 
+
+
+
+<div>
+欢迎来到我的世界
+</div>
         
 
 
