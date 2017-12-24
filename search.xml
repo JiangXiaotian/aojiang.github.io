@@ -29,7 +29,7 @@
   <entry>
     <title><![CDATA[研究生毕业设计]]></title>
     <url>%2F2017%2F12%2F23%2Fmv_graduate%2F</url>
-    <content type="text"><![CDATA[(function(){var player = new DPlayer({"container":document.getElementById("dplayer1"),"theme":"#FADFA3","video":{"url":"http://ac-ANdqGl5F.clouddn.com/7be7a94a26dafa113cb9.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/2a25084ab4a5c71d2eaa.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})() 总结Reinforcement Learning + Neural Network + TensorFlow + Ros + Webots, 用激光雷达做神经网络的输入, 本来想训练机器人实现导航, 结果不争气, 就学会了简单避障 😂。]]></content>
+    <content type="text"><![CDATA[(function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"theme":"#FADFA3","video":{"url":"http://ac-ANdqGl5F.clouddn.com/7be7a94a26dafa113cb9.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/2a25084ab4a5c71d2eaa.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})() 总结Reinforcement Learning + Neural Network + TensorFlow + Ros + Webots, 用激光雷达做神经网络的输入, 本来想训练机器人实现导航, 结果不争气, 就学会了简单避障 😂。]]></content>
       <tags>
         <tag>视频</tag>
       </tags>
@@ -79,7 +79,7 @@
   <entry>
     <title><![CDATA[看到喜欢的视频就记下来(一)]]></title>
     <url>%2F2017%2F12%2F22%2Fmv_collection1%2F</url>
-    <content type="text"><![CDATA[爱的华尔兹, 甜爆了, 收藏收藏, 哈哈, (function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"theme":"#FADFA3","loop":true,"video":{"url":"http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/80b9a1da703de72187a2.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()]]></content>
+    <content type="text"><![CDATA[爱的华尔兹, 甜爆了, 收藏收藏, 哈哈, (function(){var player = new DPlayer({"container":document.getElementById("dplayer1"),"theme":"#FADFA3","loop":true,"video":{"url":"http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/80b9a1da703de72187a2.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()]]></content>
       <tags>
         <tag>视频</tag>
       </tags>
