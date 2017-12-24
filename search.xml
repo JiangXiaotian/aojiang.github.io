@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[鞋码、衣服大小型号记录]]></title>
+    <url>%2F2017%2F12%2F24%2Fclothes%2F</url>
+    <content type="text"><![CDATA[鞋子: 42(US 8.5) 上衣: XL/180]]></content>
+      <tags>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[少年不识愁滋味]]></title>
     <url>%2F2017%2F12%2F23%2Ftalk1%2F</url>
     <content type="text"><![CDATA[]]></content>
@@ -11,8 +19,9 @@
   <entry>
     <title><![CDATA[购买海外云主机搭建服务器科学上网]]></title>
     <url>%2F2017%2F12%2F23%2Fvpn1%2F</url>
-    <content type="text"><![CDATA[为什么要自己搭vpn 分免费和收费的两种, 免费的一般用的人都比较多, 网速也不快, 而且不稳定。收费的 vpn 的价格一般从几十元到数百元不等。而自己买个云主机的价格也就在十美金以内, 每个月送的流量基本用不完, 主机独享, 完爆收费VPN。 云主机的选择国内的主机商靠谱的是阿里、腾讯、ucloud三家, 海外节点的价格基本都要百元以上。美国比较便宜(因为延时大), 亚洲节点相对较贵, 新加坡和日本稍好, 香港因为延时最小, 价格也是最贵的。国外的云主机商有 linode, bandwagon, vultr这几家。最好的是 linode, 价格也相对贵点。 PPTP/L2TP/IPSEC/IKEV2PPTP 因为安全性原因已经被 iOS10 除去了。其他三个的跨平台支持能力都不错。 参考文档海外云主机搭建IKEV2 VPN之经验总结 + 搭建证书服务器]]></content>
+    <content type="text"><![CDATA[为什么要自己搭vpn 分免费和收费的两种, 免费的一般用的人都比较多, 网速也不快, 而且不稳定。收费的 vpn 的价格一般从几十元到数百元不等。而自己买个云主机的价格也就在十美金以内, 每个月送的流量基本用不完, 主机独享, 完爆收费VPN。 云主机的选择国内的主机商靠谱的是阿里、腾讯、ucloud三家, 海外节点的价格基本都要百元以上。美国比较便宜(因为延时大), 亚洲节点相对较贵, 新加坡和日本稍好, 香港因为延时最小, 价格也是最贵的。国外的云主机商有 linode, bandwagon, vultr这几家。最好的是 linode, 价格也相对贵点。 PPTP/L2TP/IPSEC/IKEV2PPTP 因为安全性原因已经被 iOS10 除去了。其他三个的跨平台支持能力都不错。 vultr 购买云主机搭建因为 vultr 支持支付宝付款, 购买云主机启动后, 在 mac 终端可直接用 ssh 登陆, 接着提示输入密码, 都可在 vultr 控制台查到。1ssh root@&lt;host&gt; 部署 Shadowsocks 服务器端12345wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.shchmod +x shadowsocks.sh./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log TCP Fast Open实际上已经可以在自己的任意设备上进行登录使用了。但是为了更好的连接速度，你还需要多做几步。 打开 rc.local 文件1nano /etc/rc.local 在 rc.local 文件末尾加上1echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen ctrl + x 退出, 输入 y 并回车确认退出。 打开 sysctl.conf 文件,1nano /etc/sysctl.conf 在 sysctl.conf 末尾加上1net.ipv4.tcp_fastopen = 3 再打开一个 Shadowsocks 配置文件,1nano /etc/shadowsocks.json 把其中 “fast_open” 一项的 false 替换成 true。12345678910&#123; &quot;server&quot;:&quot;0.0.0.0&quot;, &quot;server_port&quot;:8989, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;password&quot;:&quot;xxxx&quot;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;aes-256-cfb&quot;, &quot;fast_open&quot;:true&#125; 如果需要添加多用户的话,12345678910111213&#123; &quot;server&quot;:&quot;0.0.0.0&quot;, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;port_password&quot;: &#123; &quot;12345&quot;: &quot;xxx&quot;, &quot;8989&quot;: &quot;xxx&quot;, &quot;22345&quot;: &quot;xxx&quot; &#125;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;aes-256-cfb&quot;, &quot;fast_open&quot;:true&#125; 重启 Shadowsocks1/etc/init.d/shadowsocks restart 客户端安装 ShadowsocksMac 版客户端下载Win 版客户端下载 部署锐速完成上述步骤后，使用过程中可能会发现连接速度有时不太稳定。这就是「锐速」发挥功能的时候了。锐速 ServerSpeeder 是一个 TCP 加速软件，对 Shadowsocks 客户端和服务器端间的传输速度有显著提升。锐速」虽然已经停止注册和安装了，不过网上还是有不少「破解版」可用。123ssh root@&lt;host&gt;wget -N --no-check-certificate https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder-all.sh &amp;&amp; bash serverspeeder-all.sh 若运行中碰到提示说需要更换内核的话CentOS6 内核更换为： 2.6.32-504.3.3.el6.x86_6412rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-firmware-2.6.32-504.3.3.el6.noarch.rpmrpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-2.6.32-504.3.3.el6.x86_64.rpm --force CentOS7 内核更换为： 3.10.0-229.1.2.el7.x86_641rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-3.10.0-229.1.2.el7.x86_64.rpm --force 查看内核是否安装成功1rpm -qa | grep kernel 重启查看内核是否更换成功123ssh root@&lt;host&gt;rebootuname -r 参考文档海外云主机搭建IKEV2 VPN之经验总结 + 搭建证书服务器科学上网的终极姿势-在-vultr-vps-上搭建-shadowsocks教程：CentOS更换内核，提供锐速可用的内核下载]]></content>
       <tags>
+        <tag>笔记</tag>
         <tag>vpn</tag>
         <tag>云主机</tag>
       </tags>
@@ -26,7 +35,7 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[图片并排选择]]></title>
+    <title><![CDATA[图片并排参数选择]]></title>
     <url>%2F2017%2F12%2F23%2Fimg_show_type%2F</url>
     <content type="text"><![CDATA[把所有并排方式列下来, 3-1 好像不起作用。 /** 2-1* □ □*/ /** 2-2* □ □*/ /** 3-1* □ □ □*/ /** 3-2* □ □ □*/ /** 3-3* □ □ □*/ /** 4-1* □ □ □ □*/ /** 4-2* □ □ □ □*/ /** 4-3* □ □ □ □*/ /** 4-4* □ □ □ □*/ /** 5-1* □ □ □ □ □*/ /** 5-2* □ □ □ □ □*/ /** 5-3* □ □ □ □ □*/ /** 5-4* □ □ □ □ □*/ /** 6-1* □ □ □ □ □ □*/ /** 6-2* □ □ □ □ □ □*/ /** 6-3* □ □ □ □ □ □*/ /** 6-4* □ □ □ □ □ □*/ /** 6-5* □ □ □ □ □ □*/ /** 7-1* □ □ □ □ □ □ □*/ /** 7-2* □ □ □ □ □ □ □*/ /** 7-3* □ □ □ □ □ □ □*/ /** 7-4* □ □ □ □ □ □ □*/ /** 7-5* □ □ □ □ □ □ □*/ /** 8-1* □ □ □ □ □ □ □ □*/ /** 8-2* □ □ □ □ □ □ □ □*/ /** 8-3* □ □ □ □ □ □ □ □*/ /** 8-4* □ □ □ □ □ □ □ □*/ /** 8-5* □ □ □ □ □ □ □ □*/ /** 8-6* □ □ □ □ □ □ □ □*/ /** 8-7* □ □ □ □ □ □ □ □*/ /** 9-1* □ □ □ □ □ □ □ □ □*/ /** 9-2* □ □ □ □ □ □ □ □ □*/ /** 9-3* □ □ □ □ □ □ □ □ □*/ /** 9-4* □ □ □ □ □ □ □ □ □*/ /** 9-5* □ □ □ □ □ □ □ □ □*/ /** 9-6* □ □ □ □ □ □ □ □ □*/ /** 9-7* □ □ □ □ □ □ □ □ □*/ /** 10-1* □ □ □ □ □ □ □ □ □ □*/ /** 10-2* □ □ □ □ □ □ □ □ □ □*/ /** 10-3* □ □ □ □ □ □ □ □ □ □*/ /** 10-4* □ □ □ □ □ □ □ □ □ □*/ /** 10-5* □ □ □ □ □ □ □ □ □ □*/ /** 10-6* □ □ □ □ □ □ □ □ □ □*/ /** 10-7* □ □ □ □ □ □ □ □ □ □*/ /** Defaults Layout* □ □ □ □ □ □ …*/]]></content>
       <tags>
@@ -62,7 +71,7 @@
   <entry>
     <title><![CDATA[看到喜欢的诗词就记下来(一)]]></title>
     <url>%2F2017%2F12%2F22%2Fpoem1%2F</url>
-    <content type="text"><![CDATA[《说苑》越人歌 春秋 山有木兮木有枝, 心悦君兮君不知。 译文山上有树木啊树木有丫枝, 心中喜欢你啊你却不知此事。王子与渔夫的故事, 歌颂贵族与劳动人民情谊。 国风·郑风·山有扶苏 作者：佚名 山有扶苏, 隰有荷华。不见子都, 乃见狂且。山有乔松, 隰有游龙, 不见子充, 乃见狡童。 译文山上有茂盛的扶苏，池里有美艳的荷花。没见到子都美男子啊，偏遇见你这个小狂徒。山上有挺拔的青松，池里有丛生的水荭。没见到子充好男儿啊，偏遇见你这个小狡童。 九歌·湘夫人 作者: 屈原 帝子降兮北渚, 目眇眇兮愁予。袅袅兮秋风, 洞庭波兮木叶下。登白薠兮骋望, 与佳期兮夕张。鸟何萃兮苹中, 罾何为兮木上。沅有芷兮澧有兰, 思公子兮未敢言。荒忽兮远望, 观流水兮潺湲。麋何食兮庭中？蛟何为兮水裔？朝驰余马兮江皋, 夕济兮西澨。闻佳人兮召予, 将腾驾兮偕逝。筑室兮水中, 葺之兮荷盖；荪壁兮紫坛, 播芳椒兮成堂；桂栋兮兰橑, 辛夷楣兮药房；罔薜荔兮为帷, 擗蕙櫋兮既张；白玉兮为镇, 疏石兰兮为芳；芷葺兮荷屋, 缭之兮杜衡。合百草兮实庭, 建芳馨兮庑门。九嶷缤兮并迎, 灵之来兮如云。捐余袂兮江中, 遗余褋兮澧浦。搴汀洲兮杜若, 将以遗兮远者；时不可兮骤得, 聊逍遥兮容与！ 注解:沅水旁边有白芷，澧水旁边有泽兰，而我身边没有你。说的是湘夫人娥皇和女英对舜的朝思暮想, 悠悠江水, 芳香芷兰, 寄托着湘夫人无尽的思念和忧怨。为爱殉情的湘夫人最后投江自尽, 一番思念寄情于芷兰芳草, 忧怨和哀婉飘荡在潇湘之间。 修罗道 作者: 步非烟 我为玉树, 君为秋风。风来云动, 树泛秋声。今我思君, 君胡不行？]]></content>
+    <content type="text"><![CDATA[《说苑》越人歌 春秋 山有木兮木有枝, 心悦君兮君不知。 译文山上有树木啊树木有丫枝, 心中喜欢你啊你却不知此事。王子与渔夫的故事, 歌颂贵族与劳动人民情谊。 国风·郑风·山有扶苏 作者：佚名 山有扶苏, 隰有荷华。不见子都, 乃见狂且。山有乔松, 隰有游龙, 不见子充, 乃见狡童。 译文山上有茂盛的扶苏，池里有美艳的荷花。没见到子都美男子啊，偏遇见你这个小狂徒。山上有挺拔的青松，池里有丛生的水荭。没见到子充好男儿啊，偏遇见你这个小狡童。 九歌·湘夫人 作者: 屈原 帝子降兮北渚, 目眇眇兮愁予。袅袅兮秋风, 洞庭波兮木叶下。登白薠兮骋望, 与佳期兮夕张。鸟何萃兮苹中, 罾何为兮木上。沅有芷兮澧有兰, 思公子兮未敢言。荒忽兮远望, 观流水兮潺湲。麋何食兮庭中？蛟何为兮水裔？朝驰余马兮江皋, 夕济兮西澨。闻佳人兮召予, 将腾驾兮偕逝。筑室兮水中, 葺之兮荷盖；荪壁兮紫坛, 播芳椒兮成堂；桂栋兮兰橑, 辛夷楣兮药房；罔薜荔兮为帷, 擗蕙櫋兮既张；白玉兮为镇, 疏石兰兮为芳；芷葺兮荷屋, 缭之兮杜衡。合百草兮实庭, 建芳馨兮庑门。九嶷缤兮并迎, 灵之来兮如云。捐余袂兮江中, 遗余褋兮澧浦。搴汀洲兮杜若, 将以遗兮远者；时不可兮骤得, 聊逍遥兮容与！ 注解:沅水旁边有白芷，澧水旁边有泽兰，而我身边没有你。说的是湘夫人娥皇和女英对舜的朝思暮想, 悠悠江水, 芳香芷兰, 寄托着湘夫人无尽的思念和忧怨。为爱殉情的湘夫人最后投江自尽, 一番思念寄情于芷兰芳草, 忧怨和哀婉飘荡在潇湘之间。 修罗道 作者: 步非烟 我为玉树, 君为秋风。风来云动, 树泛秋声。今我思君, 君胡不行？ 无题 作者: littlesen 曲曲池边路, 春来少人行。含水芙蓉叶, 春去气犹清。夕岚分彩翠, 高树藏莺声。乍向风中看, 花落更分明。徘徊觉露冷, 清宵月影横。泠泠砭肌发, 疑是晓寒生。一望可相见, 一步如重城。所爱隔山海, 山海不可平。 临江仙 苏轼 夜饮东坡醒复醉, 归来仿佛三更。家童鼻息已雷鸣。敲门都不应, 倚杖听江声。长恨此身非我有, 何时忘却营营。夜阑风静縠纹平。小舟从此逝, 江海寄余生。 卜算子 苏轼 缺月挂疏桐, 漏断人初静。谁见幽人独往来? 缥缈孤鸿影。惊起却回头, 有恨无人省。拣尽寒枝不肯栖, 寂寞沙洲冷。]]></content>
       <tags>
         <tag>诗词</tag>
       </tags>
