@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[在python中，怎么根据数组 a 对数组 b 进行排序]]></title>
+    <url>%2F2017%2F12%2F26%2Fpython_note1%2F</url>
+    <content type="text"><![CDATA[lexsort1234import numpy as npa = np.array([0,1,3,2,6,4,5])b = np.array([0,1,2,3,4,5,6])index = np.lexsort((b, a)) argsort1234import numpy as npa = np.array([0,1,3,2,6,4,5])b = np.array([0,1,2,3,4,5,6])print(b[np.argsort(a)]) zip1sorted(zip(a, b), key=lambda x:x[0])]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ios segue 几种类型区别]]></title>
+    <url>%2F2017%2F12%2F25%2Fswift_segue%2F</url>
+    <content type="text"><![CDATA[segue 分为以下几种类型: Show Show Detail Present Modally Present as Popover Custom在 iPhone 中有 Show、Show Detail、Present Modally、Custom 四种不同类型, iPad中有 Show、Show Detail、Present Modally、Present as Popover、Custom 五种不同类型。 Show一般用在 UINavigationController 的视图控制器中。切换方式: 进入时由右向左, 退出时由左向右。新压入的视图控制器有返回按钮, 单击可以返回。 Show Detail只适用于嵌入在 UISplitViewController 对象内的视图控制器, 分割控制器用以替换详细控制器（DetailViewController)。不提供返回按钮。 Present as Popover在 iPad 中, 目标视图以浮动窗样式呈现, 点击目标视图以外区域, 目标视图消失; 在 iPhone 中, 默认目标视图以模态覆盖整个屏幕。 Custom自定义跳转方式。 Present Modally有多种不同呈现方式, 可根据需要设置。在 iPhone 中, 一般以动画的形式自下向上覆盖整个屏幕, 用户无法与上一个视图交互,除非关闭当前视图; 在iPad中, 常见呈现为一个中心框, 中心框以动画形式自下向上弹出, 同时使底层视图控制器变暗。不提供返回按钮。 其他概念: presenting view controller Vs presented view controller当我们在 view controller A 中模态显示 view controller B 的时候, A 就充当 presenting view controller（弹出VC），而 B 就是 presented view controller。 modal Presentation Styles（弹出风格）有四种风格: UIModalPresentationFullScreen UIModalPresentationPageSheet UIModalPresentationFormSheet UIModalPresentationCurrentContext这四种方式在 iPad 上面统统有效，但在 iPhone 和 iPod touch 上面系统始终以 UIModalPresentationFullScreen 模式显示 presented VC。 Modal Transition Style（弹出时的动画风格） UIModalTransitionStyleCoverVertical: 底部滑入 UIModalTransitionStyleFlipHorizontal: 水平翻转进入 UIModalTransitionStyleCrossDissolve: 交叉溶解 UIModalTransitionStylePartialCurl: 翻页]]></content>
+      <tags>
+        <tag>swift</tag>
+        <tag>ios</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[优惠券系统设计]]></title>
+    <url>%2F2017%2F12%2F25%2Fmengqu_coupon%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>电商</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[鞋码、衣服大小型号记录]]></title>
     <url>%2F2017%2F12%2F24%2Fclothes%2F</url>
     <content type="text"><![CDATA[鞋子: 42(US 8.5) 上衣: XL/180]]></content>
