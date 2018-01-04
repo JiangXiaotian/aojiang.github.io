@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[iOS UIImageView 图片显示模式]]></title>
+    <url>%2F2018%2F01%2F05%2Fswift_image_mode%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>swift</tag>
+        <tag>ios</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[启动页设置]]></title>
+    <url>%2F2018%2F01%2F05%2Fswift_lauch_image%2F</url>
+    <content type="text"><![CDATA[有两种方法: Launch Image LaunchScreen.xib两者只能选一个, 同时设置可能出现黑屏啥的问题。 我用的 LaunchScreen.xib]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>swift</tag>
+        <tag>ios</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ScrollView 嵌套 TableView, 滑动删除手势冲突]]></title>
+    <url>%2F2018%2F01%2F05%2Fswift_gesture_recognize%2F</url>
+    <content type="text"><![CDATA[参考文档UIGestureRecognizerDelegate 苹果文档ATX 文档 - iOS 真机如何安装 WebDriverAgent写给iOS开发的跳一跳秘籍]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>swift</tag>
+        <tag>ios</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[图片素材网站]]></title>
+    <url>%2F2018%2F01%2F04%2Fimage_website%2F</url>
+    <content type="text"><![CDATA[千库包图千图米元素站酷花瓣昵图懒人中国设计堆糖大师]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>图片</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[python 版本管理 -- pyenv]]></title>
+    <url>%2F2018%2F01%2F04%2Fpython_note2%2F</url>
+    <content type="text"><![CDATA[安装123brew updatebrew install pyenvpyenv init pyenv init 命令解释:Sets up your shims path. This is the only requirement for pyenv to function properly. You can do this by hand by prepending $(pyenv root)/shims to your $PATH. Installs autocompletion. This is entirely optional but pretty useful. Sourcing $(pyenv root)/completions/pyenv.bash will set that up. There is also a $(pyenv root)/completions/pyenv.zsh for Zsh users. Rehashes shims. From time to time you’ll need to rebuild your shim files. Doing this on init makes sure everything is up to date. You can always run pyenv rehash manually. Installs the sh dispatcher. This bit is also optional, but allows pyenv and plugins to change variables in your current shell, making commands like pyenv shell possible. The sh dispatcher doesn’t do anything crazy like override cd or hack your shell prompt, but if for some reason you need pyenv to be a real script rather than a shell function, you can safely skip it. 在 ~/.zshrc 里增加下面这条命令自动启用 pyenv1eval &quot;$(pyenv init -)&quot; 一些命令查看 pyenv 版本1pyenv -v 查看可安装的 python 版本1pyenv install --list 安装 python3.6.31pyenv install -v 3.6.3 卸载 python3.6.31pyenv uninstall 3.6.3 查看已安装 python 版本, 好像只能查看通过 pyenv install -v 安装的和系统自带的版本1pyenv versions 创建一个名为 test 的全新虚拟环境1pyenvv virtualenv 3.6.3 test 激活该虚拟环境1pyenv activate test 设置全局的 Python 版本，通过将版本号写入 ~/.pyenv-version, 最好不用, 可能导致一些应用不能用1pyenv global 3.6.3 在当前目录下设置 python 版本, 在当前目录生成 .pyenv-version1pyenv local 3.6.3 要使 terminal 生效, 在 ~/.bash_profile 或 ~/.zshrc 中添加1if which pyenv &gt; /dev/null; then eval &quot;$(pyenv init -)&quot;; fi 再 source ~/.bash_profile 或 source ~/.zshrc 使设置生效查看 python 版本安装路径1pyenv prefix 3.6.3 期间遇到的问题No shell command in Mac OS.解决方法:在 ~/.zshrc 中添加这条命令 :1if which pyenv &gt; /dev/null; then eval &quot;$(pyenv init -)&quot;; fi 参考pyenv 更多命令Mac下 Pyenv 的安装使用pyenv github]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[微信跳一跳 -- iOS]]></title>
+    <url>%2F2018%2F01%2F04%2Fwechat_jump%2F</url>
+    <content type="text"><![CDATA[安装 WebDriverAgentRunner需要先安装 carthage + npm12345git clone https://github.com/facebook/WebDriverAgent.gitcd WebDriverAgentbrew install carthagebrew install npm./Scripts/bootstrap.sh 在安装完 carthage 执行下面命令1brew link carthage 出现执行权限问题1Linking /usr/local/Cellar/carthage/0.27.0... Error: Permission denied @ dir_s_mkdir - /usr/local/Frameworks 解决方法:12sudo mkdir /usr/local/Frameworkssudo chown $(whoami):admin /usr/local/Frameworks 安装 facebook-wda1pip install --pre facebook-wda 配置使用 WebDriverAgentRunner用 xcode9 打开 WebDriverAgent.xcodeproj, 先把项目的证书改为自己证书,scheme 选则 WebDriverAgentRunner, destination 选自己手机, 然后点 xcode 菜单栏 -&gt; Product -&gt; Test一切正常的话，手机上会出现一个无图标的 WebDriverAgent 应用, 启动之后, 马上又返回到桌面。此时控制台界面可以看到设备的 IP。通过上面给出的 IP 和端口，加上 /status 合成一个 url 地址。例如http://10.0.0.1:8100/status, 然后浏览器打开。如果出现一串JSON输出, 说明WDA安装成功了。如果没有反应, 是因为有些国产的 iPhone 机器通过手机的 IP 和端口还不能访问, 此时需要将手机的端口转发到 Mac 上。再执行以下命令:123brew intall usbmuxdbrew install libimobiledeviceiproxy 8100 8100 这时通过访问 http://localhost:8100/status 确认 WDA 是否运行成功。而 inspector 的地址是 http://localhost:8100/inspector, inspector 是用来查看 UI 的图层, 方便写测试脚本用的。 从 github 下载脚本 wechat_jump_game1git clone https://github.com/wangshub/wechat_jump_game.git 进入 wechat_jump_game 目录, 执行1pip install -r requirements.txt 把依赖装好, 用 PyCharm 打开 wechat_jump_game, 运行 wechat_jump_iOS_py3.py 文件 参考文档Android 和 iOS 操作步骤]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>game</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[在python中，怎么根据数组 a 对数组 b 进行排序]]></title>
     <url>%2F2017%2F12%2F26%2Fpython_note1%2F</url>
     <content type="text"><![CDATA[lexsort1234import numpy as npa = np.array([0,1,3,2,6,4,5])b = np.array([0,1,2,3,4,5,6])index = np.lexsort((b, a)) argsort1234import numpy as npa = np.array([0,1,3,2,6,4,5])b = np.array([0,1,2,3,4,5,6])print(b[np.argsort(a)]) zip1sorted(zip(a, b), key=lambda x:x[0])]]></content>
