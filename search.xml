@@ -11,9 +11,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[启动页设置]]></title>
+    <title><![CDATA[启动页修改图片不起作用问题]]></title>
     <url>%2F2018%2F01%2F05%2Fswift_lauch_image%2F</url>
-    <content type="text"><![CDATA[有两种方法: Launch Image LaunchScreen.xib两者只能选一个, 同时设置可能出现黑屏啥的问题。 我用的 LaunchScreen.xib]]></content>
+    <content type="text"><![CDATA[有两种方法: Launch Image LaunchScreen.xib两者只能选一个, 同时设置可能出现黑屏啥的问题。 我用的 LaunchScreen.xib, 但更改图片后, 启动页是一片空白, 不显示图片, 调试时不起作用, 最后把 app 删掉、手机重启正常。 注:网上提的解决方法是把启动页图片路径存在根目录, 但看着不顺眼。]]></content>
       <tags>
         <tag>笔记</tag>
         <tag>swift</tag>
