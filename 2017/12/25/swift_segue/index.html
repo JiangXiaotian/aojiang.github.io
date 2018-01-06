@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="我的世界">
 <meta property="og:description" content="segue 分为以下几种类型:  Show Show Detail Present Modally Present as Popover Custom在 iPhone 中有 Show、Show Detail、Present Modally、Custom 四种不同类型, iPad中有 Show、Show Detail、Present Modally、Present as Popover、Custom">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-04T06:00:30.000Z">
+<meta property="og:updated_time" content="2018-01-06T07:23:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ios segue 几种类型区别">
 <meta name="twitter:description" content="segue 分为以下几种类型:  Show Show Detail Present Modally Present as Popover Custom在 iPhone 中有 Show、Show Detail、Present Modally、Custom 四种不同类型, iPad中有 Show、Show Detail、Present Modally、Present as Popover、Custom">
@@ -396,6 +396,7 @@
 <li>UIModalTransitionStyleCrossDissolve: 交叉溶解</li>
 <li>UIModalTransitionStylePartialCurl: 翻页</li>
 </ul>
+<p>备注:<br>实现点击领取新人优惠券图标弹窗效果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func handleFreshUserCouponViewTapped() &#123;</span><br><span class="line">    guard let vc = UIStoryboard.init(name: &quot;Homepage&quot;, bundle: nil).instantiateViewController(withIdentifier: &quot;FreshUserCouponViewController&quot;) as? FreshUserCouponViewController else &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    vc.modalPresentationStyle = .overFullScreen</span><br><span class="line">    vc.modalTransitionStyle = .crossDissolve</span><br><span class="line">    self.present(vc, animated: true, completion: nil)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">FreshUserCouponViewController: </span><br><span class="line">func viewInit() &#123;</span><br><span class="line">    // 设置背景</span><br><span class="line">    self.view.backgroundColor = UIColor.black.withAlphaComponent(0.2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>

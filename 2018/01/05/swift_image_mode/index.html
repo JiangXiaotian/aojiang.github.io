@@ -79,15 +79,33 @@
 
 
 
+<meta name="description" content="拉伸缩放(Scaling the View) ScaleToFill ScalAspectFit ScaleAspectFill  主要的区别在于缩放时如何保持宽高比。 举个例子, 把一个 imageview(100x100) 也就是五角星作为一个绿色 view(200x350) 的子视图, 如下图所示">
 <meta name="keywords" content="笔记,swift,ios">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS UIImageView 图片显示模式">
 <meta property="og:url" content="http://www.ao233.com/2018/01/05/swift_image_mode/index.html">
 <meta property="og:site_name" content="我的世界">
+<meta property="og:description" content="拉伸缩放(Scaling the View) ScaleToFill ScalAspectFit ScaleAspectFill  主要的区别在于缩放时如何保持宽高比。 举个例子, 把一个 imageview(100x100) 也就是五角星作为一个绿色 view(200x350) 的子视图, 如下图所示">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-04T17:12:40.000Z">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_1.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_2.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_3.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_4.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_5.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_6.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_7.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_8.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_9.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_10.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_11.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_12.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_13.png">
+<meta property="og:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_14.png">
+<meta property="og:updated_time" content="2018-01-06T07:12:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS UIImageView 图片显示模式">
+<meta name="twitter:description" content="拉伸缩放(Scaling the View) ScaleToFill ScalAspectFit ScaleAspectFill  主要的区别在于缩放时如何保持宽高比。 举个例子, 把一个 imageview(100x100) 也就是五角星作为一个绿色 view(200x350) 的子视图, 如下图所示">
+<meta name="twitter:image" content="http://www.ao233.com/images/swift_image_contentmode/image_mode_1.png">
 
 
 
@@ -357,7 +375,22 @@
       
 
       
-        <script src="/assets/js/APlayer.min.js"> </script>
+        <script src="/assets/js/APlayer.min.js"> </script><h3 id="拉伸缩放-Scaling-the-View"><a href="#拉伸缩放-Scaling-the-View" class="headerlink" title="拉伸缩放(Scaling the View)"></a>拉伸缩放(Scaling the View)</h3><ul>
+<li>ScaleToFill</li>
+<li>ScalAspectFit</li>
+<li>ScaleAspectFill</li>
+</ul>
+<p>主要的区别在于缩放时如何保持宽高比。</p>
+<p>举个例子, 把一个 imageview(100x100) 也就是五角星作为一个绿色 view(200x350) 的子视图, 如下图所示<br><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 100%;"><img src="/images/swift_image_contentmode/image_mode_1.png" width="120" align="left/"></div></div><div class="group-picture-row"></div></div></div><br><a id="more"></a><br>为了实验, 增加一些约束使得星星图片填满 view, 不同的模式决定了图片如何填满多的空白部分。<br>如果不设置模式, 默认是 <strong>ScaleToFill</strong>, 效果如下左图所示, 可以看出, 这种模式不保持宽高比的拉伸。<br>与之对应的是 <strong>ScaleAspectFit</strong>, 效果如下右图所示, 这种模式保持宽高比的拉伸。<br><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/swift_image_contentmode/image_mode_2.png" width="120"></div><div class="group-picture-column" style="width: 50%;"><img src="/images/swift_image_contentmode/image_mode_3.png" width="120"></div></div><div class="group-picture-row"></div></div></div></p>
+<p>而第三种模式同样是保持宽高比的拉伸, 如下左图所示, 不同的是 imageView 的 contents 超出了 imageView 的边界。<br>有个属性可以设置是否截断超出的部分。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">imageView.clipsToBounds = true</span><br></pre></td></tr></table></figure></p>
+<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/swift_image_contentmode/image_mode_4.png" width="150"></div><div class="group-picture-column" style="width: 50%;"><img src="/images/swift_image_contentmode/image_mode_5.png" width="120"></div></div><div class="group-picture-row"></div></div></div>
+<h3 id="定位-Positioning-the-View"><a href="#定位-Positioning-the-View" class="headerlink" title="定位(Positioning the View)"></a>定位(Positioning the View)</h3><p>如果不想拉伸, 可以通过以下九种方式定位。<br><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_6.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_7.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_8.png" width="120"></div></div><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_9.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_10.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_11.png" width="120"></div></div><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_12.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_13.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_14.png" width="120"></div></div></div></div></p>
+<h3 id="重新绘制-Redrawing-the-View"><a href="#重新绘制-Redrawing-the-View" class="headerlink" title="重新绘制(Redrawing the View)"></a>重新绘制(Redrawing the View)</h3><p>这个看效果和 scaleToFill 差不多。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">imageView.contentMode = .redraw</span><br></pre></td></tr></table></figure></p>
+<p>这种模式没用过, </p>
+<blockquote>
+<p>Perhaps we have a custom view that implements drawRect and we need it called any time the bounds change? The Redraw content mode triggers the setNeedsDisplay method when the view bounds change.</p>
+</blockquote>
+
       
     </div>
     
@@ -475,8 +508,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -541,6 +583,22 @@ var jiathis_config={
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉伸缩放-Scaling-the-View"><span class="nav-number">1.</span> <span class="nav-text">拉伸缩放(Scaling the View)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定位-Positioning-the-View"><span class="nav-number">2.</span> <span class="nav-text">定位(Positioning the View)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重新绘制-Redrawing-the-View"><span class="nav-number">3.</span> <span class="nav-text">重新绘制(Redrawing the View)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
