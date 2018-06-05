@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[区块链 01]]></title>
+    <url>%2F2018%2F03%2F06%2Fblock_chain1%2F</url>
+    <content type="text"><![CDATA[区块链是一种分布式数据库，维护一份连续不断的交易记录档，每一笔资料都被称为一个区块。每个区块都会与另一个区块产生连接，每个区块都会包含上个区块的 hash 值。区块之间连接起来就是一本账簿， 每个区块都必须由超过 50% 的节点认证过，每个节点必须存储所有区块（但有新的设计可让节点仅存储部分区块）。复杂的密码学运算可杜绝记录篡改与修订，产生区块的过程又被称为挖矿，负责产生区块的机器又称为挖矿机。 区块链的潜在应用 数字货币 数字资产管理 生产履历、产销履历 智能合约、契约执行 交易流程透明化 电子涵证]]></content>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[NavigationBar+PYSearch]]></title>
+    <url>%2F2018%2F03%2F06%2Fmengqu_searchBar%2F</url>
+    <content type="text"><![CDATA[用到了 PYSearch 库, 在 xcode9 用 swift4 下，出现了很多奇怪的问题。 用 navitaionBar.titleView = searchBar 时在 iOS 11 系统下显示不出来, 或者显示出来后高度变成了 56，还死活改不了。用以下代码最后改为了 44。1234567if IS_IOS_11 &#123; let titleView = SearchBarContainerView.init(customSearchBar: searchBar) self.navigationItem.titleView = titleView&#125; else &#123; searchBar.commonInit() self.navigationItem.titleView = searchBar&#125; 定义 SearchBar 取消按钮 text 属性时, 需要同时写 A、B 两行代码, 少了 A 行，不起作用，少了 B 行，”啦啦”会闪烁一下。12345if let item = navigationItem.rightBarButtonItem, let cancelBtn = item.customView as? UIButton &#123; cancelBtn.titleLabel?.font = gRightItemFont cancelBtn.titleLabel?.text = &quot;啦啦&quot; // A cancelBtn.setTitle(&quot;取消&quot;, for: .normal) // B&#125; 我用 storyboard 的 segue 跳转在 ios9 的系统搜索页面会出现整体上移了一部分, 将 A 行代码改为了 B、C 行后正常。12345678910extension TestSearchViewController: UISearchBarDelegate &#123; // 禁用主页 search bar 的编辑功能, 跳转到 search 页面 func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -&gt; Bool &#123; //self.performSegue(withIdentifier: SEGUE_TO_SEARCH, sender: self) // A let resultVC = TestSearchResultViewController.init() // B // animated 设为 false, 取消动画 self.navigationController?.pushViewController(resultVC, animated: false) // C return false &#125;&#125; 完整代码:TestSearchViewController.swift123456789101112131415161718192021222324252627282930313233343536373839404142434445import UIKitimport PYSearchfileprivate let SEGUE_TO_SEARCH = &quot;to_py_search&quot;class TestSearchViewController: UIViewController &#123; @IBOutlet weak var btn: UIButton! var searchBar = UISearchBar() override func viewDidLoad() &#123; super.viewDidLoad() viewInit() &#125; func viewInit() &#123; if IS_IOS_11 &#123; let titleView = SearchBarContainerView.init(customSearchBar: searchBar) self.navigationItem.titleView = titleView &#125; else &#123; searchBar.commonInit() self.navigationItem.titleView = searchBar &#125; searchBar.showsCancelButton = false searchBar.delegate = self &#125;&#125;extension TestSearchViewController &#123; @IBAction func handleBtnTapped() &#123; self.performSegue(withIdentifier: SEGUE_TO_SEARCH, sender: self) &#125;&#125;extension TestSearchViewController: UISearchBarDelegate &#123; // 禁用主页 search bar 的编辑功能, 跳转到 search 页面 func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -&gt; Bool &#123; let resultVC = TestSearchResultViewController.init() self.navigationController?.pushViewController(resultVC, animated: false) self.performSegue(withIdentifier: SEGUE_TO_SEARCH, sender: self) return false &#125;&#125; TestSearchResultViewController.swift1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859import UIKitimport PYSearchfileprivate let HOT_SEARCHS = [&quot;抱枕&quot;, &quot;拖鞋&quot;, &quot;背包&quot;, &quot;夜灯&quot;, &quot;笔记本&quot;]class TestSearchResultViewController: PYSearchViewController &#123; override func viewDidLoad() &#123; super.viewDidLoad() &#125; override func viewWillAppear(_ animated: Bool) &#123; super.viewWillAppear(animated) viewInit() &#125; func viewInit() &#123; /* nav init */ if let nav = self.navigationController &#123; // nav bar 背景颜色 nav.navigationBar.barTintColor = UIColor.white // nav 字体颜色 nav.navigationBar.tintColor = UIColor.lightGray self.navigationItem.hidesBackButton = true &#125; /* 隐藏 tabbar */ if let tabv = self.tabBarController &#123; tabv.hidesBottomBarWhenPushed = true tabv.tabBar.isHidden = true &#125; /* pysearch init */ self.hotSearches = HOT_SEARCHS self.searchResultShowMode = .embed // 取消按钮字体设置 if let item = navigationItem.rightBarButtonItem, let cancelBtn = item.customView as? UIButton &#123; cancelBtn.titleLabel?.font = gRightItemFont cancelBtn.titleLabel?.text = &quot;取消&quot; cancelBtn.setTitle(&quot;取消&quot;, for: .normal) &#125; self.delegate = self &#125;&#125;extension TestSearchResultViewController: PYSearchViewControllerDelegate &#123; func didClickCancel(_ searchViewController: PYSearchViewController!) &#123; // 键盘失去焦点 self.searchBar.resignFirstResponder() // 返回 if let nav = self.navigationController &#123; nav.popViewController(animated: false) &#125; &#125;&#125; SearchBar+Extension.swift:12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091import UIKit// iOS 11 searchBar 高度默认为 56，改为 44 解决方法：// https://stackoverflow.com/questions/46318022/uisearchbar-increases-navigation-bar-height-in-ios-11// iOS 11: navigateItem.titleView = searchBarContainerView// iOS 11 以下: navigateItem.titleView = searchBarclass SearchBarContainerView: UIView &#123; let searchBar: UISearchBar init(customSearchBar: UISearchBar) &#123; searchBar = customSearchBar super.init(frame: CGRect.zero) addSubview(searchBar) NSLayoutConstraint.activate([searchBar.topAnchor.constraint(equalTo: self.topAnchor), searchBar.leftAnchor.constraint(equalTo: self.leftAnchor), searchBar.rightAnchor.constraint(equalTo: self.rightAnchor), searchBar.bottomAnchor.constraint(equalTo: self.bottomAnchor)]) searchBar.frame = CGRect.init(x: 0, y: 0, width: gScreenWidth-20, height: 30) searchBar.commonInit() // iOS 11 searchBar 默认左对齐，改为居中 searchBar.setCenterAlignment() &#125; override convenience init(frame: CGRect) &#123; self.init(customSearchBar: UISearchBar()) self.frame = frame &#125; required init?(coder aDecoder: NSCoder) &#123; fatalError(&quot;init(coder:) has not been implemented&quot;) &#125; // 查的一些资料说下面这行代码可以解决将高度 56 改为 44 的问题，但好像没有也可以 &lt;!-- override var intrinsicContentSize: CGSize &#123; return UILayoutFittingExpandedSize &#125; --&gt;&#125;extension UISearchBar &#123; // 初始化 searchbar 的一些基础属性 func commonInit(backgroundColor: UIColor? = nil, textColor: UIColor? = nil, font: UIFont? = nil, placeholder: String? = nil) &#123; self.placeholder = placeholder ?? gSearchBarPlaceholder if let views = self.subviews.last?.subviews &#123; for subView in views &#123; if subView .isKind(of: UITextField.self) &#123; let tf = subView as! UITextField tf.frame = self.frame // 这行很重要 tf.backgroundColor = backgroundColor ?? UIColor.lightGray.withAlphaComponent(0.2) tf.textColor = textColor ?? UIColor.black tf.font = font ?? gSearchBarFont if let searchImageView = tf.leftView as? UIImageView &#123; searchImageView.image = searchImageView.image?.withRenderingMode(.alwaysTemplate) searchImageView.tintColor = UIColor.lightGray &#125; break &#125; &#125; &#125; &#125; func setCenterAlignment() &#123; var offset = UIOffset() if let views = self.subviews.last?.subviews &#123; for subView in views &#123; if subView .isKind(of: UITextField.self) &#123; let tf = subView as! UITextField tf.frame = self.frame if let searchImageView = tf.leftView as? UIImageView &#123; let placeHolderWidth = gSearchBarPlaceholder.size().width // 20 是搜索🔍图标的宽度 offset.horizontal = (tf.frame.size.width-searchImageView.frame.size.width-placeHolderWidth)/2 - 20 gLog.debug(&quot;search bar offset x: \(offset.horizontal)&quot;) offset.vertical = 0 &#125; self.setPositionAdjustment(offset, for: .search) break &#125; &#125; &#125; &#125; func setLeftAlignment() &#123; let offset = UIOffset.init(horizontal: 0, vertical: 0) self.setPositionAdjustment(offset, for: .search) &#125;&#125; 参考资料PYSearch Github]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>Swift、iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[国外翻译的中国网络玄幻小说]]></title>
+    <url>%2F2018%2F02%2F28%2Fforeign_chinese_novel%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <tags>
+        <tag>小说</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[视频转 GIF]]></title>
+    <url>%2F2018%2F01%2F25%2Fvideo1%2F</url>
+    <content type="text"><![CDATA[[GIBrewery3][http://www.pc6.com/mac/114758.html][GIFRocket][http://www.gifrocket.com/]]]></content>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[logging 模块]]></title>
     <url>%2F2018%2F01%2F16%2Fpython_note6%2F</url>
     <content type="text"><![CDATA[logging 各参数123456789101112131415161718logging.basicConfig 函数各参数:filename: 指定日志文件名filemode: 和 file 函数意义相同，指定日志文件的打开模式，&apos;w&apos; 或 &apos;a&apos;format: 指定输出的格式和内容，format 可以输出很多有用信息，如上例所示:%(levelno)s: 打印日志级别的数值%(levelname)s: 打印日志级别名称%(pathname)s: 打印当前执行程序的路径，其实就是 sys.argv[0]%(filename)s: 打印当前执行程序名%(funcName)s: 打印日志的当前函数%(lineno)d: 打印日志的当前行号%(asctime)s: 打印日志的时间%(thread)d: 打印线程 ID%(threadName)s: 打印线程名称%(process)d: 打印进程 ID%(message)s: 打印日志信息datefmt: 指定时间格式，同 time.strftime()level: 设置日志级别，默认为 logging.WARNINGstream: 指定将日志的输出流，可以指定输出到 sys.stderr, sys.stdout 或者文件，默认输出到 sys.stderr，当 stream 和 filename 同时指定时，stream 被忽略 例子123456789logging.basicConfig( level=logging.INFO, format=&apos;levelname: %(levelname)s filename: %(filename)s outputNumber: [%(lineno)d] thread: %(threadName)s output msg: %(message)s - %(asctime)s&apos;, datefmt = &apos;[%d/%b/%Y %H:%M:%S]&apos;, filename=&apos;./loggmsg.log&apos;)logging打印信息函数:logging.debug(&apos;This is debug message&apos;)logging.info(&apos;This is info message&apos;)logging.warning(&apos;This is warning message&apos;) 获取当前文件名123import ospath = os.path.basename(sys.argv[0]) 相关代码123456789101112131415logger = logging.getLogger(log_name)logger.setLevel(logging.DEBUG)fmt = logging.Formatter(&apos;[%(asctime)s] [%(levelname)s] %(message)s - %(name)s - %(funcName)s - %(lineno)s&apos;, &apos;%Y-%m-%d %H:%M:%S&apos;)# 设置 cmd 日志stream = logging.StreamHandler()stream.setFormatter(fmt)stream.setLevel(cmd_level)self.logger.addHandler(stream)# 设置 file 日志fh = logging.FileHandler(path, encoding=&apos;utf8&apos;)fh.setFormatter(fmt)fh.setLevel(file_level)self.logger.addHandler(fh) 给日志加上颜色输出123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142class WinColor: foreground_blue = 0x0001 # text color contains blue. foreground_green = 0x0002 # text color contains green. foreground_red = 0x0004 # text color contains red. foreground_white = foreground_blue | foreground_green | foreground_red #winbase.h std_input_handle = -10 std_output_handle = -11 std_error_handle = -12 #wincon.h foreground_black = 0x0000 foreground_blue = 0x0001 foreground_green = 0x0002 foreground_cyan = 0x0003 foreground_red = 0x0004 foreground_magenta = 0x0005 foreground_yellow = 0x0006 foreground_grey = 0x0007 foreground_intensity = 0x0008 # foreground color is intensified. background_black = 0x0000 background_blue = 0x0010 background_green = 0x0020 background_cyan = 0x0030 background_red = 0x0040 background_magenta = 0x0050 background_yellow = 0x0060 background_grey = 0x0070 background_intensity = 0x0080 # background color is intensified.class AsciiColor: reset = &apos;\033[0m&apos; bold = &apos;\033[01m&apos; disable = &apos;\033[02m&apos; underline = &apos;\033[04m&apos; reverse = &apos;\033[07m&apos; strike_through = &apos;\033[09m&apos; invisible = &apos;\033[08m&apos; class FgColor: black = &apos;\033[30m&apos; red = &apos;\033[31m&apos; green = &apos;\033[32m&apos; orange = &apos;\033[33m&apos; blue = &apos;\033[34m&apos; purple = &apos;\033[35m&apos; cyan = &apos;\033[36m&apos; light_grey = &apos;\033[37m&apos; dark_grey = &apos;\033[90m&apos; light_red = &apos;\033[91m&apos; light_green = &apos;\033[92m&apos; yellow = &apos;\033[93m&apos; light_blue = &apos;\033[94m&apos; pink = &apos;\033[95m&apos; light_cyan = &apos;\033[96m&apos; class BgColor: black = &apos;\033[40m&apos; red = &apos;\033[41m&apos; green = &apos;\033[42m&apos; orange = &apos;\033[43m&apos; blue = &apos;\033[44m&apos; purple = &apos;\033[45m&apos; cyan = &apos;\033[46m&apos; light_grey = &apos;\033[47m&apos;class ColorFormatter(logging.Formatter): def format(self, record, color_flag=False): message = super().format(record) if color_flag is False: return message level_no = record.levelno if level_no &gt;= logging.CRITICAL: color = AsciiColor.FgColor.light_red elif level_no &gt;= logging.ERROR: color = AsciiColor.FgColor.light_red elif level_no &gt;= logging.WARNING: color = AsciiColor.FgColor.purple elif level_no &gt;= logging.INFO: color = AsciiColor.reset elif level_no &gt;= logging.DEBUG: color = AsciiColor.FgColor.green else: color = AsciiColor.reset message = color + message + AsciiColor.reset return messageclass ColorHandler(logging.StreamHandler): def __init__(self, stream=sys.stdout): super().__init__(stream) def format(self, record, colour=False): if not isinstance(self.formatter, ColorFormatter): self.formatter = ColorFormatter() return self.formatter.format(record, colour) def emit(self, record): stream = self.stream try: msg = self.format(record, stream.isatty()) stream.write(msg) stream.write(self.terminator) self.flush() except Exception: self.handleError(record)def log_init(detail_flag = False): h = ColorHandler() if detail_flag is True: # formatter = ColouredFormatter( # &apos;[%(levelname)s] %(message)s [%(filename)s-%(funcName)s-%(lineno)d] [%(asctime)s]&apos;, # datefmt=&apos;%Y-%m-%d %H:%M:%S&apos; # ) formatter = ColorFormatter(&apos;[%(levelname)s] %(message)s [%(filename)s-%(funcName)s-%(lineno)d]&apos;) else: formatter = ColorFormatter(&apos;%(message)s&apos;) h.formatter = formatter logging.basicConfig(level=logging.DEBUG, handlers=[h]) logger = logging.getLogger(&apos;log&apos;) return loggergLog = log_init(detail_flag = True)]]></content>
       <tags>
         <tag>笔记</tag>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[数字货币]]></title>
-    <url>%2F2018%2F01%2F15%2Fbitcoin1%2F</url>
-    <content type="text"><![CDATA[1.131.13 日开始投机数字货币交易市场、 初始资本 38500 RMB。买了 5196 USD。 每个平均 7.41 RMB。买了 329.15 个 EOS。一顿操作猛如虎, 嗯, 今天总亏了 300 RMB 左右。 搞笑段子: 通过这次大跌，感觉自己学到了很多，包括抄底，做波段，止损，平仓，刚刚又试了几把梭哈，感觉真的很不错，不出意外月底应该能全亏完。😄 早上大跌要买早上大涨要卖下午大涨不追下午大跌次日买早上大跌不割不涨不迭睡觉 炒币的话大家千万不要害怕被套，我前天 10 万进场，昨天亏损了 1 万，当时就有些急了，赶紧割肉。后来冷静下来观察了一下大盘的走势，在瀑布后选择了抄底，经过我细心的操作，现在全部身家剩下 30 块钱，本来是想赚个嫖娼的钱，结果现在有了卖淫的心了。 1.14今天 USD 降价, 每个平均 7.27 RMB。EOS 大跌 20%。今天总亏了 5000 左右。 1.15今天 USD 降价, 每个 7.15 RMB。今天赚了点, 但由于 USD 降价, 总共还是亏 5000 左右。 ###]]></content>
-      <tags>
-        <tag>数字货币</tag>
-        <tag>心情</tag>
       </tags>
   </entry>
   <entry>
@@ -39,7 +63,7 @@
   <entry>
     <title><![CDATA[python 打印不同颜色日志]]></title>
     <url>%2F2018%2F01%2F10%2Fpython_note5%2F</url>
-    <content type="text"><![CDATA[格式：\033[显示方式;前景色;背景色m 说明： 前景色 背景色 颜色30 40 黑色31 41 红色32 42 绿色33 43 黃色34 44 蓝色35 45 紫红色36 46 青蓝色37 47 白色 显示方式 意义0 终端默认设置1 高亮显示4 使用下划线5 闪烁7 反白显示8 不可见 例子：12\033[1;31;40m ## 1-高亮显示 31-前景色红色 40-背景色黑色\033[0m ## 采用终端默认设置，即取消颜色设置]]></content>
+    <content type="text"><![CDATA[格式: \033[显示方式; 前景色; 背景色 m 说明:前景色 | 背景色 | 颜色30 | 40 | 黑色31 | 41 | 红色32 | 42 | 绿色33 | 43 | 黃色34 | 44 | 蓝色35 | 45 | 紫红色36 | 46 | 青蓝色37 | 47 | 白色 显示方式 | 意义0 | 终端默认设置1 | 高亮显示4 | 使用下划线5 | 闪烁7 | 反白显示8 | 不可见 例子:12\033[1;31;40m ## 1-高亮显示 31-前景色红色 40-背景色黑色\033[0m ## 采用终端默认设置，即取消颜色设置]]></content>
       <tags>
         <tag>笔记</tag>
         <tag>python</tag>
@@ -155,15 +179,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[优惠券系统设计]]></title>
-    <url>%2F2017%2F12%2F25%2Fmengqu_coupon%2F</url>
-    <content type="text"><![CDATA[]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>电商</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[鞋码、衣服大小型号记录]]></title>
     <url>%2F2017%2F12%2F24%2Fclothes%2F</url>
     <content type="text"><![CDATA[鞋子: 42(US 8.5) 上衣: XL/180]]></content>
@@ -242,7 +257,7 @@
   <entry>
     <title><![CDATA[视频收集(一)]]></title>
     <url>%2F2017%2F12%2F22%2Fmv_collection1%2F</url>
-    <content type="text"><![CDATA[爱的华尔兹, 甜爆了, 收藏收藏, 哈哈, (function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"theme":"#FADFA3","loop":true,"video":{"url":"http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/80b9a1da703de72187a2.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()]]></content>
+    <content type="text"><![CDATA[爱的华尔兹, 甜爆了, = = (function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"theme":"#FADFA3","loop":true,"video":{"url":"http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/80b9a1da703de72187a2.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()]]></content>
       <tags>
         <tag>视频</tag>
       </tags>
