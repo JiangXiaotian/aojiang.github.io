@@ -276,6 +276,421 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.ao233.com/2018/06/25/github1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="欧阳小天">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar_blog.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/25/github1/" itemprop="url">github ssh 问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-25T17:40:35+08:00">
+                2018-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/25/github1/" class="leancloud_visitors" data-flag-title="github ssh 问题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><h3 id="github-ssh-公钥问题"><a href="#github-ssh-公钥问题" class="headerlink" title="github ssh 公钥问题"></a>github ssh 公钥问题</h3><p>测试：<br>ssh -T git@github.com<br>提示 Permission denied(publickey).</p>
+<p>ssh-keygen -t rsa -C “aojiang”<br>一直 enter,<br>cat /Users/apple/.ssh/id_rsa.pub<br>把生成的公钥复制, 然后去 github -&gt; settings -&gt;  ssh and gpg keys 里设置</p>
+<p>参考:<br><a href="https://blog.csdn.net/superior_yong/article/details/64127797" target="_blank" rel="noopener">https://blog.csdn.net/superior_yong/article/details/64127797</a></p>
+<h3 id="git-clone-问题"><a href="#git-clone-问题" class="headerlink" title="git clone 问题"></a>git clone 问题</h3><p>git clone <a href="https://github.com/openai/go-vncdriver.git" target="_blank" rel="noopener">https://github.com/openai/go-vncdriver.git</a> 提示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">error: RPC failed; curl 18 transfer closed with outstanding read data remaining</span><br><span class="line">fatal: The remote end hung up unexpectedly</span><br><span class="line">fatal: early EOF</span><br><span class="line">fatal: index-pack faile</span><br></pre></td></tr></table></figure></p>
+<p>改用 git clone git@github.com:openai/go-vncdriver.git </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.ao233.com/2018/06/19/machine_learning2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="欧阳小天">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar_blog.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/19/machine_learning2/" itemprop="url">强化学习记录(1)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-19T21:06:31+08:00">
+                2018-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/19/machine_learning2/" class="leancloud_visitors" data-flag-title="强化学习记录(1)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><h2 id="搭建-python-3-6-3-环境"><a href="#搭建-python-3-6-3-环境" class="headerlink" title="搭建 python 3.6.3 环境"></a>搭建 python 3.6.3 环境</h2><p>brew install pyenv<br>brew install pyenv-virtualenv<br>pyenv install -v 3.6.3</p>
+<p>pyenv virtualenv env_3.6.3</p>
+<h2 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h2><p>就是利用负梯度方向来决定每次迭代的新的搜索方向, 使得每次迭代能使待优化的目标函数逐步减小。<br>梯度是一个矢量，其方向上的方向导数最大, 其大小正好是此最大方向导数。方向导数也是矢量。<br>梯度方向是函数变化率最大的方向。</p>
+<p>神经网络是一种运算模型, 对于输入和输出间复杂的关系进行建模, 或者用来探索数据间的模式。</p>
+<h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><p>relu<br>softplus<br>dropout<br>sigmoid<br>tanh</p>
+<h2 id="randn-与-rand"><a href="#randn-与-rand" class="headerlink" title="randn 与  rand"></a>randn 与  rand</h2><p>np.random.rand()<br>np.random.randn()</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.ao233.com/2018/06/19/machine_learning1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="欧阳小天">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar_blog.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/19/machine_learning1/" itemprop="url">机器学习记录(1)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-19T12:31:34+08:00">
+                2018-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/19/machine_learning1/" class="leancloud_visitors" data-flag-title="机器学习记录(1)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <ol>
+<li><p>什么是机器学习？<br>想让计算机像人一样思考所研发出来的计算机理论。<br>人和计算机其实本没有差别，同样都是一大批互相连接的信息传递和存储元素所组成的系统。<br>包括概率论、统计学等等学科。<br>Google Now, Google Photo</p>
+</li>
+<li><p>机器学习算法<br>目前所有的机器学习算法大概可以被分为 4 到 5 类，<br>监督学习(数据和标签)<br>非监督学习（不提供标签的样本，通过观察各种数据之间的特性，会发现这些特性背后的规律，这些规律也就是非监督学习所学到的东西）<br>半监督学习（少量有标签的样本和大量没有标签的样本）<br>强化学习（规划机器人准则方面，把计算机丢到一个对于它完全陌生的环境，让它完成一项从未接触过的任务,它会自己去尝试各种手段，最后让自己成功适应这一个陌生的环境,从经验中总结提升）<br>遗传算法（模拟进化理论，淘汰弱者，适者生存，马里奥一代-&gt;随机生存二代-&gt;保存最厉害的马里奥,淘汰弱的-&gt;基于强者“繁衍和变异”-&gt;更强马里奥）</p>
+</li>
+<li><p>人工神经网络 VS 生物神经网络<br>900 亿的神经网络细胞，通过刺激产生新连接<br>人工神经网络连接固定，不会凭空产生,靠正向和反向传播更新神经元<br>特征-&gt;代表特征-&gt;代表特征-&gt;</p>
+</li>
+<li><p>神经网络<br>每个神经元都有属于它的刺激函数，用这些函数给计算机刺激行为</p>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/19/machine_learning1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.ao233.com/2018/03/06/block_chain1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -505,136 +920,6 @@
             </a>
           </div>
           <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.ao233.com/2018/02/28/foreign_chinese_novel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="欧阳小天">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar_blog.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的世界">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/28/foreign_chinese_novel/" itemprop="url">国外翻译的中国网络玄幻小说</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T18:34:44+08:00">
-                2018-02-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/28/foreign_chinese_novel/" class="leancloud_visitors" data-flag-title="国外翻译的中国网络玄幻小说">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script>
-          
         
       
     </div>
@@ -1100,142 +1385,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.ao233.com/2018/01/10/bitcoin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="欧阳小天">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar_blog.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的世界">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/10/bitcoin/" itemprop="url">比特币</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-10T22:50:12+08:00">
-                2018-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/01/10/bitcoin/" class="leancloud_visitors" data-flag-title="比特币">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>(USDT 罗生门：Bitfinex 的庞氏骗局还是匿名网友的恶意指控？)[<a href="https://wallstreetcn.com/articles/3045173" target="_blank" rel="noopener">https://wallstreetcn.com/articles/3045173</a>]<br>（USDT如何获得？-9月26日行情分析（海外篇）)[<a href="https://weibo.com/ttarticle/p/show?id=2309404156369409317872&amp;infeed=1" target="_blank" rel="noopener">https://weibo.com/ttarticle/p/show?id=2309404156369409317872&amp;infeed=1</a>]</p>
-<p><a href="https://otcbtc.com/fee" target="_blank" rel="noopener">OTCBTC 费率说明</a><br><a href="https://otcbtc.zendesk.com/hc/zh-cn/articles/115001754372-%E6%8F%90%E5%B8%81%E5%8A%9F%E8%83%BD%E8%AF%B4%E6%98%8E" target="_blank" rel="noopener">OTCBTC 提币功能说明</a><br><a href="https://www.huobipro.com/zh-cn/help/#360" target="_blank" rel="noopener">火币提币说明</a><br><a href="https://www.huobi.pro/zh-cn/about/fee/" target="_blank" rel="noopener">火币币币交易费率</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/10/bitcoin/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.ao233.com/2018/01/10/python_note5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1501,137 +1650,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.ao233.com/2018/01/09/python_note3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="欧阳小天">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar_blog.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我的世界">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/09/python_note3/" itemprop="url">python 查看变量占用空间大小</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-09T16:55:41+08:00">
-                2018-01-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/01/09/python_note3/" class="leancloud_visitors" data-flag-title="python 查看变量占用空间大小">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><p>例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">a = &quot;&quot;</span><br><span class="line">b = None</span><br><span class="line"></span><br><span class="line">print(sys.getsizeof(a))</span><br><span class="line">print(sys.getsizeof(b))</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1686,7 +1704,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1699,7 +1717,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

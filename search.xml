@@ -1,319 +1,1345 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title><![CDATA[区块链 01]]></title>
-    <url>%2F2018%2F03%2F06%2Fblock_chain1%2F</url>
-    <content type="text"><![CDATA[区块链是一种分布式数据库，维护一份连续不断的交易记录档，每一笔资料都被称为一个区块。每个区块都会与另一个区块产生连接，每个区块都会包含上个区块的 hash 值。区块之间连接起来就是一本账簿， 每个区块都必须由超过 50% 的节点认证过，每个节点必须存储所有区块（但有新的设计可让节点仅存储部分区块）。复杂的密码学运算可杜绝记录篡改与修订，产生区块的过程又被称为挖矿，负责产生区块的机器又称为挖矿机。 区块链的潜在应用 数字货币 数字资产管理 生产履历、产销履历 智能合约、契约执行 交易流程透明化 电子涵证]]></content>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[NavigationBar+PYSearch]]></title>
-    <url>%2F2018%2F03%2F06%2Fmengqu_searchBar%2F</url>
-    <content type="text"><![CDATA[用到了 PYSearch 库, 在 xcode9 用 swift4 下，出现了很多奇怪的问题。 用 navitaionBar.titleView = searchBar 时在 iOS 11 系统下显示不出来, 或者显示出来后高度变成了 56，还死活改不了。用以下代码最后改为了 44。1234567if IS_IOS_11 &#123; let titleView = SearchBarContainerView.init(customSearchBar: searchBar) self.navigationItem.titleView = titleView&#125; else &#123; searchBar.commonInit() self.navigationItem.titleView = searchBar&#125; 定义 SearchBar 取消按钮 text 属性时, 需要同时写 A、B 两行代码, 少了 A 行，不起作用，少了 B 行，”啦啦”会闪烁一下。12345if let item = navigationItem.rightBarButtonItem, let cancelBtn = item.customView as? UIButton &#123; cancelBtn.titleLabel?.font = gRightItemFont cancelBtn.titleLabel?.text = &quot;啦啦&quot; // A cancelBtn.setTitle(&quot;取消&quot;, for: .normal) // B&#125; 我用 storyboard 的 segue 跳转在 ios9 的系统搜索页面会出现整体上移了一部分, 将 A 行代码改为了 B、C 行后正常。12345678910extension TestSearchViewController: UISearchBarDelegate &#123; // 禁用主页 search bar 的编辑功能, 跳转到 search 页面 func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -&gt; Bool &#123; //self.performSegue(withIdentifier: SEGUE_TO_SEARCH, sender: self) // A let resultVC = TestSearchResultViewController.init() // B // animated 设为 false, 取消动画 self.navigationController?.pushViewController(resultVC, animated: false) // C return false &#125;&#125; 完整代码:TestSearchViewController.swift123456789101112131415161718192021222324252627282930313233343536373839404142434445import UIKitimport PYSearchfileprivate let SEGUE_TO_SEARCH = &quot;to_py_search&quot;class TestSearchViewController: UIViewController &#123; @IBOutlet weak var btn: UIButton! var searchBar = UISearchBar() override func viewDidLoad() &#123; super.viewDidLoad() viewInit() &#125; func viewInit() &#123; if IS_IOS_11 &#123; let titleView = SearchBarContainerView.init(customSearchBar: searchBar) self.navigationItem.titleView = titleView &#125; else &#123; searchBar.commonInit() self.navigationItem.titleView = searchBar &#125; searchBar.showsCancelButton = false searchBar.delegate = self &#125;&#125;extension TestSearchViewController &#123; @IBAction func handleBtnTapped() &#123; self.performSegue(withIdentifier: SEGUE_TO_SEARCH, sender: self) &#125;&#125;extension TestSearchViewController: UISearchBarDelegate &#123; // 禁用主页 search bar 的编辑功能, 跳转到 search 页面 func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -&gt; Bool &#123; let resultVC = TestSearchResultViewController.init() self.navigationController?.pushViewController(resultVC, animated: false) self.performSegue(withIdentifier: SEGUE_TO_SEARCH, sender: self) return false &#125;&#125; TestSearchResultViewController.swift1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859import UIKitimport PYSearchfileprivate let HOT_SEARCHS = [&quot;抱枕&quot;, &quot;拖鞋&quot;, &quot;背包&quot;, &quot;夜灯&quot;, &quot;笔记本&quot;]class TestSearchResultViewController: PYSearchViewController &#123; override func viewDidLoad() &#123; super.viewDidLoad() &#125; override func viewWillAppear(_ animated: Bool) &#123; super.viewWillAppear(animated) viewInit() &#125; func viewInit() &#123; /* nav init */ if let nav = self.navigationController &#123; // nav bar 背景颜色 nav.navigationBar.barTintColor = UIColor.white // nav 字体颜色 nav.navigationBar.tintColor = UIColor.lightGray self.navigationItem.hidesBackButton = true &#125; /* 隐藏 tabbar */ if let tabv = self.tabBarController &#123; tabv.hidesBottomBarWhenPushed = true tabv.tabBar.isHidden = true &#125; /* pysearch init */ self.hotSearches = HOT_SEARCHS self.searchResultShowMode = .embed // 取消按钮字体设置 if let item = navigationItem.rightBarButtonItem, let cancelBtn = item.customView as? UIButton &#123; cancelBtn.titleLabel?.font = gRightItemFont cancelBtn.titleLabel?.text = &quot;取消&quot; cancelBtn.setTitle(&quot;取消&quot;, for: .normal) &#125; self.delegate = self &#125;&#125;extension TestSearchResultViewController: PYSearchViewControllerDelegate &#123; func didClickCancel(_ searchViewController: PYSearchViewController!) &#123; // 键盘失去焦点 self.searchBar.resignFirstResponder() // 返回 if let nav = self.navigationController &#123; nav.popViewController(animated: false) &#125; &#125;&#125; SearchBar+Extension.swift:12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091import UIKit// iOS 11 searchBar 高度默认为 56，改为 44 解决方法：// https://stackoverflow.com/questions/46318022/uisearchbar-increases-navigation-bar-height-in-ios-11// iOS 11: navigateItem.titleView = searchBarContainerView// iOS 11 以下: navigateItem.titleView = searchBarclass SearchBarContainerView: UIView &#123; let searchBar: UISearchBar init(customSearchBar: UISearchBar) &#123; searchBar = customSearchBar super.init(frame: CGRect.zero) addSubview(searchBar) NSLayoutConstraint.activate([searchBar.topAnchor.constraint(equalTo: self.topAnchor), searchBar.leftAnchor.constraint(equalTo: self.leftAnchor), searchBar.rightAnchor.constraint(equalTo: self.rightAnchor), searchBar.bottomAnchor.constraint(equalTo: self.bottomAnchor)]) searchBar.frame = CGRect.init(x: 0, y: 0, width: gScreenWidth-20, height: 30) searchBar.commonInit() // iOS 11 searchBar 默认左对齐，改为居中 searchBar.setCenterAlignment() &#125; override convenience init(frame: CGRect) &#123; self.init(customSearchBar: UISearchBar()) self.frame = frame &#125; required init?(coder aDecoder: NSCoder) &#123; fatalError(&quot;init(coder:) has not been implemented&quot;) &#125; // 查的一些资料说下面这行代码可以解决将高度 56 改为 44 的问题，但好像没有也可以 &lt;!-- override var intrinsicContentSize: CGSize &#123; return UILayoutFittingExpandedSize &#125; --&gt;&#125;extension UISearchBar &#123; // 初始化 searchbar 的一些基础属性 func commonInit(backgroundColor: UIColor? = nil, textColor: UIColor? = nil, font: UIFont? = nil, placeholder: String? = nil) &#123; self.placeholder = placeholder ?? gSearchBarPlaceholder if let views = self.subviews.last?.subviews &#123; for subView in views &#123; if subView .isKind(of: UITextField.self) &#123; let tf = subView as! UITextField tf.frame = self.frame // 这行很重要 tf.backgroundColor = backgroundColor ?? UIColor.lightGray.withAlphaComponent(0.2) tf.textColor = textColor ?? UIColor.black tf.font = font ?? gSearchBarFont if let searchImageView = tf.leftView as? UIImageView &#123; searchImageView.image = searchImageView.image?.withRenderingMode(.alwaysTemplate) searchImageView.tintColor = UIColor.lightGray &#125; break &#125; &#125; &#125; &#125; func setCenterAlignment() &#123; var offset = UIOffset() if let views = self.subviews.last?.subviews &#123; for subView in views &#123; if subView .isKind(of: UITextField.self) &#123; let tf = subView as! UITextField tf.frame = self.frame if let searchImageView = tf.leftView as? UIImageView &#123; let placeHolderWidth = gSearchBarPlaceholder.size().width // 20 是搜索🔍图标的宽度 offset.horizontal = (tf.frame.size.width-searchImageView.frame.size.width-placeHolderWidth)/2 - 20 gLog.debug(&quot;search bar offset x: \(offset.horizontal)&quot;) offset.vertical = 0 &#125; self.setPositionAdjustment(offset, for: .search) break &#125; &#125; &#125; &#125; func setLeftAlignment() &#123; let offset = UIOffset.init(horizontal: 0, vertical: 0) self.setPositionAdjustment(offset, for: .search) &#125;&#125; 参考资料PYSearch Github]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>Swift、iOS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[国外翻译的中国网络玄幻小说]]></title>
-    <url>%2F2018%2F02%2F28%2Fforeign_chinese_novel%2F</url>
-    <content type="text"><![CDATA[]]></content>
-      <tags>
-        <tag>小说</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[视频转 GIF]]></title>
-    <url>%2F2018%2F01%2F25%2Fvideo1%2F</url>
-    <content type="text"><![CDATA[[GIBrewery3][http://www.pc6.com/mac/114758.html][GIFRocket][http://www.gifrocket.com/]]]></content>
-      <tags>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[logging 模块]]></title>
-    <url>%2F2018%2F01%2F16%2Fpython_note6%2F</url>
-    <content type="text"><![CDATA[logging 各参数123456789101112131415161718logging.basicConfig 函数各参数:filename: 指定日志文件名filemode: 和 file 函数意义相同，指定日志文件的打开模式，&apos;w&apos; 或 &apos;a&apos;format: 指定输出的格式和内容，format 可以输出很多有用信息，如上例所示:%(levelno)s: 打印日志级别的数值%(levelname)s: 打印日志级别名称%(pathname)s: 打印当前执行程序的路径，其实就是 sys.argv[0]%(filename)s: 打印当前执行程序名%(funcName)s: 打印日志的当前函数%(lineno)d: 打印日志的当前行号%(asctime)s: 打印日志的时间%(thread)d: 打印线程 ID%(threadName)s: 打印线程名称%(process)d: 打印进程 ID%(message)s: 打印日志信息datefmt: 指定时间格式，同 time.strftime()level: 设置日志级别，默认为 logging.WARNINGstream: 指定将日志的输出流，可以指定输出到 sys.stderr, sys.stdout 或者文件，默认输出到 sys.stderr，当 stream 和 filename 同时指定时，stream 被忽略 例子123456789logging.basicConfig( level=logging.INFO, format=&apos;levelname: %(levelname)s filename: %(filename)s outputNumber: [%(lineno)d] thread: %(threadName)s output msg: %(message)s - %(asctime)s&apos;, datefmt = &apos;[%d/%b/%Y %H:%M:%S]&apos;, filename=&apos;./loggmsg.log&apos;)logging打印信息函数:logging.debug(&apos;This is debug message&apos;)logging.info(&apos;This is info message&apos;)logging.warning(&apos;This is warning message&apos;) 获取当前文件名123import ospath = os.path.basename(sys.argv[0]) 相关代码123456789101112131415logger = logging.getLogger(log_name)logger.setLevel(logging.DEBUG)fmt = logging.Formatter(&apos;[%(asctime)s] [%(levelname)s] %(message)s - %(name)s - %(funcName)s - %(lineno)s&apos;, &apos;%Y-%m-%d %H:%M:%S&apos;)# 设置 cmd 日志stream = logging.StreamHandler()stream.setFormatter(fmt)stream.setLevel(cmd_level)self.logger.addHandler(stream)# 设置 file 日志fh = logging.FileHandler(path, encoding=&apos;utf8&apos;)fh.setFormatter(fmt)fh.setLevel(file_level)self.logger.addHandler(fh) 给日志加上颜色输出123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142class WinColor: foreground_blue = 0x0001 # text color contains blue. foreground_green = 0x0002 # text color contains green. foreground_red = 0x0004 # text color contains red. foreground_white = foreground_blue | foreground_green | foreground_red #winbase.h std_input_handle = -10 std_output_handle = -11 std_error_handle = -12 #wincon.h foreground_black = 0x0000 foreground_blue = 0x0001 foreground_green = 0x0002 foreground_cyan = 0x0003 foreground_red = 0x0004 foreground_magenta = 0x0005 foreground_yellow = 0x0006 foreground_grey = 0x0007 foreground_intensity = 0x0008 # foreground color is intensified. background_black = 0x0000 background_blue = 0x0010 background_green = 0x0020 background_cyan = 0x0030 background_red = 0x0040 background_magenta = 0x0050 background_yellow = 0x0060 background_grey = 0x0070 background_intensity = 0x0080 # background color is intensified.class AsciiColor: reset = &apos;\033[0m&apos; bold = &apos;\033[01m&apos; disable = &apos;\033[02m&apos; underline = &apos;\033[04m&apos; reverse = &apos;\033[07m&apos; strike_through = &apos;\033[09m&apos; invisible = &apos;\033[08m&apos; class FgColor: black = &apos;\033[30m&apos; red = &apos;\033[31m&apos; green = &apos;\033[32m&apos; orange = &apos;\033[33m&apos; blue = &apos;\033[34m&apos; purple = &apos;\033[35m&apos; cyan = &apos;\033[36m&apos; light_grey = &apos;\033[37m&apos; dark_grey = &apos;\033[90m&apos; light_red = &apos;\033[91m&apos; light_green = &apos;\033[92m&apos; yellow = &apos;\033[93m&apos; light_blue = &apos;\033[94m&apos; pink = &apos;\033[95m&apos; light_cyan = &apos;\033[96m&apos; class BgColor: black = &apos;\033[40m&apos; red = &apos;\033[41m&apos; green = &apos;\033[42m&apos; orange = &apos;\033[43m&apos; blue = &apos;\033[44m&apos; purple = &apos;\033[45m&apos; cyan = &apos;\033[46m&apos; light_grey = &apos;\033[47m&apos;class ColorFormatter(logging.Formatter): def format(self, record, color_flag=False): message = super().format(record) if color_flag is False: return message level_no = record.levelno if level_no &gt;= logging.CRITICAL: color = AsciiColor.FgColor.light_red elif level_no &gt;= logging.ERROR: color = AsciiColor.FgColor.light_red elif level_no &gt;= logging.WARNING: color = AsciiColor.FgColor.purple elif level_no &gt;= logging.INFO: color = AsciiColor.reset elif level_no &gt;= logging.DEBUG: color = AsciiColor.FgColor.green else: color = AsciiColor.reset message = color + message + AsciiColor.reset return messageclass ColorHandler(logging.StreamHandler): def __init__(self, stream=sys.stdout): super().__init__(stream) def format(self, record, colour=False): if not isinstance(self.formatter, ColorFormatter): self.formatter = ColorFormatter() return self.formatter.format(record, colour) def emit(self, record): stream = self.stream try: msg = self.format(record, stream.isatty()) stream.write(msg) stream.write(self.terminator) self.flush() except Exception: self.handleError(record)def log_init(detail_flag = False): h = ColorHandler() if detail_flag is True: # formatter = ColouredFormatter( # &apos;[%(levelname)s] %(message)s [%(filename)s-%(funcName)s-%(lineno)d] [%(asctime)s]&apos;, # datefmt=&apos;%Y-%m-%d %H:%M:%S&apos; # ) formatter = ColorFormatter(&apos;[%(levelname)s] %(message)s [%(filename)s-%(funcName)s-%(lineno)d]&apos;) else: formatter = ColorFormatter(&apos;%(message)s&apos;) h.formatter = formatter logging.basicConfig(level=logging.DEBUG, handlers=[h]) logger = logging.getLogger(&apos;log&apos;) return loggergLog = log_init(detail_flag = True)]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[iOS 启动页分辨率]]></title>
-    <url>%2F2018%2F01%2F12%2Fswift_launch%2F</url>
-    <content type="text"><![CDATA[尺寸 分辨率 Retina HD5.5 242x2208 Retina HD4.7 750x1334 Landscape Retina Hd 5.5 2208x1242]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>swift</tag>
-        <tag>ios</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[比特币]]></title>
-    <url>%2F2018%2F01%2F10%2Fbitcoin%2F</url>
-    <content type="text"><![CDATA[(USDT 罗生门：Bitfinex 的庞氏骗局还是匿名网友的恶意指控？)[https://wallstreetcn.com/articles/3045173]（USDT如何获得？-9月26日行情分析（海外篇）)[https://weibo.com/ttarticle/p/show?id=2309404156369409317872&amp;infeed=1] OTCBTC 费率说明OTCBTC 提币功能说明火币提币说明火币币币交易费率 OTCBTC提取费用:EOS: 0.25 = 17.5BTC: 0.001 = 100.0USDT: 5 = 32.55ETH: 0.001 = 10币币交易费用:0.01%0.3%~0.5%，其中 ETH 手续费 0.3%，其他币种手续费 0.5%。永久千一用户广告成交手续费永久 0.1% ，永久千二用户广告成交手续费永久 0.2%。 火币提取费用:BTC: 0.001BCH: 0.0001ETH: 0.01EOS: 0.5XRP: 0.1USDT: 20交易费用:0.2% 广告的用户每笔完成的交易需要缴纳 1% 的费用 OTC点对点交易中，手续费如何收取？发布广告免费；交易完成后收取广告方交易额的1%作为手续费；数字资产充值不产生手续费； 如何修改OTC账户的资金密码？可以在OTC用户中心中直接修改密码。信息变更后，所有使用该账户登录的平台都会24小时内禁止提币。 OTC 点对点交易中，每个账户的发布广告的次数是否有限制？每个账户同一种币，同一个方向，只可以挂单两笔交易。（比如，比特币的卖单最多两笔，买单最多两笔；USDT卖单最多两笔，买单最多两笔。） OTC 点对点交易中，买方拍下后一直未付款，币被冻结，如何处理？需要发送邮件至support@huobi.pro，详细描述您的问题，并提供订单号、手机号、您的姓名，申诉受理小组会帮您核实处理。 OTC 点对点交易中，在什么情况下我可以取消订单？目前只有买方可以取消订单，卖方无法取消。如果有任何问题，可以发起申诉；如果无法发起申诉，可以发送邮件至support@huobi.pro。 OTC点对点交易时有没有交易金额限制？目前支持100元以上的买卖交易，上不封顶。 OTC 账户有币，为什么在 Pro 站无法进行交易？OTC的币需要先转到Pro站才可进行交易。可以在OTC资金管理，选择“从OTC站账户⇌专业站账户”，划转后便可以在Pro中进行币币交易。 Pro账户有币，为什么不能直接卖出提现人民币？Pro站的币需要转到 OTC 方可卖出提现。可以在 OTC 资金管理，选择”从专业站账户⇌OTC 站账户”，然后就可以点对点交易卖出。 火币 Pro 点对点交易下单后，不想继续交易了，怎么办？如果您是卖方，需要联系客服取消订单。如果您是买方，可以点击订单号后，页面右下方有取消交易的按钮。]]></content>
-      <tags>
-        <tag>数字货币</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[python 打印不同颜色日志]]></title>
-    <url>%2F2018%2F01%2F10%2Fpython_note5%2F</url>
-    <content type="text"><![CDATA[格式: \033[显示方式; 前景色; 背景色 m 说明:前景色 | 背景色 | 颜色30 | 40 | 黑色31 | 41 | 红色32 | 42 | 绿色33 | 43 | 黃色34 | 44 | 蓝色35 | 45 | 紫红色36 | 46 | 青蓝色37 | 47 | 白色 显示方式 | 意义0 | 终端默认设置1 | 高亮显示4 | 使用下划线5 | 闪烁7 | 反白显示8 | 不可见 例子:12\033[1;31;40m ## 1-高亮显示 31-前景色红色 40-背景色黑色\033[0m ## 采用终端默认设置，即取消颜色设置]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[python 常用库]]></title>
-    <url>%2F2018%2F01%2F10%2Fpython_note4%2F</url>
-    <content type="text"><![CDATA[核心库NumPy它为 Python 中的 n 维数组和矩阵的操作提供了大量有用的功能。 SciPy包含线性代数, 优化, 集成和统计的模块。SciPy 库的主要功能是建立在 NumPy 上, 从而它的数组大量的使用了NumPy 的。它通过其特定子模块提供有效的数值例程, 并作为数字积分、优化和其他例程。 Pandas旨在通过”标记”和”关系”数据进行工作, 简单直观。Pandas 是数据整理的完美工具。它设计用于快速简单的数据操作, 聚合和可视化。库中有两个主要的数据结构: “系列”(Series), 一维; “数据帧”(Data Frames), 二维。这里稍微列出了你可以用Pandas做的事情: 轻松删除并添加数据帧（DataFrame）中的列 将数据结构转换为数据帧（DataFrame）对象 处理丢失的数据，表示为NaN 功能强大的分组 Matplotlib可视化工具, 它使 Python 成为像 MatLab 或 Mathematica 这样的科学工具的竞争对手。 线图 散点图 条形图和直方 饼状图 茎图 轮廓图 场图 频谱图 SeabornSeaborn 主要关注统计模型的可视化; 这种可视化包括热图, 这些热图(heat map)总结数据但仍描绘整体分布。Seaborn 基于 Matplotlib, 并高度依赖于此。 机器学习SciKit-Learn它专为像图像处理和机器学习辅助等特定功能而设计, 建立在SciPy之上, 并大量利用它的数学运算。 深度学习Keras它是一个用 Python 编写的开源的库, 用于在高层的接口上构建神经网络。它简单易懂, 具有高级可扩展性。Keras 使用Theano 或 TensorFlow 作为后端, 但微软现在正努力整合 CNTK(微软的认知工具包) 作为新的后端。Keras 容易上手, 并在持续完善它的快速原型能力。它完全用Python编写, 可被高度模块化和扩展。尽管它以易上手、简单和以高层次为导向, 但是 Keras 足够有深度并且足够强大, 去支持复杂的模型。 TensorFlowTensorFlow 来自 Google 的开发人员, 它是数据流图计算的开源库, 为机器学习不断打磨。它旨在满足谷歌对训练神经网络的高需求。TensorFlow 的关键特征是它的多层节点系统, 可以在大型数据集上快速训练神经网络。这为谷歌的语音识别和图像对象识别提供了支持。 TheanoTheano 是一个 Python 软件包, 它定义了与 NumPy 类似的多维数组, 以及数学运算和表达式。此库是被编译的, 可实现在所有架构上的高效运行。最初由蒙特利尔大学机器学习组开发，它主要用于满足机器学习的需求。值得注意的是, Theano 紧密结合了 NumPy 在低层次上的运算。 自然语言处理NLTK这个库的名称 “Natural Language Toolkit”, 代表自然语言工具包, 顾名思义, 它用于符号学和统计学自然语言处理(NLP) 的常见任务。 NLTK 旨在促进 NLP 及相关领域(语言学, 认知科学人工智能等)的教学和研究, 目前受到重点关注。NLTK 的功能允许很多操作, 例如文本标记, 分类和标记, 实体名称识别, 建立语料库, 可以显示语言内部和各句子间的依赖性、词根、语义推理等。所有的构建模块都可以为不同的任务构建复杂的研究系统, 例如情绪分析, 自动总结。 Gensim这个库是为了高效处理大量文本而设计的, 它实现了诸如 hierarchical Dirichlet processes(HDP), 潜在语义分析(LSA) 和潜在 Dirichlet 分配(LDA)之类的算法，以及 tf-idf, 随机预测, word2vec 和 document2vec, 便于检查一组文档中有重复模式的文本(通常称为语料库)。所有的算法均是无监督的, 意味着不需要任何参数, 唯一的输入只有语料库。 数据挖掘Scrapy Scrapy 库是用于从网络结构化检索数据(如联系人信息或 URL), 可以用来设计 crawling 程序(也称为蜘蛛 bots)。 Statsmodelsstatsmodels 使用户能够通过使用各种统计模型的估算方法进行数据挖掘, 并执行统计判断和分析。许多有用的特征是可被描述的, 并通过使用线性回归模型, 广义线性模型, 离散选择模型, 鲁棒线性模型, 时间序列分析模型,各种估计方法得出统计结果。这个库还提供了广泛的标定功能, 专门用于大数据统计中的性能优化工作。 参考文档2017，最受欢迎的 15 大 Python 库有哪些？]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[python 查看变量占用空间大小]]></title>
-    <url>%2F2018%2F01%2F09%2Fpython_note3%2F</url>
-    <content type="text"><![CDATA[例子123456import sysa = &quot;&quot;b = Noneprint(sys.getsizeof(a))print(sys.getsizeof(b))]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[数据库种类]]></title>
-    <url>%2F2018%2F01%2F08%2Fdatabase_category%2F</url>
-    <content type="text"><![CDATA[五大数据库 PPAS MySQL SQL Server MongoDB PostGreSQL]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[公开课]]></title>
-    <url>%2F2018%2F01%2F06%2Fcourse%2F</url>
-    <content type="text"><![CDATA[网易公开课 coursera udacity 斯坦福网上公开课]]></content>
-      <tags>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[iOS UIImageView 图片显示模式]]></title>
-    <url>%2F2018%2F01%2F05%2Fswift_image_mode%2F</url>
-    <content type="text"><![CDATA[拉伸缩放(Scaling the View) ScaleToFill ScalAspectFit ScaleAspectFill 主要的区别在于缩放时如何保持宽高比。 举个例子, 把一个 imageview(100x100) 也就是五角星作为一个绿色 view(200x350) 的子视图, 如下图所示为了实验, 增加一些约束使得星星图片填满 view, 不同的模式决定了图片如何填满多的空白部分。如果不设置模式, 默认是 ScaleToFill, 效果如下左图所示, 可以看出, 这种模式不保持宽高比的拉伸。与之对应的是 ScaleAspectFit, 效果如下右图所示, 这种模式保持宽高比的拉伸。 而第三种模式同样是保持宽高比的拉伸, 如下左图所示, 不同的是 imageView 的 contents 超出了 imageView 的边界。有个属性可以设置是否截断超出的部分。1imageView.clipsToBounds = true 定位(Positioning the View)如果不想拉伸, 可以通过以下九种方式定位。 重新绘制(Redrawing the View)这个看效果和 scaleToFill 差不多。1imageView.contentMode = .redraw 这种模式没用过, Perhaps we have a custom view that implements drawRect and we need it called any time the bounds change? The Redraw content mode triggers the setNeedsDisplay method when the view bounds change. 参考文档:Stretching, Redrawing and Positioning with contentMode]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>swift</tag>
-        <tag>ios</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[启动页修改图片不起作用问题]]></title>
-    <url>%2F2018%2F01%2F05%2Fswift_lauch_image%2F</url>
-    <content type="text"><![CDATA[有两种方法: Launch Image LaunchScreen.xib两者只能选一个, 同时设置可能出现黑屏啥的问题。 我用的 LaunchScreen.xib, 但更改图片后, 启动页是一片空白, 不显示图片, 调试时不起作用, 最后把 app 删掉、手机重启正常。 注:网上提的解决方法是把启动页图片路径存在根目录, 但看着不顺眼。]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>swift</tag>
-        <tag>ios</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[ScrollView 嵌套 TableView, 滑动删除手势冲突]]></title>
-    <url>%2F2018%2F01%2F05%2Fswift_gesture_recognize%2F</url>
-    <content type="text"><![CDATA[参考文档UIGestureRecognizerDelegate 苹果文档]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>swift</tag>
-        <tag>ios</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[图片素材网站]]></title>
-    <url>%2F2018%2F01%2F04%2Fimage_website%2F</url>
-    <content type="text"><![CDATA[千库包图千图米元素站酷花瓣昵图懒人中国设计堆糖大师]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>图片</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[python 版本管理 -- pyenv]]></title>
-    <url>%2F2018%2F01%2F04%2Fpython_note2%2F</url>
-    <content type="text"><![CDATA[安装123brew updatebrew install pyenvpyenv init pyenv init 命令解释:Sets up your shims path. This is the only requirement for pyenv to function properly. You can do this by hand by prepending $(pyenv root)/shims to your $PATH. Installs autocompletion. This is entirely optional but pretty useful. Sourcing $(pyenv root)/completions/pyenv.bash will set that up. There is also a $(pyenv root)/completions/pyenv.zsh for Zsh users. Rehashes shims. From time to time you’ll need to rebuild your shim files. Doing this on init makes sure everything is up to date. You can always run pyenv rehash manually. Installs the sh dispatcher. This bit is also optional, but allows pyenv and plugins to change variables in your current shell, making commands like pyenv shell possible. The sh dispatcher doesn’t do anything crazy like override cd or hack your shell prompt, but if for some reason you need pyenv to be a real script rather than a shell function, you can safely skip it. 在 ~/.zshrc 里增加下面这条命令自动启用 pyenv1eval &quot;$(pyenv init -)&quot; 一些命令查看 pyenv 版本1pyenv -v 查看可安装的 python 版本1pyenv install --list 安装 python3.6.31pyenv install -v 3.6.3 卸载 python3.6.31pyenv uninstall 3.6.3 查看已安装 python 版本, 好像只能查看通过 pyenv install -v 安装的和系统自带的版本1pyenv versions 创建一个名为 test 的全新虚拟环境1pyenvv virtualenv 3.6.3 test 激活该虚拟环境1pyenv activate test 设置全局的 Python 版本，通过将版本号写入 ~/.pyenv-version, 最好不用, 可能导致一些应用不能用1pyenv global 3.6.3 在当前目录下设置 python 版本, 在当前目录生成 .pyenv-version1pyenv local 3.6.3 要使 terminal 生效, 在 ~/.bash_profile 或 ~/.zshrc 中添加1if which pyenv &gt; /dev/null; then eval &quot;$(pyenv init -)&quot;; fi 再 source ~/.bash_profile 或 source ~/.zshrc 使设置生效查看 python 版本安装路径1pyenv prefix 3.6.3 期间遇到的问题No shell command in Mac OS.解决方法:在 ~/.zshrc 中添加这条命令 :1if which pyenv &gt; /dev/null; then eval &quot;$(pyenv init -)&quot;; fi 参考pyenv 更多命令Mac下 Pyenv 的安装使用pyenv github]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[微信跳一跳 -- iOS]]></title>
-    <url>%2F2018%2F01%2F04%2Fwechat_jump%2F</url>
-    <content type="text"><![CDATA[安装 WebDriverAgentRunner需要先安装 carthage + npm12345git clone https://github.com/facebook/WebDriverAgent.gitcd WebDriverAgentbrew install carthagebrew install npm./Scripts/bootstrap.sh 在安装完 carthage 执行下面命令1brew link carthage 出现执行权限问题1Linking /usr/local/Cellar/carthage/0.27.0... Error: Permission denied @ dir_s_mkdir - /usr/local/Frameworks 解决方法:12sudo mkdir /usr/local/Frameworkssudo chown $(whoami):admin /usr/local/Frameworks 安装 facebook-wda1pip install --pre facebook-wda 配置使用 WebDriverAgentRunner用 xcode9 打开 WebDriverAgent.xcodeproj, 先把项目的证书改为自己证书,scheme 选则 WebDriverAgentRunner, destination 选自己手机, 然后点 xcode 菜单栏 -&gt; Product -&gt; Test一切正常的话，手机上会出现一个无图标的 WebDriverAgent 应用, 启动之后, 马上又返回到桌面。此时控制台界面可以看到设备的 IP。通过上面给出的 IP 和端口，加上 /status 合成一个 url 地址。例如http://10.0.0.1:8100/status, 然后浏览器打开。如果出现一串JSON输出, 说明WDA安装成功了。如果没有反应, 是因为有些国产的 iPhone 机器通过手机的 IP 和端口还不能访问, 此时需要将手机的端口转发到 Mac 上。再执行以下命令:123brew intall usbmuxdbrew install libimobiledeviceiproxy 8100 8100 这时通过访问 http://localhost:8100/status 确认 WDA 是否运行成功。而 inspector 的地址是 http://localhost:8100/inspector, inspector 是用来查看 UI 的图层, 方便写测试脚本用的。 从 github 下载脚本 wechat_jump_game1git clone https://github.com/wangshub/wechat_jump_game.git 进入 wechat_jump_game 目录, 执行1pip install -r requirements.txt 把依赖装好, 用 PyCharm 打开 wechat_jump_game, 运行 wechat_jump_iOS_py3.py 文件 参考文档wechat_jump_game githubATX 文档 - iOS 真机如何安装 WebDriverAgent写给iOS开发的跳一跳秘籍]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>game</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[在python中，怎么根据数组 a 对数组 b 进行排序]]></title>
-    <url>%2F2017%2F12%2F26%2Fpython_note1%2F</url>
-    <content type="text"><![CDATA[lexsort1234import numpy as npa = np.array([0,1,3,2,6,4,5])b = np.array([0,1,2,3,4,5,6])index = np.lexsort((b, a)) argsort1234import numpy as npa = np.array([0,1,3,2,6,4,5])b = np.array([0,1,2,3,4,5,6])print(b[np.argsort(a)]) zip1sorted(zip(a, b), key=lambda x:x[0])]]></content>
-      <tags>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[ios segue 几种类型区别]]></title>
-    <url>%2F2017%2F12%2F25%2Fswift_segue%2F</url>
-    <content type="text"><![CDATA[segue 分为以下几种类型: Show Show Detail Present Modally Present as Popover Custom在 iPhone 中有 Show、Show Detail、Present Modally、Custom 四种不同类型, iPad中有 Show、Show Detail、Present Modally、Present as Popover、Custom 五种不同类型。 Show一般用在 UINavigationController 的视图控制器中。切换方式: 进入时由右向左, 退出时由左向右。新压入的视图控制器有返回按钮, 单击可以返回。 Show Detail只适用于嵌入在 UISplitViewController 对象内的视图控制器, 分割控制器用以替换详细控制器（DetailViewController)。不提供返回按钮。 Present as Popover在 iPad 中, 目标视图以浮动窗样式呈现, 点击目标视图以外区域, 目标视图消失; 在 iPhone 中, 默认目标视图以模态覆盖整个屏幕。 Custom自定义跳转方式。 Present Modally有多种不同呈现方式, 可根据需要设置。在 iPhone 中, 一般以动画的形式自下向上覆盖整个屏幕, 用户无法与上一个视图交互,除非关闭当前视图; 在iPad中, 常见呈现为一个中心框, 中心框以动画形式自下向上弹出, 同时使底层视图控制器变暗。不提供返回按钮。 其他概念: presenting view controller Vs presented view controller当我们在 view controller A 中模态显示 view controller B 的时候, A 就充当 presenting view controller（弹出VC），而 B 就是 presented view controller。 modal Presentation Styles（弹出风格）有四种风格: UIModalPresentationFullScreen UIModalPresentationPageSheet UIModalPresentationFormSheet UIModalPresentationCurrentContext这四种方式在 iPad 上面统统有效，但在 iPhone 和 iPod touch 上面系统始终以 UIModalPresentationFullScreen 模式显示 presented VC。 Modal Transition Style（弹出时的动画风格） UIModalTransitionStyleCoverVertical: 底部滑入 UIModalTransitionStyleFlipHorizontal: 水平翻转进入 UIModalTransitionStyleCrossDissolve: 交叉溶解 UIModalTransitionStylePartialCurl: 翻页 备注:实现点击领取新人优惠券图标弹窗效果。123456789101112131415func handleFreshUserCouponViewTapped() &#123; guard let vc = UIStoryboard.init(name: &quot;Homepage&quot;, bundle: nil).instantiateViewController(withIdentifier: &quot;FreshUserCouponViewController&quot;) as? FreshUserCouponViewController else &#123; return &#125; vc.modalPresentationStyle = .overFullScreen vc.modalTransitionStyle = .crossDissolve self.present(vc, animated: true, completion: nil)&#125;FreshUserCouponViewController: func viewInit() &#123; // 设置背景 self.view.backgroundColor = UIColor.black.withAlphaComponent(0.2)&#125;]]></content>
-      <tags>
-        <tag>swift</tag>
-        <tag>ios</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[鞋码、衣服大小型号记录]]></title>
-    <url>%2F2017%2F12%2F24%2Fclothes%2F</url>
-    <content type="text"><![CDATA[鞋子: 42(US 8.5) 上衣: XL/180]]></content>
-      <tags>
-        <tag>生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[少年不识愁滋味]]></title>
-    <url>%2F2017%2F12%2F23%2Ftalk1%2F</url>
-    <content type="text"><![CDATA[丑奴儿·书博山道中壁【作者】辛弃疾 【朝代】宋少年不识愁滋味, 爱上层楼。爱上层楼。为赋新词强说愁。而今识尽愁滋味, 欲说还休。欲说还休。却道天凉好个秋。]]></content>
-      <tags>
-        <tag>说说</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[购买海外云主机搭建服务器科学上网]]></title>
-    <url>%2F2017%2F12%2F23%2Fvpn1%2F</url>
-    <content type="text"><![CDATA[为什么要自己搭vpn 分免费和收费的两种, 免费的一般用的人都比较多, 网速也不快, 而且不稳定。收费的 vpn 的价格一般从几十元到数百元不等。而自己买个云主机的价格也就在十美金以内, 每个月送的流量基本用不完, 主机独享, 完爆收费VPN。 云主机的选择国内的主机商靠谱的是阿里、腾讯、ucloud三家, 海外节点的价格基本都要百元以上。美国比较便宜(因为延时大), 亚洲节点相对较贵, 新加坡和日本稍好, 香港因为延时最小, 价格也是最贵的。国外的云主机商有 linode, bandwagon, vultr这几家。最好的是 linode, 价格也相对贵点。 PPTP/L2TP/IPSEC/IKEV2PPTP 因为安全性原因已经被 iOS10 除去了。其他三个的跨平台支持能力都不错。 vultr 购买云主机搭建因为 vultr 支持支付宝付款, 购买云主机启动后, 在 mac 终端可直接用 ssh 登陆, 接着提示输入密码, 都可在 vultr 控制台查到。1ssh root@&lt;host&gt; 部署 Shadowsocks 服务器端12345wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.shchmod +x shadowsocks.sh./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log TCP Fast Open实际上已经可以在自己的任意设备上进行登录使用了。但是为了更好的连接速度，你还需要多做几步。 打开 rc.local 文件1nano /etc/rc.local 在 rc.local 文件末尾加上1echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen ctrl + x 退出, 输入 y 并回车确认退出。 打开 sysctl.conf 文件,1nano /etc/sysctl.conf 在 sysctl.conf 末尾加上1net.ipv4.tcp_fastopen = 3 再打开一个 Shadowsocks 配置文件,1nano /etc/shadowsocks.json 把其中 “fast_open” 一项的 false 替换成 true。12345678910&#123; &quot;server&quot;:&quot;0.0.0.0&quot;, &quot;server_port&quot;:8989, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;password&quot;:&quot;xxxx&quot;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;aes-256-cfb&quot;, &quot;fast_open&quot;:true&#125; 如果需要添加多用户的话,12345678910111213&#123; &quot;server&quot;:&quot;0.0.0.0&quot;, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;port_password&quot;: &#123; &quot;12345&quot;: &quot;xxx&quot;, &quot;8989&quot;: &quot;xxx&quot;, &quot;22345&quot;: &quot;xxx&quot; &#125;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;aes-256-cfb&quot;, &quot;fast_open&quot;:true&#125; 重启 Shadowsocks1/etc/init.d/shadowsocks restart 客户端安装 ShadowsocksMac 版客户端下载Win 版客户端下载 部署锐速完成上述步骤后，使用过程中可能会发现连接速度有时不太稳定。这就是「锐速」发挥功能的时候了。锐速 ServerSpeeder 是一个 TCP 加速软件，对 Shadowsocks 客户端和服务器端间的传输速度有显著提升。锐速」虽然已经停止注册和安装了，不过网上还是有不少「破解版」可用。123ssh root@&lt;host&gt;wget -N --no-check-certificate https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder-all.sh &amp;&amp; bash serverspeeder-all.sh 若运行中碰到提示说需要更换内核的话CentOS6 内核更换为： 2.6.32-504.3.3.el6.x86_6412rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-firmware-2.6.32-504.3.3.el6.noarch.rpmrpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-2.6.32-504.3.3.el6.x86_64.rpm --force CentOS7 内核更换为： 3.10.0-229.1.2.el7.x86_641rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-3.10.0-229.1.2.el7.x86_64.rpm --force 查看内核是否安装成功1rpm -qa | grep kernel 重启查看内核是否更换成功123ssh root@&lt;host&gt;rebootuname -r 参考文档海外云主机搭建IKEV2 VPN之经验总结 + 搭建证书服务器科学上网的终极姿势-在-vultr-vps-上搭建-shadowsocks教程：CentOS更换内核，提供锐速可用的内核下载]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>vpn</tag>
-        <tag>云主机</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[研究生毕业设计]]></title>
-    <url>%2F2017%2F12%2F23%2Fmv_graduate%2F</url>
-    <content type="text"><![CDATA[(function(){var player = new DPlayer({"container":document.getElementById("dplayer1"),"theme":"#FADFA3","video":{"url":"http://ac-ANdqGl5F.clouddn.com/7be7a94a26dafa113cb9.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/2a25084ab4a5c71d2eaa.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})() 总结Reinforcement Learning + Neural Network + TensorFlow + Ros + Webots, 用激光雷达做神经网络的输入, 本来想训练机器人实现导航, 结果不争气, 就学会了简单避障 😂。]]></content>
-      <tags>
-        <tag>视频</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[图片并排参数选择]]></title>
-    <url>%2F2017%2F12%2F23%2Fimg_show_type%2F</url>
-    <content type="text"><![CDATA[把所有并排方式列下来, 3-1 好像不起作用。 /** 2-1* □ □*/ /** 2-2* □ □*/ /** 3-1* □ □ □*/ /** 3-2* □ □ □*/ /** 3-3* □ □ □*/ /** 4-1* □ □ □ □*/ /** 4-2* □ □ □ □*/ /** 4-3* □ □ □ □*/ /** 4-4* □ □ □ □*/ /** 5-1* □ □ □ □ □*/ /** 5-2* □ □ □ □ □*/ /** 5-3* □ □ □ □ □*/ /** 5-4* □ □ □ □ □*/ /** 6-1* □ □ □ □ □ □*/ /** 6-2* □ □ □ □ □ □*/ /** 6-3* □ □ □ □ □ □*/ /** 6-4* □ □ □ □ □ □*/ /** 6-5* □ □ □ □ □ □*/ /** 7-1* □ □ □ □ □ □ □*/ /** 7-2* □ □ □ □ □ □ □*/ /** 7-3* □ □ □ □ □ □ □*/ /** 7-4* □ □ □ □ □ □ □*/ /** 7-5* □ □ □ □ □ □ □*/ /** 8-1* □ □ □ □ □ □ □ □*/ /** 8-2* □ □ □ □ □ □ □ □*/ /** 8-3* □ □ □ □ □ □ □ □*/ /** 8-4* □ □ □ □ □ □ □ □*/ /** 8-5* □ □ □ □ □ □ □ □*/ /** 8-6* □ □ □ □ □ □ □ □*/ /** 8-7* □ □ □ □ □ □ □ □*/ /** 9-1* □ □ □ □ □ □ □ □ □*/ /** 9-2* □ □ □ □ □ □ □ □ □*/ /** 9-3* □ □ □ □ □ □ □ □ □*/ /** 9-4* □ □ □ □ □ □ □ □ □*/ /** 9-5* □ □ □ □ □ □ □ □ □*/ /** 9-6* □ □ □ □ □ □ □ □ □*/ /** 9-7* □ □ □ □ □ □ □ □ □*/ /** 10-1* □ □ □ □ □ □ □ □ □ □*/ /** 10-2* □ □ □ □ □ □ □ □ □ □*/ /** 10-3* □ □ □ □ □ □ □ □ □ □*/ /** 10-4* □ □ □ □ □ □ □ □ □ □*/ /** 10-5* □ □ □ □ □ □ □ □ □ □*/ /** 10-6* □ □ □ □ □ □ □ □ □ □*/ /** 10-7* □ □ □ □ □ □ □ □ □ □*/ /** Defaults Layout* □ □ □ □ □ □ …*/]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[个人网站搭建记录(四) -- 图片设置]]></title>
-    <url>%2F2017%2F12%2F23%2Fblog_create4%2F</url>
-    <content type="text"><![CDATA[图片并排新建博文, 设置 type: “picture”, 使用 {\% gp x-x \%} … {\% endgp \%} 标签引用要展示的图片地址,如下所示, 图片展示效果，参考 theme/next/scripts/tags/group-pictures.js 注释示意图。123456789101112131415161718&#123;% gp 5-3 %&#125;---title: Naruto-Picturescategories: [图片]tags: [picture,naruto]date: 2016-09-02 14:36:04keywords: picture,narutotype: &quot;picture&quot;top: 999---&#123;% gp 5-3 %&#125;![](/images/post/18210.jpg)![](/images/post/196232.jpg)![](/images/post/224147.jpg)![](/images/post/199301.jpg)![](/images/post/213318.jpg)&#123;% endgp %&#125;&#123;% endgp %&#125; 修复图片展示设置图片并排后, 首页可以正常显示, 但点击查看博文时显示效果丢失, 在 themes\next\source\css_common\components\tags\group-pictures.styl 中设置可解决。123456.page-post-detail .post-body .group-picture-column &#123; // float: none; margin-top: 10px; width: auto !important; (这行可注释可不注释) img &#123; margin: 0 auto; &#125;&#125; 设置图片大小hexo 主题支持以下方式设置。1&lt;img src=&quot;http://ac-ANdqGl5F.clouddn.com/5cc2ff61134f1f923571.png&quot; width=&quot;142&quot; height=&quot;200&quot; alt=&quot;卡通少女1&quot;/&gt; 设置图片能够点击放大图片并排以后, 失去点击放大效果, 可在 themes/next/source/js/src/utils.js 中修改代码如下, 注释一行代码即可解决。12345wrapImageWithFancyBox: function() &#123; $(&apos;.content img&apos;) .not(&apos;[hidden]&apos;) // .not(&apos;.group-picture img, .post-gallery img&apos;) .each(function() &#123; 创建文件同时创建一个同名的图片文件夹在根目录的 _config.yml 中找到 post_asset_folder 关键字, 设为 true。在hexo的目录下执行1pm install https://github.com/CodeFalling/hexo-asset-image --save 参考文档多图功能 图片不能放大图片模式]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[图片收集(一)]]></title>
-    <url>%2F2017%2F12%2F23%2Fimg_collection1%2F</url>
-    <content type="text"><![CDATA[火影油女志乃摘下眼睛会是什么样呢 哈哈]]></content>
-      <tags>
-        <tag>图片</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[文字收集(一)]]></title>
-    <url>%2F2017%2F12%2F23%2Fnet_collection1%2F</url>
-    <content type="text"><![CDATA[来源于知乎李煜的个人简介: 若你赐我一道旖旎的风景我便为你翻山越岭 缘木求林一路上边走边停 边停边寻山空是我姓 湖静是你名若你赠我一弯悠长的天径我定为你驾雾腾云 采月摘星一路上且醉且歌 且歌且行云淡是我姓 风轻是你名若你贻我一方梦幻的仙境我必为你覆雨翻云 织云作锦一路上半雨半阴 半阴半晴雨过是我姓 天晴是你名这里李煜，略通诗词联赋。如若有幸相识，实乃缘分。 来源于知乎荏苒的回答: 所以这么多年一直有个心愿：想体验下什么叫摸头杀。听说最萌身高差15cm，所以麻烦159cm的小哥哥联系下我，不要害羞谢谢～^_^]]></content>
-      <tags>
-        <tag>文字</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[诗词收集(一)]]></title>
-    <url>%2F2017%2F12%2F22%2Fpoem1%2F</url>
-    <content type="text"><![CDATA[《说苑》越人歌 春秋 山有木兮木有枝, 心悦君兮君不知。 译文山上有树木啊树木有丫枝, 心中喜欢你啊你却不知此事。王子与渔夫的故事, 歌颂贵族与劳动人民情谊。 国风·郑风·山有扶苏 作者：佚名 山有扶苏, 隰有荷华。不见子都, 乃见狂且。山有乔松, 隰有游龙, 不见子充, 乃见狡童。 译文山上有茂盛的扶苏，池里有美艳的荷花。没见到子都美男子啊，偏遇见你这个小狂徒。山上有挺拔的青松，池里有丛生的水荭。没见到子充好男儿啊，偏遇见你这个小狡童。 九歌·湘夫人 作者: 屈原 帝子降兮北渚, 目眇眇兮愁予。袅袅兮秋风, 洞庭波兮木叶下。登白薠兮骋望, 与佳期兮夕张。鸟何萃兮苹中, 罾何为兮木上。沅有芷兮澧有兰, 思公子兮未敢言。荒忽兮远望, 观流水兮潺湲。麋何食兮庭中？蛟何为兮水裔？朝驰余马兮江皋, 夕济兮西澨。闻佳人兮召予, 将腾驾兮偕逝。筑室兮水中, 葺之兮荷盖；荪壁兮紫坛, 播芳椒兮成堂；桂栋兮兰橑, 辛夷楣兮药房；罔薜荔兮为帷, 擗蕙櫋兮既张；白玉兮为镇, 疏石兰兮为芳；芷葺兮荷屋, 缭之兮杜衡。合百草兮实庭, 建芳馨兮庑门。九嶷缤兮并迎, 灵之来兮如云。捐余袂兮江中, 遗余褋兮澧浦。搴汀洲兮杜若, 将以遗兮远者；时不可兮骤得, 聊逍遥兮容与！ 注解:沅水旁边有白芷，澧水旁边有泽兰，而我身边没有你。说的是湘夫人娥皇和女英对舜的朝思暮想, 悠悠江水, 芳香芷兰, 寄托着湘夫人无尽的思念和忧怨。为爱殉情的湘夫人最后投江自尽, 一番思念寄情于芷兰芳草, 忧怨和哀婉飘荡在潇湘之间。 修罗道 作者: 步非烟 我为玉树, 君为秋风。风来云动, 树泛秋声。今我思君, 君胡不行？ 无题 作者: littlesen 曲曲池边路, 春来少人行。含水芙蓉叶, 春去气犹清。夕岚分彩翠, 高树藏莺声。乍向风中看, 花落更分明。徘徊觉露冷, 清宵月影横。泠泠砭肌发, 疑是晓寒生。一望可相见, 一步如重城。所爱隔山海, 山海不可平。 临江仙 苏轼 夜饮东坡醒复醉, 归来仿佛三更。家童鼻息已雷鸣。敲门都不应, 倚杖听江声。长恨此身非我有, 何时忘却营营。夜阑风静縠纹平。小舟从此逝, 江海寄余生。 卜算子 苏轼 缺月挂疏桐, 漏断人初静。谁见幽人独往来? 缥缈孤鸿影。惊起却回头, 有恨无人省。拣尽寒枝不肯栖, 寂寞沙洲冷。]]></content>
-      <tags>
-        <tag>诗词</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[视频收集(一)]]></title>
-    <url>%2F2017%2F12%2F22%2Fmv_collection1%2F</url>
-    <content type="text"><![CDATA[爱的华尔兹, 甜爆了, = = (function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"theme":"#FADFA3","loop":true,"video":{"url":"http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/80b9a1da703de72187a2.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()]]></content>
-      <tags>
-        <tag>视频</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Visual Studio Code(vscode) git的使用]]></title>
-    <url>%2F2017%2F12%2F22%2Fvscode_git%2F</url>
-    <content type="text"><![CDATA[参考文档Visual Studio Code(vscode) git的使用]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>vscode</tag>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[好听的歌(一)]]></title>
-    <url>%2F2017%2F12%2F22%2Fmusic_collection1%2F</url>
-    <content type="text"><![CDATA[var options = {"narrow":false,"autoplay":false,"showlrc":3,"mode":"random","music":[{"title":"随便 Cove","author":"Zinsin","url":"http://ac-ANdqGl5F.clouddn.com/79f099beb13d9f838ae6.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/e5b3d1e39a4428a53531.png","lrc":"http://ac-ANdqGl5F.clouddn.com/591b1a290c1b537058f9.txt"},{"title":"爱的华尔兹","author":"郑爽、俞灏明","url":"http://ac-ANdqGl5F.clouddn.com/932175e28daf143867df.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/ea572fa776fa6baaceb2.png","lrc":"http://ac-ANdqGl5F.clouddn.com/24d7e3950f733abbcf21.lrc"},{"title":"美丽新世界","author":"痛痒乐队","url":"http://ac-ANdqGl5F.clouddn.com/886d4a4838e57bfe87d0.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/b8d8c00dcf8da16cea9c.png"},{"title":"我要你","author":"任素汐","url":"http://ac-ANdqGl5F.clouddn.com/14bae372d1d17ebbd56d.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/6937370626da45e44b6c.png","lrc":"http://ac-ANdqGl5F.clouddn.com/90ec5c7ef9041dc61ecb.lrc"},{"title":"彩虹","author":"周杰伦","url":"http://ac-ANdqGl5F.clouddn.com/233b707250dd1ab07365.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/94bfc39f18025fa17af9.png","lrc":"http://ac-ANdqGl5F.clouddn.com/2561b1c2e42f19b5ec5d.txt"}]}; options.element = document.getElementById("aplayer0"); var ap = new APlayer(options); window.aplayers || (window.aplayers = []); window.aplayers.push(ap); 注:美丽新世界的歌词没找到]]></content>
-      <tags>
-        <tag>音乐</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[markdown 语法记录]]></title>
-    <url>%2F2017%2F12%2F22%2Fmarkdown_guide%2F</url>
-    <content type="text"><![CDATA[以下是一些常用简单的 markdown 语法。 标题在 Markdown 中, 总共六级标题，只需要增加 # 即可，标题字号相应降低。123456# 一级标题## 二级标题### 三级标题#### 四级标题##### 五级标题###### 六级标题 列表列表格式也很常用, 你只需要在文字前面加上 - 就可以了, 例如:123- 文本1- 文本2- 文本3 如果希望有序, 在文字前面加上 1. 2. 3. 就可以了, 例如:1231. 文本12. 文本23. 文本3 链接网页链接:1[我的世界](http://www.ao233.com) 展示效果:我的世界 图片链接1![](https://dn-wbwvsbqb.qbox.me/jyRDorMAEcOdfQYpKcG9NdB.jpg) 展示效果: 引用1&gt; 心中无敌, 则无敌于天下。 展示效果 心中无敌, 则无敌于天下。 粗体与斜体用 * 包含一段文本就是粗体的语法，用 包含一段文本就是斜体的语法。 1*心中无敌*, **无敌于天下**。 展示效果: 心中无敌, 无敌于天下。 表格12345dog | bird | cat----|------|----foo | foo | foobar | bar | barbaz | baz | baz 显示效果: dog bird cat foo foo foo bar bar bar baz baz baz]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[个人网站搭建记录(三) -- Hexo Next 其他设置]]></title>
-    <url>%2F2017%2F12%2F21%2Fblog_create3%2F</url>
-    <content type="text"><![CDATA[侧边栏设置在 themes/next/_config.yml 找到 avatar 关键字, 设置头像1avatar: /images/avatar_blog.png 在 themes/next/source/css/_common/components/sidebar/sidebar-author.styl 的 .site-author-image 属性中添加以下设置使用圆形头像123border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%; 在 themes/next/_config.yml 找到 sidebar 关键字, 设置头像, 使侧边栏不自动出现12sidebar: display: hide 添加音乐方法一: 用网易云音乐网页版生成外链, 粘贴过来就行1&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=330 height=86 src=&quot;//music.163.com/outchain/player?type=2&amp;id=437292675&amp;auto=0&amp;height=66&quot;&gt;&lt;/iframe&gt; 方法二: 用 Aplayer html 音乐播放器, 首先安装 hexo-tag-aplayer 插件, 在根目录下执行:1npm install --save hexo-tag-aplayer 安装完成后，在需要添加音乐的地方加上下面这段就行, 音乐 url 图片 url 我都是把音乐下载下来传到 leancloud 获取 url。1&#123;% aplayer &quot;歌曲名称&quot; &quot;作者&quot; &quot;音乐_url&quot; &quot;封面图片_url&quot; &quot;autoplay&quot; %&#125; 也可是一个歌单:12345678910111213141516&#123;% aplayerlist %&#125;&#123; &quot;narrow&quot;: false, &quot;autoplay&quot;: true, &quot;showlrc&quot;: 3, &quot;mode&quot;: &quot;random&quot;, &quot;music&quot;: [ &#123; &quot;title&quot;: &quot;我要你&quot;, &quot;author&quot;: &quot;任素汐&quot;, &quot;url&quot;: &quot;http://ac-ANdqGl5F.clouddn.com/14bae372d1d17ebbd56d.mp3&quot;, &quot;pic&quot;: &quot;http://ac-ANdqGl5F.clouddn.com/6937370626da45e44b6c.png&quot;,&quot;lrc&quot;:&quot;http://ac-ANdqGl5F.clouddn.com/90ec5c7ef9041dc61ecb.lrc&quot; &#125; ]&#125;&#123;% endaplayerlist %&#125; 添加视频安装hexo-tag-dplayer, 详见hexo-tag-dplayer1npm install hexo-tag-dplayer --save 然后通过以下格式添加:1234567&#123;% dplayer &quot;url=http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4&quot; &quot;pic=http://ac-ANdqGl5F.clouddn.com/7fef2ae0f152f559b1cb.jpg&quot; &quot;loop=yes&quot; &quot;theme=#FADFA3&quot; &quot;autoplay=false&quot; &quot;token=tokendemo&quot; %&#125; 设置主页内容高度写文章时插入, 文章会自动从插入的位置截断, 点击阅读全文之后会显示所有内容。 自动创建文件夹存放图片首先确认根目录下的 _config.yml 中有 post_asset_folder:true, 然后在根目录执行。1npm install https://github.com/CodeFalling/hexo-asset-image --save 之后再使用 hexo new ‘new’ 创建新博客的时候，会在source/_posts里面创建.md文件的同时生成一个相同的名字的文件夹。把该文章中需要使用的图片放在该文件夹下即可。123![“图片描述”（可以不写）](/文件夹名/你的图片名字.JPG)例如：！[ ] (new/text.jpg) 增加加密功能安装 hexo-blog-encrypt12cd hexonpm install hexo-blog-encrypt --save 配置插件参考资料: 官网说明 绑定个人域名, github pages先安装插件12npm install hexo -server --savenpm install hexo-deployer-git --save 再检查下根目录下的 _config.yml 找到 deploy 关键字设置12345deploy: type: git repo: xxx branch: xxx message: xxx 在 source/ 目录下新建 CNAME(无后缀) 文件, 输入自己的域名假设你的域名与 github pages 已绑定, 用下面命令 push 到 github 上啦12hexo cleanhexo d -g 其他参考文档APlayerHexo博客中插入音乐为Hexo Next主题添加音乐播放器功能（二）]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[个人网站搭建记录(二) -- Hexo 安装与基础设置]]></title>
-    <url>%2F2017%2F12%2F21%2Fblog_create2%2F</url>
-    <content type="text"><![CDATA[Hexo 安装Hexo 是一个快速、简洁且高效的博客框架, 他使用 Markdown（或其他渲染引擎）解析文章。 安装 nvm1brew install nvm 安装完后, 需要在 .bash_profile 中加入以下这行命令:1source $(brew --prefix nvm)/nvm.sh 使设定生效1source ~/.bash_profile 安装 Node.js1curl https://raw.github.com/creationix/nvm/master/install.sh | sh 或者:1wget -qOhttps://raw.github.com/creationix/nvm/master/install.sh | sh 安装完成后，重启终端并执行下列命令即可安装 Node.js。1nvm install stable 安装 Git1brew install git 安装 Hexo1npm install -g hexo-cli 建站创建一个 hexo 项目, 命名为 hexo-doc123hexo init hexo-doccd hexo-docnpm install 新建完成后，指定文件夹的目录如下：12345678.├── _config.yml├── package.json├── scaffolds├── source| ├── _drafts| └── _posts└── themes 启动命令123hexo s (server) - 本地启动hexo g (generate) - 重新生成hexo d (deploy) - push 到 github Hexo 配置Git安装 hexo-deployer-git.1npm install hexo-deployer-git --save 在根目录下的 _configy.yml 文件找到 deploy 关键字更改设置:12345deploy: type: git repo: https://github.com/aojiang/aojiang.github.io.git branch: master message: 我的世界 更改主题为 Next进入 hexo-doc 目录1234cd hexo-docls_config.yml node_modules scaffolds themesdb.json package.json source 新建一个目录文件夹并下载 Next 主题12mkdir themes/nextcurl -s https://api.github.com/repos/iissnan/hexo-theme-next/releases/latest | grep tarball_url | cut -d &apos;&quot;&apos; -f 4 | wget -i -O| tar -zx -C themes/next --strip-components=1 在根目录下的 _configy.yml 文件找到 theme 关键字, 更改设置1theme: next next 主题又有几个不同设计风格, Muse、Mist、Pisces、Gemini, 我目前选择的 Mist, 可在 themes/next/_config.yml 中找到 scheme 关键字设置:1scheme: Mist 设置语言在 _config.yml 找到 language 关键字, 更改设置1language: zh-Hans 在菜单里增加标签栏在项目根目录下, 通过以下命令创建一个新的页面1hexo new page &quot;tags&quot; 在 tags/index.md 设置页面类型123title: All tagsdate: 2014-12-22 12:39:04type: &quot;tags&quot; 在 themes/next/_config.yml 增加 tags:1234menu: home: / archives: /archives tags: /tags 在菜单里增加分类栏在项目根目录下, 通过以下命令创建一个新的页面1hexo new page &quot;categories&quot; 在 tags/index.md 设置页面类型123title: All categoriesdate: 2014-12-22 12:39:04type: &quot;categories&quot; 在 themes/next/_config.yml 增加 “categories”:1234menu: home: / archives: /archives categories: /categories 增加搜索在站点的根目录下执行以下命令安装 hexo-generator-search:1npm install hexo-generator-search --save 在站点的根目录下执行以下命令安装 hexo-generator-searchdb:1npm install hexo-generator-searchdb --save 编辑站点配置文件，新增以下内容到任意位置启用搜索:1234search: path: search.xml field: all limit: 10000 使用 leancloud 进行页面访客统计在 leancloud官网 增加一个应用获取 app_id 和 app_key为该应用创建一个 class 名为 Counter打开/theme/next/_config.yml，在如下对应位置填入 app_id 和 app_key，并将 enable 设置为true。123456# Show number of visitors to each article.# You can visit https://leancloud.cn get AppID and AppKey.leancloud_visitors: enable: true app_id: # your app_id app_key: # your app_key 修改内容宽度编辑 themes/css/_variables/custom.styl 文件, 新增变量:1234// 修改成你期望的宽度content-desktop = 1000px// 当视窗超过 1600px 后的宽度content-desktop-large = 1200px 增加分享编辑根目录下的 _config.yml 文件, 新增变量:1jiathis: true 侧边栏增加社交链接编辑根目录下的 _config.yml，新增字段 social，然后添加社交站点名称与地址即可。例如：12345678910111213141516social: #GitHub: https://github.com/yourname || github E-Mail: mailto:aojiang.china@gmail.com || envelope #Google: https://plus.google.com/yourname || google #Twitter: https://twitter.com/yourname || twitter #FB Page: https://www.facebook.com/yourname || facebook #VK Group: https://vk.com/yourname || vk #StackOverflow: https://stackoverflow.com/yourname || stack-overflow #YouTube: https://youtube.com/yourname || youtube #Instagram: https://instagram.com/yourname || instagram #Skype: skype:yourname?call|chat || skypesocial_icons: enable: true // 是否使用图片 icons_only: false transition: false 图片名称参考 增加站点访问量统计在 themes/next/_config.yml 文件下, 找到 “busuanzi” 关键字设置:123456789101112131415busuanzi_count: # count values only if the other configs are false enable: true # custom uv span for the whole site site_uv: true site_uv_header: &lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt; 访问人数 site_uv_footer: # custom pv span for the whole site site_pv: true site_pv_header: &lt;i class=&quot;fa fa-eye&quot;&gt;&lt;/i&gt; 总访问量 site_pv_footer: 次 # custom pv span for one page only page_pv: true page_pv_header: &lt;i class=&quot;fa fa-file-o&quot;&gt;&lt;/i&gt; 浏览 page_pv_footer: 次 修改 footer将 “由 Hexo 强力驱动 主题 NexT.Pisces” 这些自带的内容修改1themes/next/layout/_pzartials/footer.swig 5.1.0:1thems/next/layout/_partials/footer.swig 参考文档:GitHub Next 主题Hexo 中文文档Hexo -Next 主题优化Hexo 博客添加站内搜索GitHub hexo-generator-search使用 leancloud 进行页面访客统计如何利用 github 打造博客专属域名footer 修改问题Hexo+Next主题 文章添加阅读次数，访问量等 总结安装: nvm+git+hexo。设置: 主题+语言+标签+分类+搜索+页面访客统计+搜索+分享+社交+footer。]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[个人网站搭建记录(一) -- 工具选择]]></title>
-    <url>%2F2017%2F12%2F21%2Fblog_create1%2F</url>
-    <content type="text"><![CDATA[以下是我搭建个人网站的简要记录, 电脑为 mac 系统。 静态网站与动态网站的选择网站可分为静态网站和动态网站, 静态网站非常适合专注于内容, 例如博客; 而动态网站以数据库技术为基础, 和用户的交互能力强, 动态网站有个很有名的 wordpress 的博客平台。 结合自己实际情况, 我选择功能较弱、较简单的静态网站。 静态网站生成工具的选择网上有很多有名的静态网站生成工具, 这些工具能从简单的纯文本文件生成一个网站。 常用的文本格式有 reStructuredText(rst) 和 Markdown。有人列举了网络上排名前十的工具, 排名并不一定准确, 仅做参考: Jekyll - GitHub Pages 的构建工具（Ruby 语言。 Octopress - 基于 Jekyll 的博客生成工具, 它简化了 Jekyll 的操作, 可以让你更舒服的创作。 Hexo - 用 Node.js 编写的博客框架, 支持所有的 GitHub Markdown 特性。 Hugo - 使用 go 语言编写, 并且使用 Markdown 语法。 Pelican - 使用Python编写的静态网站生成工具, 支持用 reStructuredText, Markdown, 和AsciiDoc 创作网站内容。 Middleman - 中间人, 一个使用 Ruby 编写的静态网站生成工具。 Metalsmith - 使用 Node.js 编写。 DocPad - 支持 CoffeeScript、Ruby、PHP、Stylus 等等。 Wintersmith - 使用 Node.js 编写。 Cactus - 使用 Python 和 Django 模版系统制作的静态网站生成工具。更多资料参考:top 10 排名。 因为熟悉一点 python 和 sphinx, 通过简单的筛选, 我最先选定的是用 Pelican+reStructuredText。 然后找到一个不错的 Pelican 主题(就是网站的整体风格) – elegant, 效果可参考孤逐王的博客。但是在找的过程中发现了更喜欢的 hexo 主题 - Next, 效果可参考XueCat的博客。 最终还是选用了 Hexo, 采用 Next 主题, markdown 写文档。 嗯, 怎么舒服怎么来。 另外, hexo 这两个主题我也很喜欢: yilia, 效果可参考Litten的博客。 raytaylorism, 效果可参考林寿山的博客。 总结我选择用静态网站搭建博客, Hexo + Next主题 + Markdown 文本格式。]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[github ssh 问题]]></title>
+      <url>/2018/06/25/github1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="github-ssh-公钥问题"><a href="#github-ssh-公钥问题" class="headerlink" title="github ssh 公钥问题"></a>github ssh 公钥问题</h3><p>测试：<br>ssh -T git@github.com<br>提示 Permission denied(publickey).</p>
+<p>ssh-keygen -t rsa -C “aojiang”<br>一直 enter,<br>cat /Users/apple/.ssh/id_rsa.pub<br>把生成的公钥复制, 然后去 github -&gt; settings -&gt;  ssh and gpg keys 里设置</p>
+<p>参考:<br><a href="https://blog.csdn.net/superior_yong/article/details/64127797" target="_blank" rel="noopener">https://blog.csdn.net/superior_yong/article/details/64127797</a></p>
+<h3 id="git-clone-问题"><a href="#git-clone-问题" class="headerlink" title="git clone 问题"></a>git clone 问题</h3><p>git clone <a href="https://github.com/openai/go-vncdriver.git" target="_blank" rel="noopener">https://github.com/openai/go-vncdriver.git</a> 提示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">error: RPC failed; curl 18 transfer closed with outstanding read data remaining</span><br><span class="line">fatal: The remote end hung up unexpectedly</span><br><span class="line">fatal: early EOF</span><br><span class="line">fatal: index-pack faile</span><br></pre></td></tr></table></figure></p>
+<p>改用 git clone git@github.com:openai/go-vncdriver.git </p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> github </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[强化学习记录(1)]]></title>
+      <url>/2018/06/19/machine_learning2/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="搭建-python-3-6-3-环境"><a href="#搭建-python-3-6-3-环境" class="headerlink" title="搭建 python 3.6.3 环境"></a>搭建 python 3.6.3 环境</h2><p>brew install pyenv<br>brew install pyenv-virtualenv<br>pyenv install -v 3.6.3</p>
+<p>pyenv virtualenv env_3.6.3</p>
+<h2 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h2><p>就是利用负梯度方向来决定每次迭代的新的搜索方向, 使得每次迭代能使待优化的目标函数逐步减小。<br>梯度是一个矢量，其方向上的方向导数最大, 其大小正好是此最大方向导数。方向导数也是矢量。<br>梯度方向是函数变化率最大的方向。</p>
+<p>神经网络是一种运算模型, 对于输入和输出间复杂的关系进行建模, 或者用来探索数据间的模式。</p>
+<h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><p>relu<br>softplus<br>dropout<br>sigmoid<br>tanh</p>
+<h2 id="randn-与-rand"><a href="#randn-与-rand" class="headerlink" title="randn 与  rand"></a>randn 与  rand</h2><p>np.random.rand()<br>np.random.randn()</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 强化学习 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[机器学习记录(1)]]></title>
+      <url>/2018/06/19/machine_learning1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><ol>
+<li><p>什么是机器学习？<br>想让计算机像人一样思考所研发出来的计算机理论。<br>人和计算机其实本没有差别，同样都是一大批互相连接的信息传递和存储元素所组成的系统。<br>包括概率论、统计学等等学科。<br>Google Now, Google Photo</p>
+</li>
+<li><p>机器学习算法<br>目前所有的机器学习算法大概可以被分为 4 到 5 类，<br>监督学习(数据和标签)<br>非监督学习（不提供标签的样本，通过观察各种数据之间的特性，会发现这些特性背后的规律，这些规律也就是非监督学习所学到的东西）<br>半监督学习（少量有标签的样本和大量没有标签的样本）<br>强化学习（规划机器人准则方面，把计算机丢到一个对于它完全陌生的环境，让它完成一项从未接触过的任务,它会自己去尝试各种手段，最后让自己成功适应这一个陌生的环境,从经验中总结提升）<br>遗传算法（模拟进化理论，淘汰弱者，适者生存，马里奥一代-&gt;随机生存二代-&gt;保存最厉害的马里奥,淘汰弱的-&gt;基于强者“繁衍和变异”-&gt;更强马里奥）</p>
+</li>
+<li><p>人工神经网络 VS 生物神经网络<br>900 亿的神经网络细胞，通过刺激产生新连接<br>人工神经网络连接固定，不会凭空产生,靠正向和反向传播更新神经元<br>特征-&gt;代表特征-&gt;代表特征-&gt;</p>
+</li>
+<li><p>神经网络<br>每个神经元都有属于它的刺激函数，用这些函数给计算机刺激行为</p>
+</li>
+</ol>
+<a id="more"></a>
+<ol>
+<li><p>卷积神经网络<br>不是对每个像素的输入做处理，对图片每一小块区域的像素做处理，加强图片信息的连续性，加深计算机对图片的理解，批量过滤器件，持续不断在图片上滚动，每一次搜集到一小块的图片信息，对搜集到的信息整理，产生一些边缘信息，再用图片过滤器扫描这些边缘信息，总结出更高层的信息结构，再经过一次过滤，最后把这些信息套入普通的全连接神经网络进行分类，<br>在每一次卷积的时候，神经元会不经意丢失一些信息，池化（pooling）可以很好解决，卷积的时候不压缩长宽，尽量保留更多信息，压缩的工作交给池化。<br>image -&gt; convolution -&gt; pooling -&gt; convolution -&gt; pooling -&gt; fully connected -&gt; fully connected -&gt; classifier</p>
+</li>
+<li><p>RNN(循环神经网络)<br>记住发生事情的能力，把之前的记忆一起分析</p>
+</li>
+<li><p>LSTM(长短期记忆) RNN<br>在反向传递得到的误差的时候, 他在每一步都会乘以一个自己的参数 W. 如果这个 W 是一个小于 1 的数, 比如 0.9. 这个 0.9 不断乘以误差, 误差传到初始时间点也会是一个接近于零的数, 所以对于初始时刻, 误差相当于就消失了. 我们把这个问题叫做梯度消失或者梯度弥散 Gradient vanishing. 反之如果 W 是一个大于1 的数, 比如 1.1 不断累乘, 则到最后变成了无穷大的数, RNN被这无穷大的数撑死了, 这种情况我们叫做剃度爆炸, Gradient exploding. 这就是普通 RNN 没有办法回忆起久远记忆的原因.<br>多出输入、输出、忘记控制器<br>主线剧情、分线剧情</p>
+</li>
+<li><p>自编码(Autoencoder)<br>非监督学习<br>图片 -&gt; 压缩（原数据的精髓） -&gt; 解压</p>
+</li>
+<li><p>生成对抗网络(GAN) Generative Adversarial Nets<br>Generator 、 Discriminator</p>
+</li>
+<li><p>优化方法<br>Newton’s method、Least Square method、Gradient Descent<br>cost = (predicted - real)^2 = (Wx - y)^2</p>
+</li>
+<li><p>过拟合<br>增加数据量<br>L1/L2 正规化<br>drop out</p>
+</li>
+<li><p>标准化<br>minmax normalization (0,1) 或者 (-1,1)<br>std(standard deviation) normalization(mean=0, std=1)</p>
+</li>
+<li><p>Good feature<br>不好的特征混淆感官, 浪费我们的分析, 计算资源<br>避免无意义、重复性、复杂的信息</p>
+</li>
+<li><p>激励函数<br>解决线性方程不能概括的问题<br>relu、sigmoid、tanh<br>激励函数必须是可微分的<br>少量层<br>CNN 推荐 relu<br>RNN 推荐 relu or tanh</p>
+</li>
+<li><p>加速神经网络训练<br>Stochastic Gradient Descent(SGD): 使用批量数据,加速训练过程, 也不会损失太多准确率<br>大多在更新神经网络参数的时候动动手脚<br>W += -Learning rate <em> dx<br>momentum:<br>m = b1</em>m - Learning rate <em> dx<br>W += m<br>Adagrad:<br>v += dx^2<br>W += -Learning rate </em> dx / v^(1/2)<br>RMSProp:<br>m = b1<em>m + (1-b1)</em>dx<br>v = b2<em>v + (1-b2)</em>dx^2<br>W += -Learning rate * m / v^(1/2)</p>
+</li>
+<li><p>不均衡数据<br>想办法获取更多的数据<br>换个评判方式(Confusion Matrix -&gt; Precision &amp; Recall -&gt; F1 Score)<br>重组数据(复制合成少数部分，砍掉多数部分)<br>使用其他机器学习方法<br>修改算法</p>
+</li>
+<li><p>批标准化<br>分散数据统一规格<br>batch normalization</p>
+</li>
+</ol>
+<p>x -&gt; 全连接层 -&gt; batch normalization -&gt; 激励函数 -&gt; 全连接层。。。</p>
+<ol>
+<li>强化学习</li>
+</ol>
+<p>分数导向性</p>
+<p>Q-learning<br>Sarsa<br>Deep Q Network</p>
+<p>Policy Gradient</p>
+<p>Model based RL</p>
+<p>分类：</p>
+<ol>
+<li>model-free or model-based</li>
+<li>Policy-Based RL(基于概率, 连续动作) or Value-Based RL<br>Actor-Critic(Actor 基于概率给出动作, Critic 对于动作给出价值)</li>
+<li>Monte-Carlo update 回合更新和 Temporal-Difference update 单步更新</li>
+<li><p>在线学习(Sarsa、Sarsa(r))和离线学习(不必是自己经验)</p>
+</li>
+<li><p>DQN<br>Experience replay, 打断经历之间的相关性，使神经网络的更新更有效率<br>Fixed Q-target(Q现实用的很久以前的参数，Q估计用的最新参数) </p>
+</li>
+<li><p>Policy Gradients<br>连续动作<br>通过奖励调整选择某一动作的概率<br>回合更新</p>
+</li>
+<li><p>Actor Critic<br>当在连续状态中更新，每次参数更新前后有相关性, 导致神经网络只能片面看待问题, 甚至学不到东西。</p>
+</li>
+<li><p>DDPG(Deep Deterministic Policy Gradient)<br>Actor Critic + DQN<br>在连续动作上更有效的学习</p>
+</li>
+<li><p>Asynchronous Advantage Actor-Critic (A3C)<br>一种有效利用计算资源, 并且能提升训练效用的算法<br>平行训练</p>
+</li>
+<li><p>alpha go<br>nature:<br>2016 alpha go 第一个版本<br>2017 alpha go zero </p>
+</li>
+</ol>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[区块链 01]]></title>
+      <url>/2018/03/06/block_chain1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>区块链是一种分布式数据库，维护一份连续不断的交易记录档，每一笔资料都被称为一个区块。<br>每个区块都会与另一个区块产生连接，每个区块都会包含上个区块的 hash 值。<br>区块之间连接起来就是一本账簿， 每个区块都必须由超过 50% 的节点认证过，每个节点必须存储所有区块（但有新的设计可让节点仅存储部分区块）。<br>复杂的密码学运算可杜绝记录篡改与修订，产生区块的过程又被称为挖矿，负责产生区块的机器又称为挖矿机。</p>
+<h3 id="区块链的潜在应用"><a href="#区块链的潜在应用" class="headerlink" title="区块链的潜在应用"></a>区块链的潜在应用</h3><ul>
+<li>数字货币</li>
+<li>数字资产管理</li>
+<li>生产履历、产销履历</li>
+<li>智能合约、契约执行</li>
+<li>交易流程透明化</li>
+<li>电子涵证</li>
+</ul>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 区块链 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[NavigationBar+PYSearch]]></title>
+      <url>/2018/03/06/mengqu_searchBar/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>用到了 PYSearch 库,  在 xcode9 用 swift4 下，出现了很多奇怪的问题。</p>
+<p>用 navitaionBar.titleView = searchBar 时在 iOS 11 系统下显示不出来, 或者显示出来后高度变成了 56，还死活改不了。用以下代码最后改为了 44。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if IS_IOS_11 &#123;</span><br><span class="line">    let titleView = SearchBarContainerView.init(customSearchBar: searchBar)</span><br><span class="line">    self.navigationItem.titleView = titleView</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    searchBar.commonInit()</span><br><span class="line">    self.navigationItem.titleView = searchBar</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>定义 SearchBar 取消按钮 text 属性时, 需要同时写 A、B 两行代码, 少了 A 行，不起作用，少了 B 行，”啦啦”会闪烁一下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if let item = navigationItem.rightBarButtonItem, let cancelBtn = item.customView as? UIButton &#123;</span><br><span class="line">    cancelBtn.titleLabel?.font = gRightItemFont</span><br><span class="line">    cancelBtn.titleLabel?.text = &quot;啦啦&quot;  // A</span><br><span class="line">    cancelBtn.setTitle(&quot;取消&quot;, for: .normal) // B</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我用 storyboard 的 segue 跳转在 ios9 的系统搜索页面会出现整体上移了一部分, 将 A 行代码改为了 B、C 行后正常。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">extension TestSearchViewController: UISearchBarDelegate &#123;</span><br><span class="line">    // 禁用主页 search bar 的编辑功能, 跳转到 search 页面</span><br><span class="line">    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -&gt; Bool &#123;</span><br><span class="line">        //self.performSegue(withIdentifier: SEGUE_TO_SEARCH, sender: self) // A</span><br><span class="line">        let resultVC = TestSearchResultViewController.init()          // B</span><br><span class="line">        // animated 设为 false, 取消动画</span><br><span class="line">        self.navigationController?.pushViewController(resultVC, animated: false) // C</span><br><span class="line">        return false</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码:"></a>完整代码:</h2><h3 id="TestSearchViewController-swift"><a href="#TestSearchViewController-swift" class="headerlink" title="TestSearchViewController.swift"></a>TestSearchViewController.swift</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line">import PYSearch</span><br><span class="line"></span><br><span class="line">fileprivate let SEGUE_TO_SEARCH = &quot;to_py_search&quot;</span><br><span class="line"></span><br><span class="line">class TestSearchViewController: UIViewController &#123;</span><br><span class="line">    </span><br><span class="line">    @IBOutlet weak var btn: UIButton!</span><br><span class="line">    var searchBar = UISearchBar()</span><br><span class="line">    </span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        viewInit()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func viewInit() &#123;</span><br><span class="line">        if IS_IOS_11 &#123;</span><br><span class="line">            let titleView = SearchBarContainerView.init(customSearchBar: searchBar)</span><br><span class="line">            self.navigationItem.titleView = titleView</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            searchBar.commonInit()</span><br><span class="line">            self.navigationItem.titleView = searchBar</span><br><span class="line">        &#125;</span><br><span class="line">        searchBar.showsCancelButton = false</span><br><span class="line">        searchBar.delegate = self</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension TestSearchViewController &#123;</span><br><span class="line">    @IBAction func handleBtnTapped() &#123;</span><br><span class="line">        self.performSegue(withIdentifier: SEGUE_TO_SEARCH, sender: self)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension TestSearchViewController: UISearchBarDelegate &#123;</span><br><span class="line">    </span><br><span class="line">    // 禁用主页 search bar 的编辑功能, 跳转到 search 页面</span><br><span class="line">    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -&gt; Bool &#123;</span><br><span class="line">        let resultVC = TestSearchResultViewController.init()</span><br><span class="line">        self.navigationController?.pushViewController(resultVC, animated: false)</span><br><span class="line">        self.performSegue(withIdentifier: SEGUE_TO_SEARCH, sender: self)</span><br><span class="line">        return false</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="TestSearchResultViewController-swift"><a href="#TestSearchResultViewController-swift" class="headerlink" title="TestSearchResultViewController.swift"></a>TestSearchResultViewController.swift</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line">import PYSearch</span><br><span class="line"></span><br><span class="line">fileprivate let HOT_SEARCHS = [&quot;抱枕&quot;, &quot;拖鞋&quot;, &quot;背包&quot;, &quot;夜灯&quot;, &quot;笔记本&quot;]</span><br><span class="line"></span><br><span class="line">class TestSearchResultViewController: PYSearchViewController &#123;</span><br><span class="line"></span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override func viewWillAppear(_ animated: Bool) &#123;</span><br><span class="line">        super.viewWillAppear(animated)</span><br><span class="line">        </span><br><span class="line">        viewInit()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func viewInit() &#123;</span><br><span class="line">        </span><br><span class="line">        /* nav init */</span><br><span class="line">        if let nav = self.navigationController &#123;</span><br><span class="line">            // nav bar 背景颜色</span><br><span class="line">            nav.navigationBar.barTintColor = UIColor.white</span><br><span class="line">            // nav 字体颜色</span><br><span class="line">            nav.navigationBar.tintColor = UIColor.lightGray</span><br><span class="line">            self.navigationItem.hidesBackButton = true</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        /* 隐藏 tabbar */</span><br><span class="line">        if let tabv = self.tabBarController &#123;</span><br><span class="line">            tabv.hidesBottomBarWhenPushed = true</span><br><span class="line">            tabv.tabBar.isHidden = true</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        /* pysearch init */</span><br><span class="line">        self.hotSearches = HOT_SEARCHS</span><br><span class="line">        self.searchResultShowMode = .embed</span><br><span class="line">        // 取消按钮字体设置</span><br><span class="line">        if let item = navigationItem.rightBarButtonItem, let cancelBtn = item.customView as? UIButton &#123;</span><br><span class="line">            cancelBtn.titleLabel?.font = gRightItemFont</span><br><span class="line">            </span><br><span class="line">            cancelBtn.titleLabel?.text = &quot;取消&quot;</span><br><span class="line">            cancelBtn.setTitle(&quot;取消&quot;, for: .normal)</span><br><span class="line">        &#125;</span><br><span class="line">        self.delegate = self</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension TestSearchResultViewController: PYSearchViewControllerDelegate &#123;</span><br><span class="line"></span><br><span class="line">    func didClickCancel(_ searchViewController: PYSearchViewController!) &#123;</span><br><span class="line">        // 键盘失去焦点</span><br><span class="line">        self.searchBar.resignFirstResponder()</span><br><span class="line">        // 返回</span><br><span class="line">        if let nav = self.navigationController &#123;</span><br><span class="line">            nav.popViewController(animated: false)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="SearchBar-Extension-swift"><a href="#SearchBar-Extension-swift" class="headerlink" title="SearchBar+Extension.swift:"></a>SearchBar+Extension.swift:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">// iOS 11 searchBar 高度默认为 56，改为 44 解决方法：</span><br><span class="line">// https://stackoverflow.com/questions/46318022/uisearchbar-increases-navigation-bar-height-in-ios-11</span><br><span class="line">// iOS 11: navigateItem.titleView = searchBarContainerView</span><br><span class="line">// iOS 11 以下: navigateItem.titleView = searchBar</span><br><span class="line">class SearchBarContainerView: UIView &#123;</span><br><span class="line">    </span><br><span class="line">    let searchBar: UISearchBar</span><br><span class="line">    </span><br><span class="line">    init(customSearchBar: UISearchBar) &#123;</span><br><span class="line">        </span><br><span class="line">        searchBar = customSearchBar</span><br><span class="line">        super.init(frame: CGRect.zero)</span><br><span class="line">        </span><br><span class="line">        addSubview(searchBar)</span><br><span class="line">        </span><br><span class="line">        NSLayoutConstraint.activate([searchBar.topAnchor.constraint(equalTo: self.topAnchor), searchBar.leftAnchor.constraint(equalTo: self.leftAnchor), searchBar.rightAnchor.constraint(equalTo: self.rightAnchor), searchBar.bottomAnchor.constraint(equalTo: self.bottomAnchor)])</span><br><span class="line">        </span><br><span class="line">        searchBar.frame = CGRect.init(x: 0, y: 0, width: gScreenWidth-20, height: 30)</span><br><span class="line">        searchBar.commonInit()</span><br><span class="line">        // iOS 11 searchBar 默认左对齐，改为居中</span><br><span class="line">        searchBar.setCenterAlignment()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override convenience init(frame: CGRect) &#123;</span><br><span class="line">        self.init(customSearchBar: UISearchBar())</span><br><span class="line">        self.frame = frame</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    required init?(coder aDecoder: NSCoder) &#123;</span><br><span class="line">        fatalError(&quot;init(coder:) has not been implemented&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 查的一些资料说下面这行代码可以解决将高度 56 改为 44 的问题，但好像没有也可以</span><br><span class="line">    &lt;!-- override var intrinsicContentSize: CGSize &#123;</span><br><span class="line">        return UILayoutFittingExpandedSize</span><br><span class="line">    &#125; --&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension UISearchBar &#123;</span><br><span class="line">    </span><br><span class="line">    // 初始化 searchbar 的一些基础属性</span><br><span class="line">    func commonInit(backgroundColor: UIColor? = nil, textColor: UIColor? = nil, font: UIFont? = nil, placeholder: String? = nil) &#123;</span><br><span class="line">        </span><br><span class="line">        self.placeholder = placeholder ?? gSearchBarPlaceholder</span><br><span class="line">        if let views = self.subviews.last?.subviews &#123;</span><br><span class="line">            for subView in views &#123;</span><br><span class="line">                if subView .isKind(of: UITextField.self) &#123;</span><br><span class="line">                    let tf = subView as! UITextField</span><br><span class="line">                    tf.frame = self.frame    // 这行很重要</span><br><span class="line">                    tf.backgroundColor = backgroundColor ?? UIColor.lightGray.withAlphaComponent(0.2)</span><br><span class="line">                    tf.textColor = textColor ?? UIColor.black</span><br><span class="line">                    tf.font = font ?? gSearchBarFont</span><br><span class="line">                    </span><br><span class="line">                    if let searchImageView = tf.leftView as? UIImageView &#123;</span><br><span class="line">                        searchImageView.image = searchImageView.image?.withRenderingMode(.alwaysTemplate)</span><br><span class="line">                        searchImageView.tintColor = UIColor.lightGray</span><br><span class="line">                    &#125;</span><br><span class="line">                    break</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func setCenterAlignment() &#123;</span><br><span class="line">        var offset = UIOffset()</span><br><span class="line">        if let views = self.subviews.last?.subviews &#123;</span><br><span class="line">            for subView in views &#123;</span><br><span class="line">                if subView .isKind(of: UITextField.self) &#123;</span><br><span class="line">                    let tf = subView as! UITextField</span><br><span class="line">                    tf.frame = self.frame</span><br><span class="line">                    if let searchImageView = tf.leftView as? UIImageView &#123;</span><br><span class="line">                        let placeHolderWidth = gSearchBarPlaceholder.size().width</span><br><span class="line">                        // 20 是搜索🔍图标的宽度</span><br><span class="line">                        offset.horizontal = (tf.frame.size.width-searchImageView.frame.size.width-placeHolderWidth)/2 - 20</span><br><span class="line">                        gLog.debug(&quot;search bar offset x: \(offset.horizontal)&quot;)</span><br><span class="line">                        offset.vertical = 0</span><br><span class="line">                    &#125;</span><br><span class="line">                    self.setPositionAdjustment(offset, for: .search)</span><br><span class="line">                    break</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func setLeftAlignment() &#123;</span><br><span class="line">        let offset = UIOffset.init(horizontal: 0, vertical: 0)</span><br><span class="line">        self.setPositionAdjustment(offset, for: .search)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://github.com/ko1o/PYSearch" target="_blank" rel="noopener">PYSearch Github</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> Swift、iOS </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[视频转 GIF]]></title>
+      <url>/2018/01/25/video1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>[GIBrewery3][<a href="http://www.pc6.com/mac/114758.html" target="_blank" rel="noopener">http://www.pc6.com/mac/114758.html</a>]<br>[GIFRocket][<a href="http://www.gifrocket.com/" target="_blank" rel="noopener">http://www.gifrocket.com/</a>]</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[logging 模块]]></title>
+      <url>/2018/01/16/python_note6/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="logging-各参数"><a href="#logging-各参数" class="headerlink" title="logging 各参数"></a>logging 各参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">logging.basicConfig 函数各参数:</span><br><span class="line">filename: 指定日志文件名</span><br><span class="line">filemode: 和 file 函数意义相同，指定日志文件的打开模式，&apos;w&apos; 或 &apos;a&apos;</span><br><span class="line">format: 指定输出的格式和内容，format 可以输出很多有用信息，如上例所示:</span><br><span class="line">%(levelno)s: 打印日志级别的数值</span><br><span class="line">%(levelname)s: 打印日志级别名称</span><br><span class="line">%(pathname)s: 打印当前执行程序的路径，其实就是 sys.argv[0]</span><br><span class="line">%(filename)s: 打印当前执行程序名</span><br><span class="line">%(funcName)s: 打印日志的当前函数</span><br><span class="line">%(lineno)d: 打印日志的当前行号</span><br><span class="line">%(asctime)s: 打印日志的时间</span><br><span class="line">%(thread)d: 打印线程 ID</span><br><span class="line">%(threadName)s: 打印线程名称</span><br><span class="line">%(process)d: 打印进程 ID</span><br><span class="line">%(message)s: 打印日志信息</span><br><span class="line">datefmt: 指定时间格式，同 time.strftime()</span><br><span class="line">level: 设置日志级别，默认为 logging.WARNING</span><br><span class="line">stream: 指定将日志的输出流，可以指定输出到 sys.stderr, sys.stdout 或者文件，默认输出到 sys.stderr，当 stream 和 filename 同时指定时，stream 被忽略</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">logging.basicConfig(</span><br><span class="line">    level=logging.INFO, </span><br><span class="line">    format=&apos;levelname: %(levelname)s filename: %(filename)s outputNumber: [%(lineno)d]  thread: %(threadName)s output msg: %(message)s - %(asctime)s&apos;, datefmt = &apos;[%d/%b/%Y %H:%M:%S]&apos;,</span><br><span class="line">    filename=&apos;./loggmsg.log&apos;)</span><br><span class="line"></span><br><span class="line">logging打印信息函数:</span><br><span class="line">logging.debug(&apos;This is debug message&apos;)</span><br><span class="line">logging.info(&apos;This is info message&apos;)</span><br><span class="line">logging.warning(&apos;This is warning message&apos;)</span><br></pre></td></tr></table></figure>
+<h3 id="获取当前文件名"><a href="#获取当前文件名" class="headerlink" title="获取当前文件名"></a>获取当前文件名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line"></span><br><span class="line">path =  os.path.basename(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<h3 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">logger = logging.getLogger(log_name)</span><br><span class="line">logger.setLevel(logging.DEBUG)</span><br><span class="line">fmt = logging.Formatter(&apos;[%(asctime)s] [%(levelname)s] %(message)s - %(name)s - %(funcName)s - %(lineno)s&apos;, &apos;%Y-%m-%d %H:%M:%S&apos;)</span><br><span class="line"></span><br><span class="line"># 设置 cmd 日志</span><br><span class="line">stream = logging.StreamHandler()</span><br><span class="line">stream.setFormatter(fmt)</span><br><span class="line">stream.setLevel(cmd_level)</span><br><span class="line">self.logger.addHandler(stream)</span><br><span class="line"></span><br><span class="line"># 设置 file 日志</span><br><span class="line">fh = logging.FileHandler(path, encoding=&apos;utf8&apos;)</span><br><span class="line">fh.setFormatter(fmt)</span><br><span class="line">fh.setLevel(file_level)</span><br><span class="line">self.logger.addHandler(fh)</span><br></pre></td></tr></table></figure>
+<p>给日志加上颜色输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line">class WinColor:</span><br><span class="line"></span><br><span class="line">    foreground_blue = 0x0001  # text color contains blue.</span><br><span class="line">    foreground_green = 0x0002  # text color contains green.</span><br><span class="line">    foreground_red = 0x0004  # text color contains red.</span><br><span class="line">    foreground_white = foreground_blue | foreground_green | foreground_red</span><br><span class="line"></span><br><span class="line">    #winbase.h</span><br><span class="line">    std_input_handle = -10</span><br><span class="line">    std_output_handle = -11</span><br><span class="line">    std_error_handle = -12</span><br><span class="line"></span><br><span class="line">    #wincon.h</span><br><span class="line">    foreground_black = 0x0000</span><br><span class="line">    foreground_blue = 0x0001</span><br><span class="line">    foreground_green = 0x0002</span><br><span class="line">    foreground_cyan = 0x0003</span><br><span class="line">    foreground_red = 0x0004</span><br><span class="line">    foreground_magenta = 0x0005</span><br><span class="line">    foreground_yellow = 0x0006</span><br><span class="line">    foreground_grey = 0x0007</span><br><span class="line">    foreground_intensity = 0x0008  # foreground color is intensified.</span><br><span class="line"></span><br><span class="line">    background_black = 0x0000</span><br><span class="line">    background_blue = 0x0010</span><br><span class="line">    background_green = 0x0020</span><br><span class="line">    background_cyan = 0x0030</span><br><span class="line">    background_red = 0x0040</span><br><span class="line">    background_magenta = 0x0050</span><br><span class="line">    background_yellow = 0x0060</span><br><span class="line">    background_grey = 0x0070</span><br><span class="line">    background_intensity = 0x0080  # background color is intensified.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class AsciiColor:</span><br><span class="line">    reset = &apos;\033[0m&apos;</span><br><span class="line">    bold = &apos;\033[01m&apos;</span><br><span class="line">    disable = &apos;\033[02m&apos;</span><br><span class="line">    underline = &apos;\033[04m&apos;</span><br><span class="line">    reverse = &apos;\033[07m&apos;</span><br><span class="line">    strike_through = &apos;\033[09m&apos;</span><br><span class="line">    invisible = &apos;\033[08m&apos;</span><br><span class="line"></span><br><span class="line">    class FgColor:</span><br><span class="line">        black = &apos;\033[30m&apos;</span><br><span class="line">        red = &apos;\033[31m&apos;</span><br><span class="line">        green = &apos;\033[32m&apos;</span><br><span class="line">        orange = &apos;\033[33m&apos;</span><br><span class="line">        blue = &apos;\033[34m&apos;</span><br><span class="line">        purple = &apos;\033[35m&apos;</span><br><span class="line">        cyan = &apos;\033[36m&apos;</span><br><span class="line">        light_grey = &apos;\033[37m&apos;</span><br><span class="line">        dark_grey = &apos;\033[90m&apos;</span><br><span class="line">        light_red = &apos;\033[91m&apos;</span><br><span class="line">        light_green = &apos;\033[92m&apos;</span><br><span class="line">        yellow = &apos;\033[93m&apos;</span><br><span class="line">        light_blue = &apos;\033[94m&apos;</span><br><span class="line">        pink = &apos;\033[95m&apos;</span><br><span class="line">        light_cyan = &apos;\033[96m&apos;</span><br><span class="line"></span><br><span class="line">    class BgColor:</span><br><span class="line">        black = &apos;\033[40m&apos;</span><br><span class="line">        red = &apos;\033[41m&apos;</span><br><span class="line">        green = &apos;\033[42m&apos;</span><br><span class="line">        orange = &apos;\033[43m&apos;</span><br><span class="line">        blue = &apos;\033[44m&apos;</span><br><span class="line">        purple = &apos;\033[45m&apos;</span><br><span class="line">        cyan = &apos;\033[46m&apos;</span><br><span class="line">        light_grey = &apos;\033[47m&apos;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ColorFormatter(logging.Formatter):</span><br><span class="line"></span><br><span class="line">    def format(self, record, color_flag=False):</span><br><span class="line">        message = super().format(record)</span><br><span class="line"></span><br><span class="line">        if color_flag is False:</span><br><span class="line">            return message</span><br><span class="line"></span><br><span class="line">        level_no = record.levelno</span><br><span class="line">        if level_no &gt;= logging.CRITICAL:</span><br><span class="line">            color = AsciiColor.FgColor.light_red</span><br><span class="line">        elif level_no &gt;= logging.ERROR:</span><br><span class="line">            color = AsciiColor.FgColor.light_red</span><br><span class="line">        elif level_no &gt;= logging.WARNING:</span><br><span class="line">            color = AsciiColor.FgColor.purple</span><br><span class="line">        elif level_no &gt;= logging.INFO:</span><br><span class="line">            color = AsciiColor.reset</span><br><span class="line">        elif level_no &gt;= logging.DEBUG:</span><br><span class="line">            color = AsciiColor.FgColor.green</span><br><span class="line">        else:</span><br><span class="line">            color = AsciiColor.reset</span><br><span class="line"></span><br><span class="line">        message = color + message + AsciiColor.reset</span><br><span class="line"></span><br><span class="line">        return message</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ColorHandler(logging.StreamHandler):</span><br><span class="line"></span><br><span class="line">    def __init__(self, stream=sys.stdout):</span><br><span class="line">        super().__init__(stream)</span><br><span class="line"></span><br><span class="line">    def format(self, record, colour=False):</span><br><span class="line">        if not isinstance(self.formatter, ColorFormatter):</span><br><span class="line">            self.formatter = ColorFormatter()</span><br><span class="line"></span><br><span class="line">        return self.formatter.format(record, colour)</span><br><span class="line"></span><br><span class="line">    def emit(self, record):</span><br><span class="line">        stream = self.stream</span><br><span class="line">        try:</span><br><span class="line">            msg = self.format(record, stream.isatty())</span><br><span class="line">            stream.write(msg)</span><br><span class="line">            stream.write(self.terminator)</span><br><span class="line">            self.flush()</span><br><span class="line">        except Exception:</span><br><span class="line">            self.handleError(record)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def log_init(detail_flag = False):</span><br><span class="line"></span><br><span class="line">    h = ColorHandler()</span><br><span class="line"></span><br><span class="line">    if detail_flag is True:</span><br><span class="line">        # formatter = ColouredFormatter(</span><br><span class="line">        #     &apos;[%(levelname)s] %(message)s [%(filename)s-%(funcName)s-%(lineno)d] [%(asctime)s]&apos;,</span><br><span class="line">        #     datefmt=&apos;%Y-%m-%d %H:%M:%S&apos;</span><br><span class="line">        # )</span><br><span class="line">        formatter = ColorFormatter(&apos;[%(levelname)s] %(message)s [%(filename)s-%(funcName)s-%(lineno)d]&apos;)</span><br><span class="line">    else:</span><br><span class="line">        formatter = ColorFormatter(&apos;%(message)s&apos;)</span><br><span class="line"></span><br><span class="line">    h.formatter = formatter</span><br><span class="line">    logging.basicConfig(level=logging.DEBUG, handlers=[h])</span><br><span class="line"></span><br><span class="line">    logger = logging.getLogger(&apos;log&apos;)</span><br><span class="line"></span><br><span class="line">    return logger</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gLog = log_init(detail_flag = True)</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[iOS 启动页分辨率]]></title>
+      <url>/2018/01/12/swift_launch/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><hr>
+<table>
+<thead>
+<tr>
+<th>尺寸</th>
+<th>分辨率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Retina HD5.5</td>
+<td>242x2208</td>
+</tr>
+<tr>
+<td>Retina HD4.7</td>
+<td>750x1334</td>
+</tr>
+<tr>
+<td>Landscape Retina Hd 5.5</td>
+<td>2208x1242</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> swift </tag>
+            
+            <tag> ios </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[python 打印不同颜色日志]]></title>
+      <url>/2018/01/10/python_note5/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>格式: \033[显示方式; 前景色; 背景色 m</p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明:"></a>说明:</h2><h2 id="前景色-背景色-颜色"><a href="#前景色-背景色-颜色" class="headerlink" title="前景色 | 背景色 | 颜色"></a>前景色 | 背景色 | 颜色</h2><p>30    | 40    |  黑色<br>31    | 41    |  红色<br>32    | 42    |  绿色<br>33    | 43    |  黃色<br>34    | 44    |  蓝色<br>35    | 45    |  紫红色<br>36    | 46    |  青蓝色<br>37    | 47    |  白色</p>
+<a id="more"></a>
+<hr>
+<h2 id="显示方式-意义"><a href="#显示方式-意义" class="headerlink" title="显示方式 | 意义"></a>显示方式 | 意义</h2><p>0       | 终端默认设置<br>1       | 高亮显示<br>4       | 使用下划线<br>5       | 闪烁<br>7       | 反白显示<br>8       | 不可见</p>
+<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\033[1;31;40m    ## 1-高亮显示 31-前景色红色  40-背景色黑色</span><br><span class="line">\033[0m          ## 采用终端默认设置，即取消颜色设置</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[python 常用库]]></title>
+      <url>/2018/01/10/python_note4/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="核心库"><a href="#核心库" class="headerlink" title="核心库"></a>核心库</h2><h3 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h3><p>它为 Python 中的 n 维数组和矩阵的操作提供了大量有用的功能。</p>
+<h3 id="SciPy"><a href="#SciPy" class="headerlink" title="SciPy"></a>SciPy</h3><p>包含线性代数, 优化, 集成和统计的模块。SciPy 库的主要功能是建立在 NumPy 上, 从而它的数组大量的使用了NumPy 的。它通过其特定子模块提供有效的数值例程, 并作为数字积分、优化和其他例程。</p>
+<h3 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h3><p>旨在通过”标记”和”关系”数据进行工作, 简单直观。Pandas 是数据整理的完美工具。它设计用于快速简单的数据操作, 聚合和可视化。库中有两个主要的数据结构: “系列”(Series), 一维; “数据帧”(Data Frames), 二维。<br>这里稍微列出了你可以用Pandas做的事情:</p>
+<ul>
+<li>轻松删除并添加数据帧（DataFrame）中的列</li>
+<li>将数据结构转换为数据帧（DataFrame）对象</li>
+<li>处理丢失的数据，表示为NaN</li>
+<li>功能强大的分组<a id="more"></a>
+</li>
+</ul>
+<h3 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h3><p>可视化工具, 它使 Python 成为像 MatLab 或 Mathematica 这样的科学工具的竞争对手。</p>
+<ul>
+<li>线图</li>
+<li>散点图</li>
+<li>条形图和直方</li>
+<li>饼状图</li>
+<li>茎图</li>
+<li>轮廓图</li>
+<li>场图</li>
+<li>频谱图</li>
+</ul>
+<h3 id="Seaborn"><a href="#Seaborn" class="headerlink" title="Seaborn"></a>Seaborn</h3><p>Seaborn 主要关注统计模型的可视化; 这种可视化包括热图, 这些热图(heat map)总结数据但仍描绘整体分布。Seaborn 基于 Matplotlib, 并高度依赖于此。</p>
+<h2 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h2><h3 id="SciKit-Learn"><a href="#SciKit-Learn" class="headerlink" title="SciKit-Learn"></a>SciKit-Learn</h3><p>它专为像图像处理和机器学习辅助等特定功能而设计, 建立在SciPy之上, 并大量利用它的数学运算。</p>
+<h2 id="深度学习"><a href="#深度学习" class="headerlink" title="深度学习"></a>深度学习</h2><h3 id="Keras"><a href="#Keras" class="headerlink" title="Keras"></a>Keras</h3><p>它是一个用 Python 编写的开源的库, 用于在高层的接口上构建神经网络。它简单易懂, 具有高级可扩展性。Keras 使用Theano 或 TensorFlow 作为后端, 但微软现在正努力整合 CNTK(微软的认知工具包) 作为新的后端。<br>Keras 容易上手, 并在持续完善它的快速原型能力。它完全用Python编写, 可被高度模块化和扩展。尽管它以易上手、简单和以高层次为导向, 但是 Keras 足够有深度并且足够强大, 去支持复杂的模型。</p>
+<h3 id="TensorFlow"><a href="#TensorFlow" class="headerlink" title="TensorFlow"></a>TensorFlow</h3><p>TensorFlow 来自 Google 的开发人员, 它是数据流图计算的开源库, 为机器学习不断打磨。它旨在满足谷歌对训练神经网络的高需求。TensorFlow 的关键特征是它的多层节点系统, 可以在大型数据集上快速训练神经网络。这为谷歌的语音识别和图像对象识别提供了支持。</p>
+<h3 id="Theano"><a href="#Theano" class="headerlink" title="Theano"></a>Theano</h3><p>Theano 是一个 Python 软件包, 它定义了与 NumPy 类似的多维数组, 以及数学运算和表达式。此库是被编译的, 可实现在所有架构上的高效运行。最初由蒙特利尔大学机器学习组开发，它主要用于满足机器学习的需求。值得注意的是, Theano 紧密结合了 NumPy 在低层次上的运算。</p>
+<h2 id="自然语言处理"><a href="#自然语言处理" class="headerlink" title="自然语言处理"></a>自然语言处理</h2><h3 id="NLTK"><a href="#NLTK" class="headerlink" title="NLTK"></a>NLTK</h3><p>这个库的名称 “Natural Language Toolkit”, 代表自然语言工具包, 顾名思义, 它用于符号学和统计学自然语言处理(NLP) 的常见任务。 NLTK 旨在促进 NLP 及相关领域(语言学, 认知科学人工智能等)的教学和研究, 目前受到重点关注。<br>NLTK 的功能允许很多操作, 例如文本标记, 分类和标记, 实体名称识别, 建立语料库, 可以显示语言内部和各句子间的依赖性、词根、语义推理等。所有的构建模块都可以为不同的任务构建复杂的研究系统, 例如情绪分析, 自动总结。</p>
+<h3 id="Gensim"><a href="#Gensim" class="headerlink" title="Gensim"></a>Gensim</h3><p>这个库是为了高效处理大量文本而设计的, 它实现了诸如 hierarchical Dirichlet processes(HDP), 潜在语义分析(LSA) 和潜在 Dirichlet 分配(LDA)之类的算法，以及 tf-idf, 随机预测, word2vec 和 document2vec, 便于检查一组文档中有重复模式的文本(通常称为语料库)。所有的算法均是无监督的, 意味着不需要任何参数, 唯一的输入只有语料库。</p>
+<h2 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h2><h3 id="Scrapy"><a href="#Scrapy" class="headerlink" title="Scrapy"></a>Scrapy</h3><p> Scrapy 库是用于从网络结构化检索数据(如联系人信息或 URL), 可以用来设计 crawling 程序(也称为蜘蛛 bots)。</p>
+<h3 id="Statsmodels"><a href="#Statsmodels" class="headerlink" title="Statsmodels"></a>Statsmodels</h3><p>statsmodels 使用户能够通过使用各种统计模型的估算方法进行数据挖掘, 并执行统计判断和分析。<br>许多有用的特征是可被描述的, 并通过使用线性回归模型, 广义线性模型, 离散选择模型, 鲁棒线性模型, 时间序列分析模型,各种估计方法得出统计结果。<br>这个库还提供了广泛的标定功能, 专门用于大数据统计中的性能优化工作。 </p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://www.leiphone.com/news/201706/SP8YmNMNi2kSbUcE.html" target="_blank" rel="noopener">2017，最受欢迎的 15 大 Python 库有哪些？</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[python 查看变量占用空间大小]]></title>
+      <url>/2018/01/09/python_note3/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">a = &quot;&quot;</span><br><span class="line">b = None</span><br><span class="line"></span><br><span class="line">print(sys.getsizeof(a))</span><br><span class="line">print(sys.getsizeof(b))</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[数据库种类]]></title>
+      <url>/2018/01/08/database_category/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="五大数据库"><a href="#五大数据库" class="headerlink" title="五大数据库"></a>五大数据库</h3><ul>
+<li>PPAS</li>
+<li>MySQL</li>
+<li>SQL Server</li>
+<li>MongoDB</li>
+<li>PostGreSQL</li>
+</ul>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> 数据库 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[公开课]]></title>
+      <url>/2018/01/06/course/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><ul>
+<li><a href="http://open.163.com/" target="_blank" rel="noopener">网易公开课</a></li>
+<li><a href="https://www.coursera.org/" target="_blank" rel="noopener">coursera</a></li>
+<li><a href="https://www.udacity.com/" target="_blank" rel="noopener">udacity</a></li>
+<li><a href="https://lagunita.stanford.edu/" target="_blank" rel="noopener">斯坦福网上公开课</a></li>
+</ul>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[iOS UIImageView 图片显示模式]]></title>
+      <url>/2018/01/05/swift_image_mode/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="拉伸缩放-Scaling-the-View"><a href="#拉伸缩放-Scaling-the-View" class="headerlink" title="拉伸缩放(Scaling the View)"></a>拉伸缩放(Scaling the View)</h3><ul>
+<li>ScaleToFill</li>
+<li>ScalAspectFit</li>
+<li>ScaleAspectFill</li>
+</ul>
+<p>主要的区别在于缩放时如何保持宽高比。</p>
+<p>举个例子, 把一个 imageview(100x100) 也就是五角星作为一个绿色 view(200x350) 的子视图, 如下图所示<br><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 100%;"><img src="/images/swift_image_contentmode/image_mode_1.png" width="120" align="left/"></div></div><div class="group-picture-row"></div></div></div><br><a id="more"></a><br>为了实验, 增加一些约束使得星星图片填满 view, 不同的模式决定了图片如何填满多的空白部分。<br>如果不设置模式, 默认是 <strong>ScaleToFill</strong>, 效果如下左图所示, 可以看出, 这种模式不保持宽高比的拉伸。<br>与之对应的是 <strong>ScaleAspectFit</strong>, 效果如下右图所示, 这种模式保持宽高比的拉伸。<br><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/swift_image_contentmode/image_mode_2.png" width="120"></div><div class="group-picture-column" style="width: 50%;"><img src="/images/swift_image_contentmode/image_mode_3.png" width="120"></div></div><div class="group-picture-row"></div></div></div></p>
+<p>而第三种模式同样是保持宽高比的拉伸, 如下左图所示, 不同的是 imageView 的 contents 超出了 imageView 的边界。<br>有个属性可以设置是否截断超出的部分。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">imageView.clipsToBounds = true</span><br></pre></td></tr></table></figure></p>
+<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="/images/swift_image_contentmode/image_mode_4.png" width="150"></div><div class="group-picture-column" style="width: 50%;"><img src="/images/swift_image_contentmode/image_mode_5.png" width="120"></div></div><div class="group-picture-row"></div></div></div>
+<h3 id="定位-Positioning-the-View"><a href="#定位-Positioning-the-View" class="headerlink" title="定位(Positioning the View)"></a>定位(Positioning the View)</h3><p>如果不想拉伸, 可以通过以下九种方式定位。<br><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_6.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_7.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_8.png" width="120"></div></div><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_9.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_10.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_11.png" width="120"></div></div><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_12.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_13.png" width="120"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/images/swift_image_contentmode/image_mode_14.png" width="120"></div></div></div></div></p>
+<h3 id="重新绘制-Redrawing-the-View"><a href="#重新绘制-Redrawing-the-View" class="headerlink" title="重新绘制(Redrawing the View)"></a>重新绘制(Redrawing the View)</h3><p>这个看效果和 scaleToFill 差不多。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">imageView.contentMode = .redraw</span><br></pre></td></tr></table></figure></p>
+<p>这种模式没用过, </p>
+<blockquote>
+<p>Perhaps we have a custom view that implements drawRect and we need it called any time the bounds change? The Redraw content mode triggers the setNeedsDisplay method when the view bounds change.</p>
+</blockquote>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档:"></a>参考文档:</h3><p><a href="https://useyourloaf.com/blog/stretching-redrawing-and-positioning-with-contentmode/" target="_blank" rel="noopener">Stretching, Redrawing and Positioning with contentMode</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> swift </tag>
+            
+            <tag> ios </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[启动页修改图片不起作用问题]]></title>
+      <url>/2018/01/05/swift_lauch_image/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>有两种方法:</p>
+<ul>
+<li>Launch Image</li>
+<li>LaunchScreen.xib<br>两者只能选一个, 同时设置可能出现黑屏啥的问题。</li>
+</ul>
+<p>我用的 LaunchScreen.xib, 但更改图片后, 启动页是一片空白, 不显示图片, 调试时不起作用, 最后把 app 删掉、手机重启正常。</p>
+<p>注:<br>网上提的解决方法是把启动页图片路径存在根目录, 但看着不顺眼。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> swift </tag>
+            
+            <tag> ios </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ScrollView 嵌套 TableView, 滑动删除手势冲突]]></title>
+      <url>/2018/01/05/swift_gesture_recognize/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://developer.apple.com/documentation/uikit/uigesturerecognizerdelegate" target="_blank" rel="noopener">UIGestureRecognizerDelegate 苹果文档</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> swift </tag>
+            
+            <tag> ios </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[图片素材网站]]></title>
+      <url>/2018/01/04/image_website/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p><a href="http://588ku.com/" target="_blank" rel="noopener">千库</a><br><a href="http://ibaotu.com/" target="_blank" rel="noopener">包图</a><br><a href="http://www.58pic.com/" target="_blank" rel="noopener">千图</a><br><a href="https://www.mlito.com/" target="_blank" rel="noopener">米元素</a><br><a href="http://www.zcool.com.cn/" target="_blank" rel="noopener">站酷</a><br><a href="http://huaban.com/" target="_blank" rel="noopener">花瓣</a><br><a href="http://www.nipic.com/index.html" target="_blank" rel="noopener">昵图</a><br><a href="http://www.lanrentuku.com/" target="_blank" rel="noopener">懒人</a><br><a href="http://www.cndesign.com/" target="_blank" rel="noopener">中国设计</a><br><a href="https://www.duitang.com/" target="_blank" rel="noopener">堆糖</a><br><a href="https://www.ldspsd.com/" target="_blank" rel="noopener">大师</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> 图片 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[python 版本管理 -- pyenv]]></title>
+      <url>/2018/01/04/python_note2/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew update</span><br><span class="line">brew install pyenv</span><br><span class="line">pyenv init</span><br></pre></td></tr></table></figure>
+<p>pyenv init 命令解释:<br>Sets up your <strong>shims path</strong>. This is the only requirement for pyenv to function properly. You can do this by hand by prepending $(pyenv root)/shims to your $PATH.</p>
+<p><strong>Installs autocompletion</strong>. This is entirely optional but pretty useful. Sourcing $(pyenv root)/completions/pyenv.bash will set that up. There is also a $(pyenv root)/completions/pyenv.zsh for Zsh users.</p>
+<a id="more"></a>
+<p><strong>Rehashes shims</strong>. From time to time you’ll need to rebuild your shim files. Doing this on init makes sure everything is up to date. You can always run pyenv rehash manually.</p>
+<p><strong>Installs the sh dispatcher</strong>. This bit is also optional, but allows pyenv and plugins to change variables in your current shell, making commands like pyenv shell possible. The sh dispatcher doesn’t do anything crazy like override cd or hack your shell prompt, but if for some reason you need pyenv to be a real script rather than a shell function, you can safely skip it.</p>
+<p>在 ~/.zshrc 里增加下面这条命令自动启用 pyenv<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval &quot;$(pyenv init -)&quot;</span><br></pre></td></tr></table></figure></p>
+<h3 id="一些命令"><a href="#一些命令" class="headerlink" title="一些命令"></a>一些命令</h3><p>查看 pyenv 版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv -v</span><br></pre></td></tr></table></figure></p>
+<p>查看可安装的 python 版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv install --list</span><br></pre></td></tr></table></figure></p>
+<p>安装 python3.6.3<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv install -v 3.6.3</span><br></pre></td></tr></table></figure></p>
+<p>卸载  python3.6.3<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv uninstall 3.6.3</span><br></pre></td></tr></table></figure></p>
+<p>查看已安装 python 版本, 好像只能查看通过 pyenv install -v 安装的和系统自带的版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv versions</span><br></pre></td></tr></table></figure></p>
+<p>创建一个名为 test 的全新虚拟环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenvv virtualenv 3.6.3 test</span><br></pre></td></tr></table></figure></p>
+<p>激活该虚拟环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv activate test</span><br></pre></td></tr></table></figure></p>
+<p>设置全局的 Python 版本，通过将版本号写入 ~/.pyenv-version, 最好不用, 可能导致一些应用不能用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv global 3.6.3</span><br></pre></td></tr></table></figure></p>
+<p>在当前目录下设置 python 版本, 在当前目录生成 .pyenv-version<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv local 3.6.3</span><br></pre></td></tr></table></figure></p>
+<p>要使 terminal 生效, 在 ~/.bash_profile 或 ~/.zshrc 中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if which pyenv &gt; /dev/null; then eval &quot;$(pyenv init -)&quot;; fi</span><br></pre></td></tr></table></figure></p>
+<p>再 source ~/.bash_profile 或 source ~/.zshrc 使设置生效<br>查看 python 版本安装路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv prefix 3.6.3</span><br></pre></td></tr></table></figure></p>
+<h3 id="期间遇到的问题"><a href="#期间遇到的问题" class="headerlink" title="期间遇到的问题"></a>期间遇到的问题</h3><p>No <code>shell</code> command in Mac OS.<br>解决方法:<br>在 ~/.zshrc 中添加这条命令 :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if which pyenv &gt; /dev/null; then eval &quot;$(pyenv init -)&quot;; fi</span><br></pre></td></tr></table></figure></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.jianshu.com/p/a23448208d9a" target="_blank" rel="noopener">pyenv 更多命令</a><br><a href="http://www.jianshu.com/p/cea9259d87df" target="_blank" rel="noopener">Mac下 Pyenv 的安装使用</a><br><a href="https://github.com/pyenv/pyenv#homebrew-on-mac-os-x" target="_blank" rel="noopener">pyenv github</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[微信跳一跳 -- iOS]]></title>
+      <url>/2018/01/04/wechat_jump/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="安装-WebDriverAgentRunner"><a href="#安装-WebDriverAgentRunner" class="headerlink" title="安装 WebDriverAgentRunner"></a>安装 WebDriverAgentRunner</h3><p>需要先安装 carthage + npm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/facebook/WebDriverAgent.git</span><br><span class="line">cd WebDriverAgent</span><br><span class="line">brew install carthage</span><br><span class="line">brew install npm</span><br><span class="line">./Scripts/bootstrap.sh</span><br></pre></td></tr></table></figure></p>
+<p>在安装完 carthage 执行下面命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew link carthage</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>出现执行权限问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Linking /usr/local/Cellar/carthage/0.27.0... Error: Permission denied @ dir_s_mkdir - /usr/local/Frameworks</span><br></pre></td></tr></table></figure></p>
+<p>解决方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /usr/local/Frameworks</span><br><span class="line">sudo chown $(whoami):admin /usr/local/Frameworks</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装-facebook-wda"><a href="#安装-facebook-wda" class="headerlink" title="安装 facebook-wda"></a>安装 facebook-wda</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install --pre facebook-wda</span><br></pre></td></tr></table></figure>
+<h3 id="配置使用-WebDriverAgentRunner"><a href="#配置使用-WebDriverAgentRunner" class="headerlink" title="配置使用 WebDriverAgentRunner"></a>配置使用 WebDriverAgentRunner</h3><p>用 <strong>xcode9</strong> 打开 WebDriverAgent.xcodeproj, 先把项目的证书改为自己证书,<br>scheme 选则 WebDriverAgentRunner, destination 选自己手机, 然后点 xcode 菜单栏 -&gt; Product -&gt; Test<br>一切正常的话，手机上会出现一个无图标的 WebDriverAgent 应用, 启动之后, 马上又返回到桌面。<br>此时控制台界面可以看到设备的 IP。通过上面给出的 IP 和端口，加上 /status 合成一个 url 地址。例如<a href="http://10.0.0.1:8100/status" target="_blank" rel="noopener">http://10.0.0.1:8100/status</a>, 然后浏览器打开。如果出现一串JSON输出, 说明WDA安装成功了。<br>如果没有反应, 是因为有些国产的 iPhone 机器通过手机的 IP 和端口还不能访问, 此时需要将手机的端口转发到 Mac 上。再执行以下命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew intall usbmuxd</span><br><span class="line">brew install libimobiledevice</span><br><span class="line">iproxy 8100 8100</span><br></pre></td></tr></table></figure></p>
+<p>这时通过访问 <a href="http://localhost:8100/status" target="_blank" rel="noopener">http://localhost:8100/status</a> 确认 WDA 是否运行成功。<br>而 inspector 的地址是 <a href="http://localhost:8100/inspector" target="_blank" rel="noopener">http://localhost:8100/inspector</a>, inspector 是用来查看 UI 的图层, 方便写测试脚本用的。</p>
+<h3 id="从-github-下载脚本-wechat-jump-game"><a href="#从-github-下载脚本-wechat-jump-game" class="headerlink" title="从 github 下载脚本 wechat_jump_game"></a>从 github 下载脚本 wechat_jump_game</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/wangshub/wechat_jump_game.git</span><br></pre></td></tr></table></figure>
+<p>进入 wechat_jump_game 目录, 执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure></p>
+<p>把依赖装好, 用 PyCharm 打开 wechat_jump_game, 运行 wechat_jump_iOS_py3.py 文件</p>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><p><a href="https://github.com/wangshub/wechat_jump_game" target="_blank" rel="noopener">wechat_jump_game github</a><br><a href="https://testerhome.com/topics/7220" target="_blank" rel="noopener">ATX 文档 - iOS 真机如何安装 WebDriverAgent</a><br><a href="https://www.jianshu.com/p/320e42a3d7a7" target="_blank" rel="noopener">写给iOS开发的跳一跳秘籍</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> game </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[在python中，怎么根据数组 a 对数组 b 进行排序]]></title>
+      <url>/2017/12/26/python_note1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>lexsort<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = np.array([0,1,3,2,6,4,5])</span><br><span class="line">b = np.array([0,1,2,3,4,5,6])</span><br><span class="line">index = np.lexsort((b, a))</span><br></pre></td></tr></table></figure></p>
+<p>argsort<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">a = np.array([0,1,3,2,6,4,5])</span><br><span class="line">b = np.array([0,1,2,3,4,5,6])</span><br><span class="line">print(b[np.argsort(a)])</span><br></pre></td></tr></table></figure></p>
+<p>zip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sorted(zip(a, b), key=lambda x:x[0])</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ios segue 几种类型区别]]></title>
+      <url>/2017/12/25/swift_segue/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>segue 分为以下几种类型:</p>
+<ul>
+<li>Show</li>
+<li>Show Detail</li>
+<li>Present Modally</li>
+<li>Present as Popover</li>
+<li>Custom<br>在 iPhone 中有 Show、Show Detail、Present Modally、Custom 四种不同类型, iPad中有 Show、Show Detail、Present Modally、Present as Popover、Custom 五种不同类型。</li>
+</ul>
+<h3 id="Show"><a href="#Show" class="headerlink" title="Show"></a>Show</h3><p>一般用在 UINavigationController 的视图控制器中。<br>切换方式: 进入时由右向左, 退出时由左向右。<br>新压入的视图控制器有返回按钮, 单击可以返回。</p>
+<a id="more"></a>
+<h3 id="Show-Detail"><a href="#Show-Detail" class="headerlink" title="Show Detail"></a>Show Detail</h3><p>只适用于嵌入在 UISplitViewController 对象内的视图控制器, 分割控制器用以替换详细控制器（DetailViewController)。<br>不提供返回按钮。</p>
+<h3 id="Present-as-Popover"><a href="#Present-as-Popover" class="headerlink" title="Present as Popover"></a>Present as Popover</h3><p>在 iPad 中, 目标视图以浮动窗样式呈现, 点击目标视图以外区域, 目标视图消失; 在 iPhone 中, 默认目标视图以模态覆盖整个屏幕。</p>
+<h3 id="Custom"><a href="#Custom" class="headerlink" title="Custom"></a>Custom</h3><p>自定义跳转方式。</p>
+<h3 id="Present-Modally"><a href="#Present-Modally" class="headerlink" title="Present Modally"></a>Present Modally</h3><p>有多种不同呈现方式, 可根据需要设置。在 iPhone 中, 一般以动画的形式自下向上覆盖整个屏幕, 用户无法与上一个视图交互,除非关闭当前视图; 在iPad中, 常见呈现为一个中心框, 中心框以动画形式自下向上弹出, 同时使底层视图控制器变暗。<br>不提供返回按钮。</p>
+<p>其他概念:</p>
+<ol>
+<li><p>presenting view controller Vs presented view controller<br>当我们在 view controller A 中模态显示 view controller B 的时候, A 就充当 presenting view controller（弹出VC），而 B 就是 presented view controller。</p>
+</li>
+<li><p>modal Presentation Styles（弹出风格）<br>有四种风格:</p>
+</li>
+</ol>
+<ul>
+<li>UIModalPresentationFullScreen</li>
+<li>UIModalPresentationPageSheet</li>
+<li>UIModalPresentationFormSheet</li>
+<li>UIModalPresentationCurrentContext<br>这四种方式在 iPad 上面统统有效，但在 iPhone 和 iPod touch 上面系统始终以 UIModalPresentationFullScreen 模式显示 presented VC。</li>
+</ul>
+<ol>
+<li>Modal Transition Style（弹出时的动画风格）</li>
+</ol>
+<ul>
+<li>UIModalTransitionStyleCoverVertical: 底部滑入</li>
+<li>UIModalTransitionStyleFlipHorizontal: 水平翻转进入</li>
+<li>UIModalTransitionStyleCrossDissolve: 交叉溶解</li>
+<li>UIModalTransitionStylePartialCurl: 翻页</li>
+</ul>
+<p>备注:<br>实现点击领取新人优惠券图标弹窗效果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func handleFreshUserCouponViewTapped() &#123;</span><br><span class="line">    guard let vc = UIStoryboard.init(name: &quot;Homepage&quot;, bundle: nil).instantiateViewController(withIdentifier: &quot;FreshUserCouponViewController&quot;) as? FreshUserCouponViewController else &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    vc.modalPresentationStyle = .overFullScreen</span><br><span class="line">    vc.modalTransitionStyle = .crossDissolve</span><br><span class="line">    self.present(vc, animated: true, completion: nil)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">FreshUserCouponViewController: </span><br><span class="line">func viewInit() &#123;</span><br><span class="line">    // 设置背景</span><br><span class="line">    self.view.backgroundColor = UIColor.black.withAlphaComponent(0.2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> swift </tag>
+            
+            <tag> ios </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[鞋码、衣服大小型号记录]]></title>
+      <url>/2017/12/24/clothes/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>鞋子: 42(US 8.5)</p>
+<p>上衣: XL/180</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 生活 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[少年不识愁滋味]]></title>
+      <url>/2017/12/23/talk1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="丑奴儿·书博山道中壁"><a href="#丑奴儿·书博山道中壁" class="headerlink" title="丑奴儿·书博山道中壁"></a>丑奴儿·书博山道中壁</h3><p>【作者】辛弃疾 【朝代】宋<br>少年不识愁滋味, 爱上层楼。爱上层楼。为赋新词强说愁。<br>而今识尽愁滋味, 欲说还休。欲说还休。却道天凉好个秋。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 说说 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[购买海外云主机搭建服务器科学上网]]></title>
+      <url>/2017/12/23/vpn1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="为什么要自己搭"><a href="#为什么要自己搭" class="headerlink" title="为什么要自己搭"></a>为什么要自己搭</h3><p>vpn 分免费和收费的两种, 免费的一般用的人都比较多, 网速也不快, 而且不稳定。收费的 vpn 的价格一般从几十元到数百元不等。而自己买个云主机的价格也就在十美金以内, 每个月送的流量基本用不完, 主机独享, 完爆收费VPN。</p>
+<h3 id="云主机的选择"><a href="#云主机的选择" class="headerlink" title="云主机的选择"></a>云主机的选择</h3><p>国内的主机商靠谱的是阿里、腾讯、ucloud三家, 海外节点的价格基本都要百元以上。美国比较便宜(因为延时大), 亚洲节点相对较贵, 新加坡和日本稍好, 香港因为延时最小, 价格也是最贵的。国外的云主机商有 linode, bandwagon, vultr这几家。最好的是 linode, 价格也相对贵点。</p>
+<h3 id="PPTP-L2TP-IPSEC-IKEV2"><a href="#PPTP-L2TP-IPSEC-IKEV2" class="headerlink" title="PPTP/L2TP/IPSEC/IKEV2"></a>PPTP/L2TP/IPSEC/IKEV2</h3><p>PPTP 因为安全性原因已经被 iOS10 除去了。其他三个的跨平台支持能力都不错。</p>
+<a id="more"></a>
+<h3 id="vultr-购买云主机搭建"><a href="#vultr-购买云主机搭建" class="headerlink" title="vultr 购买云主机搭建"></a>vultr 购买云主机搭建</h3><p>因为 vultr 支持支付宝付款, 购买云主机启动后, 在 mac 终端可直接用 ssh 登陆, 接着提示输入密码, 都可在 vultr 控制台查到。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@&lt;host&gt;</span><br></pre></td></tr></table></figure></p>
+<p>部署 Shadowsocks 服务器端<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line"></span><br><span class="line">chmod +x shadowsocks.sh</span><br><span class="line"></span><br><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure></p>
+<h3 id="TCP-Fast-Open"><a href="#TCP-Fast-Open" class="headerlink" title="TCP Fast Open"></a>TCP Fast Open</h3><p>实际上已经可以在自己的任意设备上进行登录使用了。但是为了更好的连接速度，你还需要多做几步。</p>
+<p>打开 rc.local 文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/rc.local</span><br></pre></td></tr></table></figure></p>
+<p>在 rc.local 文件末尾加上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen</span><br></pre></td></tr></table></figure></p>
+<p>ctrl + x 退出, 输入 y 并回车确认退出。</p>
+<p>打开 sysctl.conf 文件,<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/sysctl.conf</span><br></pre></td></tr></table></figure></p>
+<p>在 sysctl.conf 末尾加上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_fastopen = 3</span><br></pre></td></tr></table></figure></p>
+<p>再打开一个 Shadowsocks 配置文件,<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/shadowsocks.json</span><br></pre></td></tr></table></figure></p>
+<p>把其中 “fast_open” 一项的 false 替换成 true。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;server_port&quot;:8989,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;password&quot;:&quot;xxxx&quot;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;:true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果需要添加多用户的话,<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;port_password&quot;: &#123;</span><br><span class="line">        &quot;12345&quot;: &quot;xxx&quot;,</span><br><span class="line">        &quot;8989&quot;: &quot;xxx&quot;,</span><br><span class="line">        &quot;22345&quot;: &quot;xxx&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;:true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>重启 Shadowsocks<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/shadowsocks restart</span><br></pre></td></tr></table></figure></p>
+<h3 id="客户端安装-Shadowsocks"><a href="#客户端安装-Shadowsocks" class="headerlink" title="客户端安装 Shadowsocks"></a>客户端安装 Shadowsocks</h3><p><a href="https://sourceforge.net/projects/shadowsocksgui" target="_blank" rel="noopener">Mac 版客户端下载</a><br><a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="noopener">Win 版客户端下载</a></p>
+<h3 id="部署锐速"><a href="#部署锐速" class="headerlink" title="部署锐速"></a>部署锐速</h3><p>完成上述步骤后，使用过程中可能会发现连接速度有时不太稳定。这就是「锐速」发挥功能的时候了。锐速 ServerSpeeder 是一个 TCP 加速软件，对 Shadowsocks 客户端和服务器端间的传输速度有显著提升。<br>锐速」虽然已经停止注册和安装了，不过网上还是有不少「破解版」可用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh root@&lt;host&gt;</span><br><span class="line"></span><br><span class="line">wget -N --no-check-certificate https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder-all.sh &amp;&amp; bash serverspeeder-all.sh</span><br></pre></td></tr></table></figure></p>
+<p>若运行中碰到提示说需要更换内核的话<br>CentOS6 内核更换为： 2.6.32-504.3.3.el6.x86_64<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-firmware-2.6.32-504.3.3.el6.noarch.rpm</span><br><span class="line">rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-2.6.32-504.3.3.el6.x86_64.rpm --force</span><br></pre></td></tr></table></figure></p>
+<p>CentOS7 内核更换为： 3.10.0-229.1.2.el7.x86_64<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-3.10.0-229.1.2.el7.x86_64.rpm --force</span><br></pre></td></tr></table></figure></p>
+<p>查看内核是否安装成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep kernel</span><br></pre></td></tr></table></figure></p>
+<p>重启查看内核是否更换成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh root@&lt;host&gt;</span><br><span class="line">reboot</span><br><span class="line">uname -r</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://www.cnblogs.com/shawnye/p/6591650.html" target="_blank" rel="noopener">海外云主机搭建IKEV2 VPN之经验总结 + 搭建证书服务器</a><br><a href="https://medium.com/@zoomyale/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%9A%84%E7%BB%88%E6%9E%81%E5%A7%BF%E5%8A%BF-%E5%9C%A8-vultr-vps-%E4%B8%8A%E6%90%AD%E5%BB%BA-shadowsocks-fd57c807d97e" target="_blank" rel="noopener">科学上网的终极姿势-在-vultr-vps-上搭建-shadowsocks</a><br><a href="https://www.91yun.co/archives/795" target="_blank" rel="noopener">教程：CentOS更换内核，提供锐速可用的内核下载</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> vpn </tag>
+            
+            <tag> 云主机 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[研究生毕业设计]]></title>
+      <url>/2017/12/23/mv_graduate/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><div id="dplayer1" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer1"),"theme":"#FADFA3","video":{"url":"http://ac-ANdqGl5F.clouddn.com/7be7a94a26dafa113cb9.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/2a25084ab4a5c71d2eaa.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script>
+<a id="more"></a>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Reinforcement Learning + Neural Network + TensorFlow + Ros + Webots, 用激光雷达做神经网络的输入, 本来想训练机器人实现导航, 结果不争气, 就学会了简单避障 😂。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 视频 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[图片并排参数选择]]></title>
+      <url>/2017/12/23/img_show_type/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>把所有并排方式列下来, 3-1 好像不起作用。</p>
+<p>  /**</p>
+<ul>
+<li>2-1<br>*</li>
+<li>□</li>
+<li><p>□<br>*/</p>
+<p>/**</p>
+</li>
+<li>2-2<br>*</li>
+<li>□ □<br>*/<a id="more"></a>
+/**</li>
+<li>3-1<br>*</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>3-2<br>*</li>
+<li>□</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>3-3<br>*</li>
+<li>□ □</li>
+<li><p>□<br>*/</p>
+<p>/**</p>
+</li>
+<li>4-1<br>*</li>
+<li>□</li>
+<li>□ □</li>
+<li><p>□<br>*/</p>
+<p>/**</p>
+</li>
+<li>4-2<br>*</li>
+<li>□</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>4-3<br>*</li>
+<li>□ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>4-4<br>*</li>
+<li>□ □ □</li>
+<li><p>□<br>*/</p>
+<p>/**</p>
+</li>
+<li>5-1<br>*</li>
+<li>□</li>
+<li>□ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>5-2<br>*</li>
+<li>□ □</li>
+<li>□</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>5-3<br>*</li>
+<li>□ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>5-4<br>*</li>
+<li>□ □ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>6-1<br>*</li>
+<li>□</li>
+<li>□ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>6-2<br>*</li>
+<li>□</li>
+<li>□ □ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>6-3<br>*</li>
+<li>□ □</li>
+<li>□</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>6-4<br>*</li>
+<li>□ □</li>
+<li>□ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>6-5<br>*</li>
+<li>□ □ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>7-1<br>*</li>
+<li>□</li>
+<li>□ □</li>
+<li>□ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>7-2<br>*</li>
+<li>□</li>
+<li>□ □ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>7-3<br>*</li>
+<li>□ □</li>
+<li>□ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>7-4<br>*</li>
+<li>□ □</li>
+<li>□ □ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>7-5<br>*</li>
+<li>□ □ □</li>
+<li>□ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>8-1<br>*</li>
+<li>□</li>
+<li>□ □</li>
+<li>□ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>8-2<br>*</li>
+<li>□</li>
+<li>□ □</li>
+<li>□ □ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>8-3<br>*</li>
+<li>□</li>
+<li>□ □ □</li>
+<li>□ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>8-4<br>*</li>
+<li>□ □</li>
+<li>□ □</li>
+<li>□ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>8-5<br>*</li>
+<li>□ □</li>
+<li>□ □ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>8-6<br>*</li>
+<li>□ □ □</li>
+<li>□ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>8-7<br>*</li>
+<li>□ □ □</li>
+<li>□ □ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>9-1<br>*</li>
+<li>□</li>
+<li>□ □</li>
+<li>□ □ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>9-2<br>*</li>
+<li>□</li>
+<li>□ □ □</li>
+<li>□ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>9-3<br>*</li>
+<li>□ □</li>
+<li>□ □</li>
+<li>□ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>9-4<br>*</li>
+<li>□ □</li>
+<li>□ □</li>
+<li>□ □ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>9-5<br>*</li>
+<li>□ □</li>
+<li>□ □ □</li>
+<li>□ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>9-6<br>*</li>
+<li>□ □ □</li>
+<li>□ □</li>
+<li>□ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>9-7<br>*</li>
+<li>□ □ □</li>
+<li>□ □ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>10-1<br>*</li>
+<li>□</li>
+<li>□ □ □</li>
+<li>□ □ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>10-2<br>*</li>
+<li>□ □</li>
+<li>□ □</li>
+<li>□ □ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>10-3<br>*</li>
+<li>□ □</li>
+<li>□ □ □</li>
+<li>□ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>10-4<br>*</li>
+<li>□ □</li>
+<li>□ □ □</li>
+<li>□ □ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>10-5<br>*</li>
+<li>□ □ □</li>
+<li>□ □</li>
+<li>□ □</li>
+<li><p>□ □ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>10-6<br>*</li>
+<li>□ □ □</li>
+<li>□ □</li>
+<li>□ □ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>10-7<br>*</li>
+<li>□ □ □</li>
+<li>□ □ □</li>
+<li>□ □</li>
+<li><p>□ □<br>*/</p>
+<p>/**</p>
+</li>
+<li>Defaults Layout<br>*</li>
+<li>□ □ □</li>
+<li>□ □ □</li>
+<li>…<br>*/</li>
+</ul>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[个人网站搭建记录(四) -- 图片设置]]></title>
+      <url>/2017/12/23/blog_create4/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="图片并排"><a href="#图片并排" class="headerlink" title="图片并排"></a>图片并排</h3><p>新建博文, 设置 <strong>type: “picture”</strong>, 使用 <strong>{\% gp x-x \%} … {\% endgp \%}</strong> 标签引用要展示的图片地址,如下所示, 图片展示效果，参考 <strong>theme/next/scripts/tags/group-pictures.js</strong> 注释示意图。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% gp 5-3 %&#125;</span><br><span class="line">---</span><br><span class="line">title: Naruto-Pictures</span><br><span class="line">categories: [图片]</span><br><span class="line">tags: [picture,naruto]</span><br><span class="line">date: 2016-09-02 14:36:04</span><br><span class="line">keywords: picture,naruto</span><br><span class="line">type: &quot;picture&quot;</span><br><span class="line">top: 999</span><br><span class="line">---</span><br><span class="line">&#123;% gp 5-3 %&#125;</span><br><span class="line">![](/images/post/18210.jpg)</span><br><span class="line">![](/images/post/196232.jpg)</span><br><span class="line">![](/images/post/224147.jpg)</span><br><span class="line">![](/images/post/199301.jpg)</span><br><span class="line">![](/images/post/213318.jpg)</span><br><span class="line">&#123;% endgp %&#125;</span><br><span class="line">&#123;% endgp %&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="修复图片展示"><a href="#修复图片展示" class="headerlink" title="修复图片展示"></a>修复图片展示</h3><p>设置图片并排后, 首页可以正常显示, 但点击查看博文时显示效果丢失, 在 <strong>themes\next\source\css_common\components\tags\group-pictures.styl</strong> 中设置可解决。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.page-post-detail .post-body .group-picture-column &#123;</span><br><span class="line">  // float: none;</span><br><span class="line">  margin-top: 10px;</span><br><span class="line">  width: auto !important; (这行可注释可不注释)</span><br><span class="line">  img &#123; margin: 0 auto; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置图片大小"><a href="#设置图片大小" class="headerlink" title="设置图片大小"></a>设置图片大小</h3><p>hexo 主题支持以下方式设置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;http://ac-ANdqGl5F.clouddn.com/5cc2ff61134f1f923571.png&quot; width=&quot;142&quot; height=&quot;200&quot; alt=&quot;卡通少女1&quot;/&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置图片能够点击放大"><a href="#设置图片能够点击放大" class="headerlink" title="设置图片能够点击放大"></a>设置图片能够点击放大</h3><p>图片并排以后, 失去点击放大效果, 可在 themes/next/source/js/src/utils.js 中修改代码如下, 注释一行代码即可解决。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wrapImageWithFancyBox: function() &#123;</span><br><span class="line">    $(&apos;.content img&apos;)</span><br><span class="line">      .not(&apos;[hidden]&apos;)</span><br><span class="line">      // .not(&apos;.group-picture img, .post-gallery img&apos;)</span><br><span class="line">      .each(function() &#123;</span><br></pre></td></tr></table></figure></p>
+<h3 id="创建文件同时创建一个同名的图片文件夹"><a href="#创建文件同时创建一个同名的图片文件夹" class="headerlink" title="创建文件同时创建一个同名的图片文件夹"></a>创建文件同时创建一个同名的图片文件夹</h3><p>在根目录的 _config.yml 中找到 post_asset_folder 关键字, 设为 true。<br>在hexo的目录下执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm install https://github.com/CodeFalling/hexo-asset-image --save</span><br></pre></td></tr></table></figure></p>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><p><a href="https://github.com/iissnan/hexo-theme-next/issues/1043" target="_blank" rel="noopener">多图功能 图片不能放大</a><br><a href="https://ehlxr.me/2016/08/30/%E4%BD%BF%E7%94%A8Hexo%E5%9F%BA%E4%BA%8EGitHub-Pages%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%89%EF%BC%89/#%E5%85%AB%E3%80%81%E5%9B%BE%E7%89%87%E6%A8%A1%E5%BC%8F" target="_blank" rel="noopener">图片模式</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[图片收集(一)]]></title>
+      <url>/2017/12/23/img_collection1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="http://ac-ANdqGl5F.clouddn.com/7da3389060cac6cf6f36.png" width="260" height="200" alt="2017春晚狗年名单"></div><div class="group-picture-column" style="width: 50%;"><img src="http://ac-ANdqGl5F.clouddn.com/e442bbb0dc9c3a999628.png" width="462" height="200" alt="区块链"></div></div><div class="group-picture-row"></div></div></div>
+<a id="more"></a>
+<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="http://ac-ANdqGl5F.clouddn.com/5cc2ff61134f1f923571.png" width="142" height="200" alt="卡通少女1"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="http://ac-ANdqGl5F.clouddn.com/cc25a25cc0914ccbb65e.png" width="139" height="200" alt="卡通狗粮1"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="http://ac-ANdqGl5F.clouddn.com/4a01f1fe5dd0ddd5026c.png" width="147" height="200" alt="卡通狗粮2"></div></div><div class="group-picture-row"></div></div></div>
+<p>火影油女志乃摘下眼睛会是什么样呢 哈哈<br><div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="http://ac-ANdqGl5F.clouddn.com/f586a371329bcb90ebe3.png" width="333" height="200" alt="火影_油女志乃1"></div><div class="group-picture-column" style="width: 50%;"><img src="http://ac-ANdqGl5F.clouddn.com/b27a7aa62f7081b94089.png" width="333" height="200" alt="火影_油女志乃2"></div></div><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="http://ac-ANdqGl5F.clouddn.com/a13475d195bacd16557b.png" width="333" height="200" alt="火影_油女志乃3"></div><div class="group-picture-column" style="width: 50%;"><img src="http://ac-ANdqGl5F.clouddn.com/73eb7fa0c0f32d296abf.png" width="333" height="200" alt="火影_油女志乃4"></div></div></div></div> </p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 图片 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[文字收集(一)]]></title>
+      <url>/2017/12/23/net_collection1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>来源于<a href="https://www.zhihu.com/people/xie-cheng-huan-78/activities" target="_blank" rel="noopener">知乎李煜</a>的个人简介:</p>
+<blockquote>
+<p>若你赐我一道旖旎的风景<br>我便为你翻山越岭 缘木求林<br>一路上边走边停 边停边寻<br>山空是我姓 湖静是你名<br>若你赠我一弯悠长的天径<br>我定为你驾雾腾云 采月摘星<br>一路上且醉且歌 且歌且行<br>云淡是我姓 风轻是你名<br>若你贻我一方梦幻的仙境<br>我必为你覆雨翻云 织云作锦<br>一路上半雨半阴 半阴半晴<br>雨过是我姓 天晴是你名<br>这里李煜，略通诗词联赋。如若有幸相识，实乃缘分。</p>
+</blockquote>
+<p>来源于<a href="https://www.zhihu.com/question/26025036/answer/276791594" target="_blank" rel="noopener">知乎荏苒</a>的回答:</p>
+<blockquote>
+<p>所以这么多年一直有个心愿：想体验下什么叫摸头杀。听说最萌身高差15cm，所以麻烦159cm的小哥哥联系下我，不要害羞谢谢～^_^<br><a id="more"></a></p>
+</blockquote>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 文字 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[诗词收集(一)]]></title>
+      <url>/2017/12/22/poem1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="《说苑》越人歌-春秋"><a href="#《说苑》越人歌-春秋" class="headerlink" title="《说苑》越人歌 春秋"></a>《说苑》越人歌 春秋</h3><blockquote>
+<p>山有木兮木有枝, 心悦君兮君不知。</p>
+</blockquote>
+<p>译文<br>山上有树木啊树木有丫枝, 心中喜欢你啊你却不知此事。<br>王子与渔夫的故事, 歌颂贵族与劳动人民情谊。</p>
+<h3 id="国风·郑风·山有扶苏-作者：佚名"><a href="#国风·郑风·山有扶苏-作者：佚名" class="headerlink" title="国风·郑风·山有扶苏 作者：佚名"></a>国风·郑风·山有扶苏 作者：佚名</h3><blockquote>
+<p>山有扶苏, 隰有荷华。不见子都, 乃见狂且。<br>山有乔松, 隰有游龙, 不见子充, 乃见狡童。</p>
+</blockquote>
+<p>译文<br>山上有茂盛的扶苏，池里有美艳的荷花。没见到子都美男子啊，偏遇见你这个小狂徒。<br>山上有挺拔的青松，池里有丛生的水荭。没见到子充好男儿啊，偏遇见你这个小狡童。</p>
+<a id="more"></a>
+<h3 id="九歌·湘夫人-作者-屈原"><a href="#九歌·湘夫人-作者-屈原" class="headerlink" title="九歌·湘夫人  作者: 屈原"></a>九歌·湘夫人  作者: 屈原</h3><blockquote>
+<p>帝子降兮北渚, 目眇眇兮愁予。<br>袅袅兮秋风, 洞庭波兮木叶下。<br>登白薠兮骋望, 与佳期兮夕张。<br>鸟何萃兮苹中, 罾何为兮木上。<br><strong>沅有芷兮澧有兰, 思公子兮未敢言。</strong><br><strong>荒忽兮远望, 观流水兮潺湲。</strong><br><strong>麋何食兮庭中？蛟何为兮水裔？</strong><br><strong>朝驰余马兮江皋, 夕济兮西澨。</strong><br><strong>闻佳人兮召予, 将腾驾兮偕逝。</strong><br>筑室兮水中, 葺之兮荷盖；<br>荪壁兮紫坛, 播芳椒兮成堂；<br>桂栋兮兰橑, 辛夷楣兮药房；<br>罔薜荔兮为帷, 擗蕙櫋兮既张；<br>白玉兮为镇, 疏石兰兮为芳；<br>芷葺兮荷屋, 缭之兮杜衡。<br>合百草兮实庭, 建芳馨兮庑门。<br>九嶷缤兮并迎, 灵之来兮如云。<br>捐余袂兮江中, 遗余褋兮澧浦。<br>搴汀洲兮杜若, 将以遗兮远者；<br>时不可兮骤得, 聊逍遥兮容与！</p>
+</blockquote>
+<p>注解:<br>沅水旁边有白芷，澧水旁边有泽兰，而我身边没有你。说的是湘夫人娥皇和女英对舜的朝思暮想, 悠悠江水, 芳香芷兰, 寄托着湘夫人无尽的思念和忧怨。为爱殉情的湘夫人最后投江自尽, 一番思念寄情于芷兰芳草, 忧怨和哀婉飘荡在潇湘之间。</p>
+<h3 id="修罗道-作者-步非烟"><a href="#修罗道-作者-步非烟" class="headerlink" title="修罗道 作者: 步非烟"></a>修罗道 作者: 步非烟</h3><blockquote>
+<p>我为玉树, 君为秋风。<br>风来云动, 树泛秋声。<br>今我思君, 君胡不行？</p>
+</blockquote>
+<h3 id="无题-作者-littlesen"><a href="#无题-作者-littlesen" class="headerlink" title="无题 作者: littlesen"></a>无题 作者: littlesen</h3><blockquote>
+<p>曲曲池边路, 春来少人行。<br>含水芙蓉叶, 春去气犹清。<br>夕岚分彩翠, 高树藏莺声。<br>乍向风中看, 花落更分明。<br>徘徊觉露冷, 清宵月影横。<br>泠泠砭肌发, 疑是晓寒生。<br>一望可相见, 一步如重城。<br><strong>所爱隔山海, 山海不可平。</strong></p>
+</blockquote>
+<h3 id="临江仙-苏轼"><a href="#临江仙-苏轼" class="headerlink" title="临江仙 苏轼"></a>临江仙 苏轼</h3><blockquote>
+<p>夜饮东坡醒复醉, 归来仿佛三更。家童鼻息已雷鸣。敲门都不应, 倚杖听江声。<br>长恨此身非我有, 何时忘却营营。夜阑风静縠纹平。小舟从此逝, 江海寄余生。 </p>
+</blockquote>
+<h3 id="卜算子-苏轼"><a href="#卜算子-苏轼" class="headerlink" title="卜算子 苏轼"></a>卜算子 苏轼</h3><blockquote>
+<p>缺月挂疏桐, 漏断人初静。谁见幽人独往来? 缥缈孤鸿影。<br>惊起却回头, 有恨无人省。拣尽寒枝不肯栖, 寂寞沙洲冷。</p>
+</blockquote>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 诗词 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[视频收集(一)]]></title>
+      <url>/2017/12/22/mv_collection1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>爱的华尔兹, 甜爆了, = =</p>
+<div id="dplayer0" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"theme":"#FADFA3","loop":true,"video":{"url":"http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/80b9a1da703de72187a2.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 视频 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Visual Studio Code(vscode) git的使用]]></title>
+      <url>/2017/12/22/vscode_git/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="http://blog.csdn.net/q3585914/article/details/68924116" target="_blank" rel="noopener">Visual Studio Code(vscode) git的使用</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> vscode </tag>
+            
+            <tag> git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[好听的歌(一)]]></title>
+      <url>/2017/12/22/music_collection1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
+			<div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
+			<script>
+				var options = {"narrow":false,"autoplay":false,"showlrc":3,"mode":"random","music":[{"title":"随便 Cove","author":"Zinsin","url":"http://ac-ANdqGl5F.clouddn.com/79f099beb13d9f838ae6.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/e5b3d1e39a4428a53531.png","lrc":"http://ac-ANdqGl5F.clouddn.com/591b1a290c1b537058f9.txt"},{"title":"爱的华尔兹","author":"郑爽、俞灏明","url":"http://ac-ANdqGl5F.clouddn.com/932175e28daf143867df.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/ea572fa776fa6baaceb2.png","lrc":"http://ac-ANdqGl5F.clouddn.com/24d7e3950f733abbcf21.lrc"},{"title":"美丽新世界","author":"痛痒乐队","url":"http://ac-ANdqGl5F.clouddn.com/886d4a4838e57bfe87d0.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/b8d8c00dcf8da16cea9c.png"},{"title":"我要你","author":"任素汐","url":"http://ac-ANdqGl5F.clouddn.com/14bae372d1d17ebbd56d.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/6937370626da45e44b6c.png","lrc":"http://ac-ANdqGl5F.clouddn.com/90ec5c7ef9041dc61ecb.lrc"},{"title":"彩虹","author":"周杰伦","url":"http://ac-ANdqGl5F.clouddn.com/233b707250dd1ab07365.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/94bfc39f18025fa17af9.png","lrc":"http://ac-ANdqGl5F.clouddn.com/2561b1c2e42f19b5ec5d.txt"}]};
+				options.element = document.getElementById("aplayer0");
+				var ap = new APlayer(options);
+				window.aplayers || (window.aplayers = []);
+				window.aplayers.push(ap);
+			</script>
+
+		
+<p>注:<br>美丽新世界的歌词没找到</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 音乐 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[markdown 语法记录]]></title>
+      <url>/2017/12/22/markdown_guide/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>以下是一些常用简单的 markdown 语法。</p>
+<h3 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h3><p>在 Markdown 中, 总共六级标题，只需要增加 # 即可，标题字号相应降低。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure></p>
+<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>列表格式也很常用, 你只需要在文字前面加上 - 就可以了, 例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 文本1</span><br><span class="line">- 文本2</span><br><span class="line">- 文本3</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>如果希望有序, 在文字前面加上 1. 2. 3. 就可以了, 例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 文本1</span><br><span class="line">2. 文本2</span><br><span class="line">3. 文本3</span><br></pre></td></tr></table></figure></p>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>网页链接:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[我的世界](http://www.ao233.com)</span><br></pre></td></tr></table></figure></p>
+<p>展示效果:<br><a href="http://www.ao233.com">我的世界</a></p>
+<p>图片链接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![](https://dn-wbwvsbqb.qbox.me/jyRDorMAEcOdfQYpKcG9NdB.jpg)</span><br></pre></td></tr></table></figure></p>
+<p>展示效果:<br><img src="https://dn-wbwvsbqb.qbox.me/jyRDorMAEcOdfQYpKcG9NdB.jpg" alt=""></p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; 心中无敌, 则无敌于天下。</span><br></pre></td></tr></table></figure>
+<p>展示效果</p>
+<blockquote>
+<p>心中无敌, 则无敌于天下。</p>
+</blockquote>
+<h3 id="粗体与斜体"><a href="#粗体与斜体" class="headerlink" title="粗体与斜体"></a>粗体与斜体</h3><p>用 <em>* 包含一段文本就是粗体的语法，用 </em> 包含一段文本就是斜体的语法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*心中无敌*, **无敌于天下**。</span><br></pre></td></tr></table></figure>
+<p>展示效果:</p>
+<p><em>心中无敌</em>, <strong>无敌于天下</strong>。</p>
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dog | bird | cat</span><br><span class="line">----|------|----</span><br><span class="line">foo | foo  | foo</span><br><span class="line">bar | bar  | bar</span><br><span class="line">baz | baz  | baz</span><br></pre></td></tr></table></figure>
+<p>显示效果:</p>
+<table>
+<thead>
+<tr>
+<th>dog</th>
+<th>bird</th>
+<th>cat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>foo</td>
+<td>foo</td>
+<td>foo</td>
+</tr>
+<tr>
+<td>bar</td>
+<td>bar</td>
+<td>bar</td>
+</tr>
+<tr>
+<td>baz</td>
+<td>baz</td>
+<td>baz</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> markdown </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[个人网站搭建记录(三) -- Hexo Next 其他设置]]></title>
+      <url>/2017/12/21/blog_create3/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="侧边栏设置"><a href="#侧边栏设置" class="headerlink" title="侧边栏设置"></a>侧边栏设置</h2><p>在 themes/next/_config.yml 找到 avatar 关键字, 设置头像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">avatar: /images/avatar_blog.png</span><br></pre></td></tr></table></figure></p>
+<p>在 themes/next/source/css/_common/components/sidebar/sidebar-author.styl 的 .site-author-image 属性中添加以下设置使用圆形头像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">border-radius: 50%;</span><br><span class="line">-webkit-border-radius: 50%;</span><br><span class="line">-moz-border-radius: 50%;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>在 themes/next/_config.yml 找到 sidebar 关键字, 设置头像, 使侧边栏不自动出现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sidebar:</span><br><span class="line">    display: hide</span><br></pre></td></tr></table></figure></p>
+<h2 id="添加音乐"><a href="#添加音乐" class="headerlink" title="添加音乐"></a>添加音乐</h2><p>方法一: 用<strong>网易云音乐网页版</strong>生成外链, 粘贴过来就行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=330 height=86 src=&quot;//music.163.com/outchain/player?type=2&amp;id=437292675&amp;auto=0&amp;height=66&quot;&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure></p>
+<p>方法二: 用 <a href="https://github.com/MoePlayer/APlayer" target="_blank" rel="noopener">Aplayer</a> html 音乐播放器, 首先安装 hexo-tag-aplayer 插件, 在根目录下执行:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-tag-aplayer</span><br></pre></td></tr></table></figure></p>
+<p>安装完成后，在需要添加音乐的地方加上下面这段就行, 音乐 url 图片 url 我都是把音乐下载下来传到 leancloud 获取 url。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% aplayer &quot;歌曲名称&quot; &quot;作者&quot; &quot;音乐_url&quot; &quot;封面图片_url&quot; &quot;autoplay&quot; %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>也可是一个歌单:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% aplayerlist %&#125;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;narrow&quot;: false,</span><br><span class="line">    &quot;autoplay&quot;: true,</span><br><span class="line">    &quot;showlrc&quot;: 3,</span><br><span class="line">    &quot;mode&quot;: &quot;random&quot;,</span><br><span class="line">    &quot;music&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;title&quot;: &quot;我要你&quot;,</span><br><span class="line">            &quot;author&quot;: &quot;任素汐&quot;,</span><br><span class="line">            &quot;url&quot;: &quot;http://ac-ANdqGl5F.clouddn.com/14bae372d1d17ebbd56d.mp3&quot;,</span><br><span class="line">            &quot;pic&quot;: &quot;http://ac-ANdqGl5F.clouddn.com/6937370626da45e44b6c.png&quot;,&quot;lrc&quot;:&quot;http://ac-ANdqGl5F.clouddn.com/90ec5c7ef9041dc61ecb.lrc&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endaplayerlist %&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="添加视频"><a href="#添加视频" class="headerlink" title="添加视频"></a>添加视频</h2><p>安装hexo-tag-dplayer, 详见<a href="https://github.com/MoePlayer/hexo-tag-dplayer" target="_blank" rel="noopener">hexo-tag-dplayer</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-tag-dplayer --save</span><br></pre></td></tr></table></figure></p>
+<p>然后通过以下格式添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;% dplayer </span><br><span class="line">&quot;url=http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4&quot;  </span><br><span class="line">&quot;pic=http://ac-ANdqGl5F.clouddn.com/7fef2ae0f152f559b1cb.jpg&quot; </span><br><span class="line">&quot;loop=yes&quot; </span><br><span class="line">&quot;theme=#FADFA3&quot; </span><br><span class="line">&quot;autoplay=false&quot; </span><br><span class="line">&quot;token=tokendemo&quot; %&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="设置主页内容高度"><a href="#设置主页内容高度" class="headerlink" title="设置主页内容高度"></a>设置主页内容高度</h2><p>写文章时插入<!--more-->, 文章会自动从插入的位置截断, 点击阅读全文之后会显示所有内容。</p>
+<h2 id="自动创建文件夹存放图片"><a href="#自动创建文件夹存放图片" class="headerlink" title="自动创建文件夹存放图片"></a>自动创建文件夹存放图片</h2><p>首先确认根目录下的 _config.yml 中有 post_asset_folder:true, 然后在根目录执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install https://github.com/CodeFalling/hexo-asset-image --save</span><br></pre></td></tr></table></figure></p>
+<p>之后再使用 hexo new ‘new’ 创建新博客的时候，会在source/_posts里面创建.md文件的同时生成一个相同的名字的文件夹。把该文章中需要使用的图片放在该文件夹下即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">![“图片描述”（可以不写）](/文件夹名/你的图片名字.JPG)</span><br><span class="line">例如：</span><br><span class="line">！[ ] (new/text.jpg)</span><br></pre></td></tr></table></figure></p>
+<h2 id="增加加密功能"><a href="#增加加密功能" class="headerlink" title="增加加密功能"></a>增加加密功能</h2><p>安装 <a href="https://github.com/MikeCoder/hexo-blog-encrypt" target="_blank" rel="noopener">hexo-blog-encrypt</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd hexo</span><br><span class="line">npm install hexo-blog-encrypt --save</span><br></pre></td></tr></table></figure></p>
+<p>配置插件<br>参考资料: <a href="https://github.com/MikeCoder/hexo-blog-encrypt" target="_blank" rel="noopener">官网说明</a></p>
+<h2 id="绑定个人域名-github-pages"><a href="#绑定个人域名-github-pages" class="headerlink" title="绑定个人域名, github pages"></a>绑定个人域名, github pages</h2><p>先安装插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo -server --save</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></p>
+<p>再检查下根目录下的 _config.yml 找到 deploy 关键字设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: xxx</span><br><span class="line">  branch: xxx</span><br><span class="line">  message: xxx</span><br></pre></td></tr></table></figure></p>
+<p>在 source/ 目录下新建 CNAME(无后缀) 文件, 输入自己的域名<br>假设你的域名与 github pages 已绑定, 用下面命令 push 到 github 上啦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo d -g</span><br></pre></td></tr></table></figure></p>
+<h2 id="其他参考文档"><a href="#其他参考文档" class="headerlink" title="其他参考文档"></a>其他参考文档</h2><p><a href="https://aplayer.js.org/docs/#/?id=lrc-in-html" target="_blank" rel="noopener">APlayer</a><br><a href="https://cxjiang.top/2017/04/22/hexo-music/" target="_blank" rel="noopener">Hexo博客中插入音乐</a><br><a href="http://www.iamlj.com/2016/07/add-music-player-function-for-hexo/" target="_blank" rel="noopener">为Hexo Next主题添加音乐播放器功能（二）</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[个人网站搭建记录(二) -- Hexo 安装与基础设置]]></title>
+      <url>/2017/12/21/blog_create2/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="Hexo-安装"><a href="#Hexo-安装" class="headerlink" title="Hexo 安装"></a>Hexo 安装</h2><p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo</a> 是一个快速、简洁且高效的博客框架, 他使用 Markdown（或其他渲染引擎）解析文章。</p>
+<h3 id="安装-nvm"><a href="#安装-nvm" class="headerlink" title="安装 nvm"></a>安装 nvm</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nvm</span><br></pre></td></tr></table></figure>
+<p>安装完后, 需要在 .bash_profile 中加入以下这行命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source $(brew --prefix nvm)/nvm.sh</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>使设定生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bash_profile</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://raw.github.com/creationix/nvm/master/install.sh | sh</span><br></pre></td></tr></table></figure>
+<p>或者:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -qOhttps://raw.github.com/creationix/nvm/master/install.sh | sh</span><br></pre></td></tr></table></figure></p>
+<p>安装完成后，重启终端并执行下列命令即可安装 Node.js。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm install stable</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装-Git"><a href="#安装-Git" class="headerlink" title="安装 Git"></a>安装 Git</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install git</span><br></pre></td></tr></table></figure>
+<h3 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<h3 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h3><p>创建一个 hexo 项目, 命名为 hexo-doc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init hexo-doc</span><br><span class="line">cd hexo-doc</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></p>
+<p>新建完成后，指定文件夹的目录如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure></p>
+<p>启动命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo s   (server) - 本地启动</span><br><span class="line">hexo g  (generate) - 重新生成</span><br><span class="line">hexo d  (deploy) - push 到 github</span><br></pre></td></tr></table></figure></p>
+<h2 id="Hexo-配置"><a href="#Hexo-配置" class="headerlink" title="Hexo 配置"></a>Hexo 配置</h2><h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><p>安装 <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">hexo-deployer-git</a>.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></p>
+<p>在根目录下的 _configy.yml 文件找到 deploy 关键字更改设置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/aojiang/aojiang.github.io.git</span><br><span class="line">  branch: master</span><br><span class="line">  message: 我的世界</span><br></pre></td></tr></table></figure></p>
+<h3 id="更改主题为-Next"><a href="#更改主题为-Next" class="headerlink" title="更改主题为 Next"></a>更改主题为 Next</h3><p>进入 hexo-doc 目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd hexo-doc</span><br><span class="line">ls</span><br><span class="line">_config.yml  node_modules scaffolds    themes</span><br><span class="line">db.json      package.json source</span><br></pre></td></tr></table></figure></p>
+<p>新建一个目录文件夹并下载  Next 主题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir themes/next</span><br><span class="line">curl -s https://api.github.com/repos/iissnan/hexo-theme-next/releases/latest | grep tarball_url | cut -d &apos;&quot;&apos; -f 4 | wget -i -O| tar -zx -C themes/next --strip-components=1</span><br></pre></td></tr></table></figure></p>
+<p>在根目录下的 _configy.yml 文件找到 theme 关键字, 更改设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure></p>
+<p>next 主题又有几个不同设计风格, Muse、Mist、Pisces、Gemini, 我目前选择的 Mist, 可在 themes/next/_config.yml 中找到 scheme 关键字设置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scheme: Mist</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h3><p>在 _config.yml 找到 language 关键字, 更改设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">language: zh-Hans</span><br></pre></td></tr></table></figure></p>
+<h3 id="在菜单里增加标签栏"><a href="#在菜单里增加标签栏" class="headerlink" title="在菜单里增加标签栏"></a>在菜单里增加标签栏</h3><p>在项目根目录下, 通过以下命令创建一个新的页面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;tags&quot;</span><br></pre></td></tr></table></figure></p>
+<p>在 tags/index.md 设置页面类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: All tags</span><br><span class="line">date: 2014-12-22 12:39:04</span><br><span class="line">type: &quot;tags&quot;</span><br></pre></td></tr></table></figure></p>
+<p>在 themes/next/_config.yml 增加 tags:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">    home: /</span><br><span class="line">    archives: /archives</span><br><span class="line">    tags: /tags</span><br></pre></td></tr></table></figure></p>
+<h3 id="在菜单里增加分类栏"><a href="#在菜单里增加分类栏" class="headerlink" title="在菜单里增加分类栏"></a>在菜单里增加分类栏</h3><p>在项目根目录下, 通过以下命令创建一个新的页面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;categories&quot;</span><br></pre></td></tr></table></figure></p>
+<p>在 tags/index.md 设置页面类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: All categories</span><br><span class="line">date: 2014-12-22 12:39:04</span><br><span class="line">type: &quot;categories&quot;</span><br></pre></td></tr></table></figure></p>
+<p>在 themes/next/_config.yml 增加 “categories”:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">    home: /</span><br><span class="line">    archives: /archives</span><br><span class="line">    categories: /categories</span><br></pre></td></tr></table></figure></p>
+<h3 id="增加搜索"><a href="#增加搜索" class="headerlink" title="增加搜索"></a>增加搜索</h3><p>在站点的根目录下执行以下命令安装 hexo-generator-search:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure></p>
+<p>在站点的根目录下执行以下命令安装 hexo-generator-searchdb:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></p>
+<p>编辑站点配置文件，新增以下内容到任意位置启用搜索:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: all</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用-leancloud-进行页面访客统计"><a href="#使用-leancloud-进行页面访客统计" class="headerlink" title="使用 leancloud 进行页面访客统计"></a>使用 leancloud 进行页面访客统计</h3><p>在 <a href="leancloud.cn">leancloud官网</a> 增加一个应用获取 app_id 和 app_key<br>为该应用创建一个 class 名为 Counter<br>打开/theme/next/_config.yml，在如下对应位置填入 app_id 和 app_key，并将 enable 设置为true。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Show number of visitors to each article.</span><br><span class="line"># You can visit https://leancloud.cn get AppID and AppKey.</span><br><span class="line">leancloud_visitors:</span><br><span class="line">  enable: true</span><br><span class="line">  app_id: # your app_id</span><br><span class="line">  app_key: # your app_key</span><br></pre></td></tr></table></figure></p>
+<h3 id="修改内容宽度"><a href="#修改内容宽度" class="headerlink" title="修改内容宽度"></a>修改内容宽度</h3><p>编辑 themes/css/_variables/custom.styl 文件, 新增变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 修改成你期望的宽度</span><br><span class="line">content-desktop = 1000px</span><br><span class="line">// 当视窗超过 1600px 后的宽度</span><br><span class="line">content-desktop-large = 1200px</span><br></pre></td></tr></table></figure></p>
+<h3 id="增加分享"><a href="#增加分享" class="headerlink" title="增加分享"></a>增加分享</h3><p>编辑根目录下的 _config.yml 文件, 新增变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jiathis: true</span><br></pre></td></tr></table></figure></p>
+<h3 id="侧边栏增加社交链接"><a href="#侧边栏增加社交链接" class="headerlink" title="侧边栏增加社交链接"></a>侧边栏增加社交链接</h3><p>编辑根目录下的 _config.yml，新增字段 social，然后添加社交站点名称与地址即可。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">social:</span><br><span class="line">  #GitHub: https://github.com/yourname || github</span><br><span class="line">  E-Mail: mailto:aojiang.china@gmail.com || envelope</span><br><span class="line">  #Google: https://plus.google.com/yourname || google</span><br><span class="line">  #Twitter: https://twitter.com/yourname || twitter</span><br><span class="line">  #FB Page: https://www.facebook.com/yourname || facebook</span><br><span class="line">  #VK Group: https://vk.com/yourname || vk</span><br><span class="line">  #StackOverflow: https://stackoverflow.com/yourname || stack-overflow</span><br><span class="line">  #YouTube: https://youtube.com/yourname || youtube</span><br><span class="line">  #Instagram: https://instagram.com/yourname || instagram</span><br><span class="line">  #Skype: skype:yourname?call|chat || skype</span><br><span class="line"></span><br><span class="line">social_icons:</span><br><span class="line">  enable: true   // 是否使用图片</span><br><span class="line">  icons_only: false</span><br><span class="line">  transition: false</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://fontawesome.io/cheatsheet/" target="_blank" rel="noopener">图片名称参考</a></p>
+<h3 id="增加站点访问量统计"><a href="#增加站点访问量统计" class="headerlink" title="增加站点访问量统计"></a>增加站点访问量统计</h3><p>在 themes/next/_config.yml 文件下, 找到 “busuanzi” 关键字设置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">busuanzi_count:</span><br><span class="line">  # count values only if the other configs are false</span><br><span class="line">  enable: true</span><br><span class="line">  # custom uv span for the whole site</span><br><span class="line">  site_uv: true</span><br><span class="line">  site_uv_header: &lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt; 访问人数</span><br><span class="line">  site_uv_footer:</span><br><span class="line">  # custom pv span for the whole site</span><br><span class="line">  site_pv: true</span><br><span class="line">  site_pv_header: &lt;i class=&quot;fa fa-eye&quot;&gt;&lt;/i&gt; 总访问量</span><br><span class="line">  site_pv_footer: 次</span><br><span class="line">  # custom pv span for one page only</span><br><span class="line">  page_pv: true</span><br><span class="line">  page_pv_header: &lt;i class=&quot;fa fa-file-o&quot;&gt;&lt;/i&gt; 浏览</span><br><span class="line">  page_pv_footer: 次</span><br></pre></td></tr></table></figure></p>
+<h3 id="修改-footer"><a href="#修改-footer" class="headerlink" title="修改 footer"></a>修改 footer</h3><p>将 “由 Hexo 强力驱动 主题 NexT.Pisces” 这些自带的内容修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">themes/next/layout/_pzartials/footer.swig</span><br></pre></td></tr></table></figure></p>
+<p>5.1.0:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">thems/next/layout/_partials/footer.swig</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档:"></a>参考文档:</h2><p><a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">GitHub Next 主题</a><br><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo 中文文档</a><br><a href="http://blog.csdn.net/heqiangflytosky/article/details/54863185" target="_blank" rel="noopener">Hexo -Next 主题优化</a><br><a href="https://www.ezlippi.com/blog/2017/02/hexo-search.html" target="_blank" rel="noopener">Hexo 博客添加站内搜索</a><br><a href="https://github.com/PaicHyperionDev/hexo-generator-search" target="_blank" rel="noopener">GitHub hexo-generator-search</a><br><a href="https://lfwen.site/2016/05/31/add-count-for-hexo-next/" target="_blank" rel="noopener">使用 leancloud 进行页面访客统计</a><br><a href="http://blog.csdn.net/lmj623565791/article/details/51319147" target="_blank" rel="noopener">如何利用 github 打造博客专属域名</a><br><a href="https://github.com/iissnan/hexo-theme-next/issues/928" target="_blank" rel="noopener">footer 修改问题</a><br><a href="https://lannly.github.io/2016/11/11/hexo-next%E4%B8%BB%E9%A2%98-%E6%96%87%E7%AB%A0%E6%B7%BB%E5%8A%A0%E9%98%85%E8%AF%BB%E6%AC%A1%E6%95%B0%EF%BC%8C%E8%AE%BF%E9%97%AE%E9%87%8F%E7%AD%89/" target="_blank" rel="noopener">Hexo+Next主题 文章添加阅读次数，访问量等</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>安装: nvm+git+hexo。<br>设置: 主题+语言+标签+分类+搜索+页面访客统计+搜索+分享+社交+footer。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[个人网站搭建记录(一) -- 工具选择]]></title>
+      <url>/2017/12/21/blog_create1/</url>
+      <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><p>以下是我搭建个人网站的简要记录, 电脑为 mac 系统。</p>
+<h2 id="静态网站与动态网站的选择"><a href="#静态网站与动态网站的选择" class="headerlink" title="静态网站与动态网站的选择"></a>静态网站与动态网站的选择</h2><p>网站可分为静态网站和动态网站, 静态网站非常适合专注于内容, 例如博客; 而动态网站以数据库技术为基础, 和用户的交互能力强, 动态网站有个很有名的 wordpress 的博客平台。 结合自己实际情况, 我选择功能较弱、较简单的静态网站。</p>
+<h2 id="静态网站生成工具的选择"><a href="#静态网站生成工具的选择" class="headerlink" title="静态网站生成工具的选择"></a>静态网站生成工具的选择</h2><p>网上有很多有名的静态网站生成工具, 这些工具能从简单的纯文本文件生成一个网站。 常用的文本格式有 reStructuredText(rst) 和 Markdown。<br>有人列举了网络上排名前十的工具, 排名并不一定准确, 仅做参考:</p>
+<ol>
+<li>Jekyll - GitHub Pages 的构建工具（Ruby 语言。</li>
+<li>Octopress - 基于 Jekyll 的博客生成工具, 它简化了 Jekyll 的操作, 可以让你更舒服的创作。</li>
+<li>Hexo - 用 Node.js 编写的博客框架, 支持所有的 GitHub Markdown 特性。</li>
+<li>Hugo - 使用 go 语言编写, 并且使用 Markdown 语法。<a id="more"></a></li>
+<li>Pelican - 使用Python编写的静态网站生成工具, 支持用 reStructuredText, Markdown, 和AsciiDoc 创作网站内容。</li>
+<li>Middleman - 中间人, 一个使用 Ruby 编写的静态网站生成工具。</li>
+<li>Metalsmith - 使用 Node.js 编写。</li>
+<li>DocPad - 支持 CoffeeScript、Ruby、PHP、Stylus 等等。</li>
+<li>Wintersmith - 使用 Node.js 编写。</li>
+<li>Cactus - 使用 Python 和 Django 模版系统制作的静态网站生成工具。<br>更多资料参考:<a href="http://topspeedsnail。com/static-website-generators_or_tools/" target="_blank" rel="noopener">top 10 排名</a>。</li>
+</ol>
+<p>因为熟悉一点 python 和 sphinx, 通过简单的筛选, 我最先选定的是用 Pelican+reStructuredText。 然后找到一个不错的 Pelican 主题(就是网站的整体风格) – elegant, 效果可参考<a href="http://wonux。tech/" target="_blank" rel="noopener">孤逐王的博客</a>。<br>但是在找的过程中发现了更喜欢的 hexo 主题 - Next, 效果可参考<a href="https://xuecat。github。io/" target="_blank" rel="noopener">XueCat的博客</a>。 最终还是选用了 Hexo, 采用 Next 主题, markdown 写文档。 嗯, 怎么舒服怎么来。</p>
+<p>另外, hexo 这两个主题我也很喜欢:</p>
+<ul>
+<li><a href="https://github。com/litten/hexo-theme-yilia" target="_blank" rel="noopener">yilia</a>, 效果可参考<a href="http://litten。me/" target="_blank" rel="noopener">Litten的博客</a>。</li>
+<li><a href="https://github。com/raytaylorlin/hexo-theme-raytaylorism" target="_blank" rel="noopener">raytaylorism</a>, 效果可参考<a href="http://raytaylorlin。com/" target="_blank" rel="noopener">林寿山的博客</a>。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我选择用静态网站搭建博客, Hexo + Next主题 + Markdown 文本格式。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+        
+    </entry>
+    
+  
+  
 </search>
