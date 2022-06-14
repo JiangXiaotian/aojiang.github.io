@@ -1,18 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
-    <url>%2F2018%2F06%2F26%2Fcv_1%2F</url>
-    <content type="text"><![CDATA[]]></content>
+    <title><![CDATA[iOS AutoLayout]]></title>
+    <url>%2F2018%2F08%2F07%2FiOS_note2%2F</url>
+    <content type="text"><![CDATA[leadingAnchor、trailingAnchor 与 leftAnchor、rightAnchor 区别leadingAnchor：依赖语言环境设置，对于从左往右阅读语言，比如英语，leadingAnchor = leftAnchor，对于从右往左阅读语言，比如阿拉伯语，leadingAnchor = rightAnchortrailingAnchor：依赖语言环境设置，对于从左往右阅读语言，比如英语，trailingAnchor = rightAnchor，对于从右往左阅读语言，比如阿拉伯语，trailingAnchor = leftAnchorleft和right约束是绝对的，总是意指屏幕的左侧和右侧。leading和trailing约束和设备的语言环境有关系。苹果官方的建议是使用leading和trailing约束，如果是绝对布局并且不在意语言环境设置，可以使用left和right约束。]]></content>
+      <tags>
+        <tag>iOS</tag>
+      </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>%2F2018%2F06%2F26%2Fcpp1%2F</url>
-    <content type="text"><![CDATA[]]></content>
+    <title><![CDATA[iOS 记录]]></title>
+    <url>%2F2018%2F08%2F07%2FiOS_note1%2F</url>
+    <content type="text"><![CDATA[Google Objective-C Style Guide 中文版 free-programming-booksiOS开发60分钟入门一个合格的程序员应该读过哪些书 info.plist的选项含义 iphone 6 屏幕揭秘 Objective-C实现链式编程语法（DSL） http://mobile.51cto.com/iphone-530967.htm]]></content>
+      <tags>
+        <tag>iOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[无人驾驶决策规划]]></title>
+    <url>%2F2018%2F08%2F02%2Fautomobile1%2F</url>
+    <content type="text"><![CDATA[车载硬件、传感器集成、感知预测以及控制规划等多个模块的协同配合。狭义上的决策规划控制部分，包含了无人车行为决策、动作规划, 以及反馈控制这三个模块。从更宽泛的概念来说，紧密依赖于上游的路由寻径（Routing）以及交通预测（Prediction）的计算结果。 参考:无人驾驶中的决策规划控制技术]]></content>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Swift 记录]]></title>
+    <url>%2F2018%2F07%2F03%2Fswift_1%2F</url>
+    <content type="text"><![CDATA[谈谈 Swift 中的 map 和 flatMapAPP上架/发布流程(2017.8图文解说版)Publish a Universal Binary iOS Framework in Swift using CocoaPods天天都在用的 SDWebImage， 你了解它的缓存策略吗？深入理解RunLoop优化UITableViewCell高度计算的那些事深度学习指南：在iOS平台上使用TensorFlowGetting started with TensorFlow on iOSMastering Core ML for iOSIntegrating TensorFlow Model in an iOS AppApple’s deep learning frameworks: BNNS vs. Metal CNNtensorflow 在 iOS 平台上的应用KVC和KVO的使用及原理Runtime面试、工作Instruments性能优化-Core AnimationGCD精讲iOS Swift GCD 开发教程Swift学习笔记-内存管理TCP/IP、Http、Socket的区别[iOS封装功能生成 .framework][https://www.jianshu.com/p/87dbf57cfe4a]iOS 架构模式之 MVP 查看设置 swift 版本: xcode -&gt; target -&gt; buildsetting -&gt; “swift”]]></content>
+      <tags>
+        <tag>Swift</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[cocoapods 记录]]></title>
+    <url>%2F2018%2F06%2F30%2Fpod1%2F</url>
+    <content type="text"><![CDATA[升级 macOS High Sierra 后与 Cocoapods 出现兼容问题:pod 命令需要用到 2.0 版本的 Ruby 解释器 /System/Library/Frameworks/Ruby.framework/Versions/2.0，而 macOS High Sierra 将系统的 Ruby 解释器升级到了 2.3 /System/Library/Frameworks/Ruby.framework/Versions/2.3，因此执行 pod 命令的时候由于找不到 Ruby 解释器而报错。 解决方法: 重装 cocoapods1sudo gem install cocoapods 装完后出现下面错误:123$ pod installAnalyzing dependencies[!] Unable to find a specification for `**` 解决方法:123pod repo remove masterpod setuppod install or123sudo rm -fr ~/.cocoapods/repos/masterpod setuppod install 参考链接升级 macOS High Sierra 后与 Cocoapods 的兼容问题]]></content>
+      <tags>
+        <tag>cocoapods</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[python 版本管理 -- pyenv]]></title>
+    <url>%2F2018%2F06%2F30%2Fpython_note2%2F</url>
+    <content type="text"><![CDATA[安装123brew updatebrew install pyenvpyenv init pyenv init 命令解释:Sets up your shims path. This is the only requirement for pyenv to function properly. You can do this by hand by prepending $(pyenv root)/shims to your $PATH. Installs autocompletion. This is entirely optional but pretty useful. Sourcing $(pyenv root)/completions/pyenv.bash will set that up. There is also a $(pyenv root)/completions/pyenv.zsh for Zsh users. Rehashes shims. From time to time you’ll need to rebuild your shim files. Doing this on init makes sure everything is up to date. You can always run pyenv rehash manually. Installs the sh dispatcher. This bit is also optional, but allows pyenv and plugins to change variables in your current shell, making commands like pyenv shell possible. The sh dispatcher doesn’t do anything crazy like override cd or hack your shell prompt, but if for some reason you need pyenv to be a real script rather than a shell function, you can safely skip it. 在 ~/.zshrc 里增加下面这条命令自动启用 pyenv1eval &quot;$(pyenv init -)&quot; 一些命令查看 pyenv 版本1pyenv -v 查看可安装的 python 版本1pyenv install --list 安装 python3.6.31pyenv install -v 3.6.3 卸载 python3.6.31pyenv uninstall 3.6.3 查看已安装 python 版本, 好像只能查看通过 pyenv install -v 安装的和系统自带的版本1pyenv versions 创建一个名为 test 的全新虚拟环境1pyenvv virtualenv 3.6.3 test 激活该虚拟环境1pyenv activate test 设置全局的 Python 版本，通过将版本号写入 ~/.pyenv-version, 最好不用, 可能导致一些应用不能用1pyenv global 3.6.3 在当前目录下设置 python 版本, 在当前目录生成 .pyenv-version1pyenv local 3.6.3 要使 terminal 生效, 在 ~/.bash_profile 或 ~/.zshrc 中添加1if which pyenv &gt; /dev/null; then eval &quot;$(pyenv init -)&quot;; fi 再 source ~/.bash_profile 或 source ~/.zshrc 使设置生效查看 python 版本安装路径1pyenv prefix 3.6.3 期间遇到的问题No shell command in Mac OS.解决方法:在 ~/.zshrc 中添加这条命令 :1if which pyenv &gt; /dev/null; then eval &quot;$(pyenv init -)&quot;; fi 指定安装版本号1pip install robotframework==2.8.7 参考pyenv 更多命令Mac下 Pyenv 的安装使用pyenv github]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[cpp 记录(1)]]></title>
+    <url>%2F2018%2F06%2F27%2Fcpp1%2F</url>
+    <content type="text"><![CDATA[继承、封装、多态。 多态是指在基类中定义的属性和行为被子类继承后，可以具有不同的数据类型或者表现行为等特性。 子类对象拥有与其基类相同的全部属性和方法，称为继承。 封装意味着把对象的属性和方法结合成一个独立的系统单位，并尽可能隐藏对象的内部细节。封装是面向对象思想描述的基础，从此程序员面对的就不再是许多复杂的函数和过程实现，而是少数具有行为能力的个体实例。 抽象的过程是对具体问题进行概括的过程，是对一类公共问题进行统一描述的过程。]]></content>
+      <tags>
+        <tag>cpp</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[github ssh 问题]]></title>
-    <url>%2F2018%2F06%2F25%2Fgithub1%2F</url>
+    <url>%2F2018%2F06%2F26%2Fgithub1%2F</url>
     <content type="text"><![CDATA[github ssh 公钥问题测试：ssh -T git@github.com提示 Permission denied(publickey). ssh-keygen -t rsa -C “aojiang”一直 enter,cat /Users/apple/.ssh/id_rsa.pub把生成的公钥复制, 然后去 github -&gt; settings -&gt; ssh and gpg keys 里设置 参考:https://blog.csdn.net/superior_yong/article/details/64127797 git clone 问题git clone https://github.com/openai/go-vncdriver.git 提示1234error: RPC failed; curl 18 transfer closed with outstanding read data remainingfatal: The remote end hung up unexpectedlyfatal: early EOFfatal: index-pack faile 改用 git clone git@github.com:openai/go-vncdriver.git]]></content>
       <tags>
         <tag>github</tag>
@@ -20,7 +67,7 @@
   </entry>
   <entry>
     <title><![CDATA[强化学习记录(1)]]></title>
-    <url>%2F2018%2F06%2F19%2Fmachine_learning2%2F</url>
+    <url>%2F2018%2F06%2F25%2Fmachine_learning2%2F</url>
     <content type="text"><![CDATA[搭建 python 3.6.3 环境brew install pyenvbrew install pyenv-virtualenvpyenv install -v 3.6.3 pyenv virtualenv env_3.6.3 梯度下降法就是利用负梯度方向来决定每次迭代的新的搜索方向, 使得每次迭代能使待优化的目标函数逐步减小。梯度是一个矢量，其方向上的方向导数最大, 其大小正好是此最大方向导数。方向导数也是矢量。梯度方向是函数变化率最大的方向。 神经网络是一种运算模型, 对于输入和输出间复杂的关系进行建模, 或者用来探索数据间的模式。 激活函数relusoftplusdropoutsigmoidtanh randn 与 randnp.random.rand()np.random.randn()]]></content>
       <tags>
         <tag>强化学习</tag>
@@ -35,8 +82,24 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[视频转 GIF]]></title>
+    <url>%2F2018%2F06%2F01%2Fvideo1%2F</url>
+    <content type="text"><![CDATA[[GIBrewery3][http://www.pc6.com/mac/114758.html][GIFRocket][http://www.gifrocket.com/]]]></content>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[视频收集(一)]]></title>
+    <url>%2F2018%2F06%2F01%2Fmv_collection1%2F</url>
+    <content type="text"><![CDATA[爱的华尔兹, 甜爆了, = = (function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"theme":"#FADFA3","loop":true,"video":{"url":"http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/80b9a1da703de72187a2.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()]]></content>
+      <tags>
+        <tag>视频</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[区块链 01]]></title>
-    <url>%2F2018%2F03%2F06%2Fblock_chain1%2F</url>
+    <url>%2F2018%2F03%2F07%2Fblock_chain1%2F</url>
     <content type="text"><![CDATA[区块链是一种分布式数据库，维护一份连续不断的交易记录档，每一笔资料都被称为一个区块。每个区块都会与另一个区块产生连接，每个区块都会包含上个区块的 hash 值。区块之间连接起来就是一本账簿， 每个区块都必须由超过 50% 的节点认证过，每个节点必须存储所有区块（但有新的设计可让节点仅存储部分区块）。复杂的密码学运算可杜绝记录篡改与修订，产生区块的过程又被称为挖矿，负责产生区块的机器又称为挖矿机。 区块链的潜在应用 数字货币 数字资产管理 生产履历、产销履历 智能合约、契约执行 交易流程透明化 电子涵证]]></content>
       <tags>
         <tag>区块链</tag>
@@ -52,25 +115,8 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[视频转 GIF]]></title>
-    <url>%2F2018%2F01%2F25%2Fvideo1%2F</url>
-    <content type="text"><![CDATA[[GIBrewery3][http://www.pc6.com/mac/114758.html][GIFRocket][http://www.gifrocket.com/]]]></content>
-      <tags>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[logging 模块]]></title>
-    <url>%2F2018%2F01%2F16%2Fpython_note6%2F</url>
-    <content type="text"><![CDATA[logging 各参数123456789101112131415161718logging.basicConfig 函数各参数:filename: 指定日志文件名filemode: 和 file 函数意义相同，指定日志文件的打开模式，&apos;w&apos; 或 &apos;a&apos;format: 指定输出的格式和内容，format 可以输出很多有用信息，如上例所示:%(levelno)s: 打印日志级别的数值%(levelname)s: 打印日志级别名称%(pathname)s: 打印当前执行程序的路径，其实就是 sys.argv[0]%(filename)s: 打印当前执行程序名%(funcName)s: 打印日志的当前函数%(lineno)d: 打印日志的当前行号%(asctime)s: 打印日志的时间%(thread)d: 打印线程 ID%(threadName)s: 打印线程名称%(process)d: 打印进程 ID%(message)s: 打印日志信息datefmt: 指定时间格式，同 time.strftime()level: 设置日志级别，默认为 logging.WARNINGstream: 指定将日志的输出流，可以指定输出到 sys.stderr, sys.stdout 或者文件，默认输出到 sys.stderr，当 stream 和 filename 同时指定时，stream 被忽略 例子123456789logging.basicConfig( level=logging.INFO, format=&apos;levelname: %(levelname)s filename: %(filename)s outputNumber: [%(lineno)d] thread: %(threadName)s output msg: %(message)s - %(asctime)s&apos;, datefmt = &apos;[%d/%b/%Y %H:%M:%S]&apos;, filename=&apos;./loggmsg.log&apos;)logging打印信息函数:logging.debug(&apos;This is debug message&apos;)logging.info(&apos;This is info message&apos;)logging.warning(&apos;This is warning message&apos;) 获取当前文件名123import ospath = os.path.basename(sys.argv[0]) 相关代码123456789101112131415logger = logging.getLogger(log_name)logger.setLevel(logging.DEBUG)fmt = logging.Formatter(&apos;[%(asctime)s] [%(levelname)s] %(message)s - %(name)s - %(funcName)s - %(lineno)s&apos;, &apos;%Y-%m-%d %H:%M:%S&apos;)# 设置 cmd 日志stream = logging.StreamHandler()stream.setFormatter(fmt)stream.setLevel(cmd_level)self.logger.addHandler(stream)# 设置 file 日志fh = logging.FileHandler(path, encoding=&apos;utf8&apos;)fh.setFormatter(fmt)fh.setLevel(file_level)self.logger.addHandler(fh) 给日志加上颜色输出123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142class WinColor: foreground_blue = 0x0001 # text color contains blue. foreground_green = 0x0002 # text color contains green. foreground_red = 0x0004 # text color contains red. foreground_white = foreground_blue | foreground_green | foreground_red #winbase.h std_input_handle = -10 std_output_handle = -11 std_error_handle = -12 #wincon.h foreground_black = 0x0000 foreground_blue = 0x0001 foreground_green = 0x0002 foreground_cyan = 0x0003 foreground_red = 0x0004 foreground_magenta = 0x0005 foreground_yellow = 0x0006 foreground_grey = 0x0007 foreground_intensity = 0x0008 # foreground color is intensified. background_black = 0x0000 background_blue = 0x0010 background_green = 0x0020 background_cyan = 0x0030 background_red = 0x0040 background_magenta = 0x0050 background_yellow = 0x0060 background_grey = 0x0070 background_intensity = 0x0080 # background color is intensified.class AsciiColor: reset = &apos;\033[0m&apos; bold = &apos;\033[01m&apos; disable = &apos;\033[02m&apos; underline = &apos;\033[04m&apos; reverse = &apos;\033[07m&apos; strike_through = &apos;\033[09m&apos; invisible = &apos;\033[08m&apos; class FgColor: black = &apos;\033[30m&apos; red = &apos;\033[31m&apos; green = &apos;\033[32m&apos; orange = &apos;\033[33m&apos; blue = &apos;\033[34m&apos; purple = &apos;\033[35m&apos; cyan = &apos;\033[36m&apos; light_grey = &apos;\033[37m&apos; dark_grey = &apos;\033[90m&apos; light_red = &apos;\033[91m&apos; light_green = &apos;\033[92m&apos; yellow = &apos;\033[93m&apos; light_blue = &apos;\033[94m&apos; pink = &apos;\033[95m&apos; light_cyan = &apos;\033[96m&apos; class BgColor: black = &apos;\033[40m&apos; red = &apos;\033[41m&apos; green = &apos;\033[42m&apos; orange = &apos;\033[43m&apos; blue = &apos;\033[44m&apos; purple = &apos;\033[45m&apos; cyan = &apos;\033[46m&apos; light_grey = &apos;\033[47m&apos;class ColorFormatter(logging.Formatter): def format(self, record, color_flag=False): message = super().format(record) if color_flag is False: return message level_no = record.levelno if level_no &gt;= logging.CRITICAL: color = AsciiColor.FgColor.light_red elif level_no &gt;= logging.ERROR: color = AsciiColor.FgColor.light_red elif level_no &gt;= logging.WARNING: color = AsciiColor.FgColor.purple elif level_no &gt;= logging.INFO: color = AsciiColor.reset elif level_no &gt;= logging.DEBUG: color = AsciiColor.FgColor.green else: color = AsciiColor.reset message = color + message + AsciiColor.reset return messageclass ColorHandler(logging.StreamHandler): def __init__(self, stream=sys.stdout): super().__init__(stream) def format(self, record, colour=False): if not isinstance(self.formatter, ColorFormatter): self.formatter = ColorFormatter() return self.formatter.format(record, colour) def emit(self, record): stream = self.stream try: msg = self.format(record, stream.isatty()) stream.write(msg) stream.write(self.terminator) self.flush() except Exception: self.handleError(record)def log_init(detail_flag = False): h = ColorHandler() if detail_flag is True: # formatter = ColouredFormatter( # &apos;[%(levelname)s] %(message)s [%(filename)s-%(funcName)s-%(lineno)d] [%(asctime)s]&apos;, # datefmt=&apos;%Y-%m-%d %H:%M:%S&apos; # ) formatter = ColorFormatter(&apos;[%(levelname)s] %(message)s [%(filename)s-%(funcName)s-%(lineno)d]&apos;) else: formatter = ColorFormatter(&apos;%(message)s&apos;) h.formatter = formatter logging.basicConfig(level=logging.DEBUG, handlers=[h]) logger = logging.getLogger(&apos;log&apos;) return loggergLog = log_init(detail_flag = True)]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[iOS 启动页分辨率]]></title>
-    <url>%2F2018%2F01%2F12%2Fswift_launch%2F</url>
+    <url>%2F2018%2F01%2F16%2Fswift_launch%2F</url>
     <content type="text"><![CDATA[尺寸 分辨率 Retina HD5.5 242x2208 Retina HD4.7 750x1334 Landscape Retina Hd 5.5 2208x1242]]></content>
       <tags>
         <tag>笔记</tag>
@@ -80,8 +126,17 @@
   </entry>
   <entry>
     <title><![CDATA[python 打印不同颜色日志]]></title>
-    <url>%2F2018%2F01%2F10%2Fpython_note5%2F</url>
+    <url>%2F2018%2F01%2F16%2Fpython_note5%2F</url>
     <content type="text"><![CDATA[格式: \033[显示方式; 前景色; 背景色 m 说明:前景色 | 背景色 | 颜色30 | 40 | 黑色31 | 41 | 红色32 | 42 | 绿色33 | 43 | 黃色34 | 44 | 蓝色35 | 45 | 紫红色36 | 46 | 青蓝色37 | 47 | 白色 显示方式 | 意义0 | 终端默认设置1 | 高亮显示4 | 使用下划线5 | 闪烁7 | 反白显示8 | 不可见 例子:12\033[1;31;40m ## 1-高亮显示 31-前景色红色 40-背景色黑色\033[0m ## 采用终端默认设置，即取消颜色设置]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[logging 模块]]></title>
+    <url>%2F2018%2F01%2F16%2Fpython_note6%2F</url>
+    <content type="text"><![CDATA[logging 各参数123456789101112131415161718logging.basicConfig 函数各参数:filename: 指定日志文件名filemode: 和 file 函数意义相同，指定日志文件的打开模式，&apos;w&apos; 或 &apos;a&apos;format: 指定输出的格式和内容，format 可以输出很多有用信息，如上例所示:%(levelno)s: 打印日志级别的数值%(levelname)s: 打印日志级别名称%(pathname)s: 打印当前执行程序的路径，其实就是 sys.argv[0]%(filename)s: 打印当前执行程序名%(funcName)s: 打印日志的当前函数%(lineno)d: 打印日志的当前行号%(asctime)s: 打印日志的时间%(thread)d: 打印线程 ID%(threadName)s: 打印线程名称%(process)d: 打印进程 ID%(message)s: 打印日志信息datefmt: 指定时间格式，同 time.strftime()level: 设置日志级别，默认为 logging.WARNINGstream: 指定将日志的输出流，可以指定输出到 sys.stderr, sys.stdout 或者文件，默认输出到 sys.stderr，当 stream 和 filename 同时指定时，stream 被忽略 例子123456789logging.basicConfig( level=logging.INFO, format=&apos;levelname: %(levelname)s filename: %(filename)s outputNumber: [%(lineno)d] thread: %(threadName)s output msg: %(message)s - %(asctime)s&apos;, datefmt = &apos;[%d/%b/%Y %H:%M:%S]&apos;, filename=&apos;./loggmsg.log&apos;)logging打印信息函数:logging.debug(&apos;This is debug message&apos;)logging.info(&apos;This is info message&apos;)logging.warning(&apos;This is warning message&apos;) 获取当前文件名123import ospath = os.path.basename(sys.argv[0]) 相关代码123456789101112131415logger = logging.getLogger(log_name)logger.setLevel(logging.DEBUG)fmt = logging.Formatter(&apos;[%(asctime)s] [%(levelname)s] %(message)s - %(name)s - %(funcName)s - %(lineno)s&apos;, &apos;%Y-%m-%d %H:%M:%S&apos;)# 设置 cmd 日志stream = logging.StreamHandler()stream.setFormatter(fmt)stream.setLevel(cmd_level)self.logger.addHandler(stream)# 设置 file 日志fh = logging.FileHandler(path, encoding=&apos;utf8&apos;)fh.setFormatter(fmt)fh.setLevel(file_level)self.logger.addHandler(fh) 给日志加上颜色输出123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142class WinColor: foreground_blue = 0x0001 # text color contains blue. foreground_green = 0x0002 # text color contains green. foreground_red = 0x0004 # text color contains red. foreground_white = foreground_blue | foreground_green | foreground_red #winbase.h std_input_handle = -10 std_output_handle = -11 std_error_handle = -12 #wincon.h foreground_black = 0x0000 foreground_blue = 0x0001 foreground_green = 0x0002 foreground_cyan = 0x0003 foreground_red = 0x0004 foreground_magenta = 0x0005 foreground_yellow = 0x0006 foreground_grey = 0x0007 foreground_intensity = 0x0008 # foreground color is intensified. background_black = 0x0000 background_blue = 0x0010 background_green = 0x0020 background_cyan = 0x0030 background_red = 0x0040 background_magenta = 0x0050 background_yellow = 0x0060 background_grey = 0x0070 background_intensity = 0x0080 # background color is intensified.class AsciiColor: reset = &apos;\033[0m&apos; bold = &apos;\033[01m&apos; disable = &apos;\033[02m&apos; underline = &apos;\033[04m&apos; reverse = &apos;\033[07m&apos; strike_through = &apos;\033[09m&apos; invisible = &apos;\033[08m&apos; class FgColor: black = &apos;\033[30m&apos; red = &apos;\033[31m&apos; green = &apos;\033[32m&apos; orange = &apos;\033[33m&apos; blue = &apos;\033[34m&apos; purple = &apos;\033[35m&apos; cyan = &apos;\033[36m&apos; light_grey = &apos;\033[37m&apos; dark_grey = &apos;\033[90m&apos; light_red = &apos;\033[91m&apos; light_green = &apos;\033[92m&apos; yellow = &apos;\033[93m&apos; light_blue = &apos;\033[94m&apos; pink = &apos;\033[95m&apos; light_cyan = &apos;\033[96m&apos; class BgColor: black = &apos;\033[40m&apos; red = &apos;\033[41m&apos; green = &apos;\033[42m&apos; orange = &apos;\033[43m&apos; blue = &apos;\033[44m&apos; purple = &apos;\033[45m&apos; cyan = &apos;\033[46m&apos; light_grey = &apos;\033[47m&apos;class ColorFormatter(logging.Formatter): def format(self, record, color_flag=False): message = super().format(record) if color_flag is False: return message level_no = record.levelno if level_no &gt;= logging.CRITICAL: color = AsciiColor.FgColor.light_red elif level_no &gt;= logging.ERROR: color = AsciiColor.FgColor.light_red elif level_no &gt;= logging.WARNING: color = AsciiColor.FgColor.purple elif level_no &gt;= logging.INFO: color = AsciiColor.reset elif level_no &gt;= logging.DEBUG: color = AsciiColor.FgColor.green else: color = AsciiColor.reset message = color + message + AsciiColor.reset return messageclass ColorHandler(logging.StreamHandler): def __init__(self, stream=sys.stdout): super().__init__(stream) def format(self, record, colour=False): if not isinstance(self.formatter, ColorFormatter): self.formatter = ColorFormatter() return self.formatter.format(record, colour) def emit(self, record): stream = self.stream try: msg = self.format(record, stream.isatty()) stream.write(msg) stream.write(self.terminator) self.flush() except Exception: self.handleError(record)def log_init(detail_flag = False): h = ColorHandler() if detail_flag is True: # formatter = ColouredFormatter( # &apos;[%(levelname)s] %(message)s [%(filename)s-%(funcName)s-%(lineno)d] [%(asctime)s]&apos;, # datefmt=&apos;%Y-%m-%d %H:%M:%S&apos; # ) formatter = ColorFormatter(&apos;[%(levelname)s] %(message)s [%(filename)s-%(funcName)s-%(lineno)d]&apos;) else: formatter = ColorFormatter(&apos;%(message)s&apos;) h.formatter = formatter logging.basicConfig(level=logging.DEBUG, handlers=[h]) logger = logging.getLogger(&apos;log&apos;) return loggergLog = log_init(detail_flag = True)]]></content>
       <tags>
         <tag>笔记</tag>
         <tag>python</tag>
@@ -124,8 +179,53 @@
   </entry>
   <entry>
     <title><![CDATA[iOS UIImageView 图片显示模式]]></title>
-    <url>%2F2018%2F01%2F05%2Fswift_image_mode%2F</url>
+    <url>%2F2018%2F01%2F06%2Fswift_image_mode%2F</url>
     <content type="text"><![CDATA[拉伸缩放(Scaling the View) ScaleToFill ScalAspectFit ScaleAspectFill 主要的区别在于缩放时如何保持宽高比。 举个例子, 把一个 imageview(100x100) 也就是五角星作为一个绿色 view(200x350) 的子视图, 如下图所示为了实验, 增加一些约束使得星星图片填满 view, 不同的模式决定了图片如何填满多的空白部分。如果不设置模式, 默认是 ScaleToFill, 效果如下左图所示, 可以看出, 这种模式不保持宽高比的拉伸。与之对应的是 ScaleAspectFit, 效果如下右图所示, 这种模式保持宽高比的拉伸。 而第三种模式同样是保持宽高比的拉伸, 如下左图所示, 不同的是 imageView 的 contents 超出了 imageView 的边界。有个属性可以设置是否截断超出的部分。1imageView.clipsToBounds = true 定位(Positioning the View)如果不想拉伸, 可以通过以下九种方式定位。 重新绘制(Redrawing the View)这个看效果和 scaleToFill 差不多。1imageView.contentMode = .redraw 这种模式没用过, Perhaps we have a custom view that implements drawRect and we need it called any time the bounds change? The Redraw content mode triggers the setNeedsDisplay method when the view bounds change. 参考文档:Stretching, Redrawing and Positioning with contentMode]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>swift</tag>
+        <tag>ios</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ios segue 几种类型区别]]></title>
+    <url>%2F2018%2F01%2F06%2Fswift_segue%2F</url>
+    <content type="text"><![CDATA[segue 分为以下几种类型: Show Show Detail Present Modally Present as Popover Custom在 iPhone 中有 Show、Show Detail、Present Modally、Custom 四种不同类型, iPad中有 Show、Show Detail、Present Modally、Present as Popover、Custom 五种不同类型。 Show一般用在 UINavigationController 的视图控制器中。切换方式: 进入时由右向左, 退出时由左向右。新压入的视图控制器有返回按钮, 单击可以返回。 Show Detail只适用于嵌入在 UISplitViewController 对象内的视图控制器, 分割控制器用以替换详细控制器（DetailViewController)。不提供返回按钮。 Present as Popover在 iPad 中, 目标视图以浮动窗样式呈现, 点击目标视图以外区域, 目标视图消失; 在 iPhone 中, 默认目标视图以模态覆盖整个屏幕。 Custom自定义跳转方式。 Present Modally有多种不同呈现方式, 可根据需要设置。在 iPhone 中, 一般以动画的形式自下向上覆盖整个屏幕, 用户无法与上一个视图交互,除非关闭当前视图; 在iPad中, 常见呈现为一个中心框, 中心框以动画形式自下向上弹出, 同时使底层视图控制器变暗。不提供返回按钮。 其他概念: presenting view controller Vs presented view controller当我们在 view controller A 中模态显示 view controller B 的时候, A 就充当 presenting view controller（弹出VC），而 B 就是 presented view controller。 modal Presentation Styles（弹出风格）有四种风格: UIModalPresentationFullScreen UIModalPresentationPageSheet UIModalPresentationFormSheet UIModalPresentationCurrentContext这四种方式在 iPad 上面统统有效，但在 iPhone 和 iPod touch 上面系统始终以 UIModalPresentationFullScreen 模式显示 presented VC。 Modal Transition Style（弹出时的动画风格） UIModalTransitionStyleCoverVertical: 底部滑入 UIModalTransitionStyleFlipHorizontal: 水平翻转进入 UIModalTransitionStyleCrossDissolve: 交叉溶解 UIModalTransitionStylePartialCurl: 翻页 备注:实现点击领取新人优惠券图标弹窗效果。123456789101112131415func handleFreshUserCouponViewTapped() &#123; guard let vc = UIStoryboard.init(name: &quot;Homepage&quot;, bundle: nil).instantiateViewController(withIdentifier: &quot;FreshUserCouponViewController&quot;) as? FreshUserCouponViewController else &#123; return &#125; vc.modalPresentationStyle = .overFullScreen vc.modalTransitionStyle = .crossDissolve self.present(vc, animated: true, completion: nil)&#125;FreshUserCouponViewController: func viewInit() &#123; // 设置背景 self.view.backgroundColor = UIColor.black.withAlphaComponent(0.2)&#125;]]></content>
+      <tags>
+        <tag>swift</tag>
+        <tag>ios</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[少年不识愁滋味]]></title>
+    <url>%2F2018%2F01%2F06%2Ftalk1%2F</url>
+    <content type="text"><![CDATA[丑奴儿·书博山道中壁【作者】辛弃疾 【朝代】宋少年不识愁滋味, 爱上层楼。爱上层楼。为赋新词强说愁。而今识尽愁滋味, 欲说还休。欲说还休。却道天凉好个秋。]]></content>
+      <tags>
+        <tag>说说</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[个人网站搭建记录(四) -- 图片设置]]></title>
+    <url>%2F2018%2F01%2F05%2Fblog_create4%2F</url>
+    <content type="text"><![CDATA[图片并排新建博文, 设置 type: “picture”, 使用 {\% gp x-x \%} … {\% endgp \%} 标签引用要展示的图片地址,如下所示, 图片展示效果，参考 theme/next/scripts/tags/group-pictures.js 注释示意图。123456789101112131415161718&#123;% gp 5-3 %&#125;---title: Naruto-Picturescategories: [图片]tags: [picture,naruto]date: 2016-09-02 14:36:04keywords: picture,narutotype: &quot;picture&quot;top: 999---&#123;% gp 5-3 %&#125;![](/images/post/18210.jpg)![](/images/post/196232.jpg)![](/images/post/224147.jpg)![](/images/post/199301.jpg)![](/images/post/213318.jpg)&#123;% endgp %&#125;&#123;% endgp %&#125; 修复图片展示设置图片并排后, 首页可以正常显示, 但点击查看博文时显示效果丢失, 在 themes\next\source\css_common\components\tags\group-pictures.styl 中设置可解决。123456.page-post-detail .post-body .group-picture-column &#123; // float: none; margin-top: 10px; width: auto !important; (这行可注释可不注释) img &#123; margin: 0 auto; &#125;&#125; 设置图片大小hexo 主题支持以下方式设置。1&lt;img src=&quot;http://ac-ANdqGl5F.clouddn.com/5cc2ff61134f1f923571.png&quot; width=&quot;142&quot; height=&quot;200&quot; alt=&quot;卡通少女1&quot;/&gt; 设置图片能够点击放大图片并排以后, 失去点击放大效果, 可在 themes/next/source/js/src/utils.js 中修改代码如下, 注释一行代码即可解决。12345wrapImageWithFancyBox: function() &#123; $(&apos;.content img&apos;) .not(&apos;[hidden]&apos;) // .not(&apos;.group-picture img, .post-gallery img&apos;) .each(function() &#123; 创建文件同时创建一个同名的图片文件夹在根目录的 _config.yml 中找到 post_asset_folder 关键字, 设为 true。在hexo的目录下执行1pm install https://github.com/CodeFalling/hexo-asset-image --save 参考文档多图功能 图片不能放大图片模式]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[微信跳一跳 -- iOS]]></title>
+    <url>%2F2018%2F01%2F05%2Fwechat_jump%2F</url>
+    <content type="text"><![CDATA[安装 WebDriverAgentRunner需要先安装 carthage + npm12345git clone https://github.com/facebook/WebDriverAgent.gitcd WebDriverAgentbrew install carthagebrew install npm./Scripts/bootstrap.sh 在安装完 carthage 执行下面命令1brew link carthage 出现执行权限问题1Linking /usr/local/Cellar/carthage/0.27.0... Error: Permission denied @ dir_s_mkdir - /usr/local/Frameworks 解决方法:12sudo mkdir /usr/local/Frameworkssudo chown $(whoami):admin /usr/local/Frameworks 安装 facebook-wda1pip install --pre facebook-wda 配置使用 WebDriverAgentRunner用 xcode9 打开 WebDriverAgent.xcodeproj, 先把项目的证书改为自己证书,scheme 选则 WebDriverAgentRunner, destination 选自己手机, 然后点 xcode 菜单栏 -&gt; Product -&gt; Test一切正常的话，手机上会出现一个无图标的 WebDriverAgent 应用, 启动之后, 马上又返回到桌面。此时控制台界面可以看到设备的 IP。通过上面给出的 IP 和端口，加上 /status 合成一个 url 地址。例如http://10.0.0.1:8100/status, 然后浏览器打开。如果出现一串JSON输出, 说明WDA安装成功了。如果没有反应, 是因为有些国产的 iPhone 机器通过手机的 IP 和端口还不能访问, 此时需要将手机的端口转发到 Mac 上。再执行以下命令:123brew intall usbmuxdbrew install libimobiledeviceiproxy 8100 8100 这时通过访问 http://localhost:8100/status 确认 WDA 是否运行成功。而 inspector 的地址是 http://localhost:8100/inspector, inspector 是用来查看 UI 的图层, 方便写测试脚本用的。 从 github 下载脚本 wechat_jump_game1git clone https://github.com/wangshub/wechat_jump_game.git 进入 wechat_jump_game 目录, 执行1pip install -r requirements.txt 把依赖装好, 用 PyCharm 打开 wechat_jump_game, 运行 wechat_jump_iOS_py3.py 文件 参考文档wechat_jump_game githubATX 文档 - iOS 真机如何安装 WebDriverAgent写给iOS开发的跳一跳秘籍]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>game</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ScrollView 嵌套 TableView, 滑动删除手势冲突]]></title>
+    <url>%2F2018%2F01%2F05%2Fswift_gesture_recognize%2F</url>
+    <content type="text"><![CDATA[参考文档UIGestureRecognizerDelegate 苹果文档]]></content>
       <tags>
         <tag>笔记</tag>
         <tag>swift</tag>
@@ -143,40 +243,12 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[ScrollView 嵌套 TableView, 滑动删除手势冲突]]></title>
-    <url>%2F2018%2F01%2F05%2Fswift_gesture_recognize%2F</url>
-    <content type="text"><![CDATA[参考文档UIGestureRecognizerDelegate 苹果文档]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>swift</tag>
-        <tag>ios</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[图片素材网站]]></title>
     <url>%2F2018%2F01%2F04%2Fimage_website%2F</url>
     <content type="text"><![CDATA[千库包图千图米元素站酷花瓣昵图懒人中国设计堆糖大师]]></content>
       <tags>
         <tag>笔记</tag>
         <tag>图片</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[python 版本管理 -- pyenv]]></title>
-    <url>%2F2018%2F01%2F04%2Fpython_note2%2F</url>
-    <content type="text"><![CDATA[安装123brew updatebrew install pyenvpyenv init pyenv init 命令解释:Sets up your shims path. This is the only requirement for pyenv to function properly. You can do this by hand by prepending $(pyenv root)/shims to your $PATH. Installs autocompletion. This is entirely optional but pretty useful. Sourcing $(pyenv root)/completions/pyenv.bash will set that up. There is also a $(pyenv root)/completions/pyenv.zsh for Zsh users. Rehashes shims. From time to time you’ll need to rebuild your shim files. Doing this on init makes sure everything is up to date. You can always run pyenv rehash manually. Installs the sh dispatcher. This bit is also optional, but allows pyenv and plugins to change variables in your current shell, making commands like pyenv shell possible. The sh dispatcher doesn’t do anything crazy like override cd or hack your shell prompt, but if for some reason you need pyenv to be a real script rather than a shell function, you can safely skip it. 在 ~/.zshrc 里增加下面这条命令自动启用 pyenv1eval &quot;$(pyenv init -)&quot; 一些命令查看 pyenv 版本1pyenv -v 查看可安装的 python 版本1pyenv install --list 安装 python3.6.31pyenv install -v 3.6.3 卸载 python3.6.31pyenv uninstall 3.6.3 查看已安装 python 版本, 好像只能查看通过 pyenv install -v 安装的和系统自带的版本1pyenv versions 创建一个名为 test 的全新虚拟环境1pyenvv virtualenv 3.6.3 test 激活该虚拟环境1pyenv activate test 设置全局的 Python 版本，通过将版本号写入 ~/.pyenv-version, 最好不用, 可能导致一些应用不能用1pyenv global 3.6.3 在当前目录下设置 python 版本, 在当前目录生成 .pyenv-version1pyenv local 3.6.3 要使 terminal 生效, 在 ~/.bash_profile 或 ~/.zshrc 中添加1if which pyenv &gt; /dev/null; then eval &quot;$(pyenv init -)&quot;; fi 再 source ~/.bash_profile 或 source ~/.zshrc 使设置生效查看 python 版本安装路径1pyenv prefix 3.6.3 期间遇到的问题No shell command in Mac OS.解决方法:在 ~/.zshrc 中添加这条命令 :1if which pyenv &gt; /dev/null; then eval &quot;$(pyenv init -)&quot;; fi 参考pyenv 更多命令Mac下 Pyenv 的安装使用pyenv github]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[微信跳一跳 -- iOS]]></title>
-    <url>%2F2018%2F01%2F04%2Fwechat_jump%2F</url>
-    <content type="text"><![CDATA[安装 WebDriverAgentRunner需要先安装 carthage + npm12345git clone https://github.com/facebook/WebDriverAgent.gitcd WebDriverAgentbrew install carthagebrew install npm./Scripts/bootstrap.sh 在安装完 carthage 执行下面命令1brew link carthage 出现执行权限问题1Linking /usr/local/Cellar/carthage/0.27.0... Error: Permission denied @ dir_s_mkdir - /usr/local/Frameworks 解决方法:12sudo mkdir /usr/local/Frameworkssudo chown $(whoami):admin /usr/local/Frameworks 安装 facebook-wda1pip install --pre facebook-wda 配置使用 WebDriverAgentRunner用 xcode9 打开 WebDriverAgent.xcodeproj, 先把项目的证书改为自己证书,scheme 选则 WebDriverAgentRunner, destination 选自己手机, 然后点 xcode 菜单栏 -&gt; Product -&gt; Test一切正常的话，手机上会出现一个无图标的 WebDriverAgent 应用, 启动之后, 马上又返回到桌面。此时控制台界面可以看到设备的 IP。通过上面给出的 IP 和端口，加上 /status 合成一个 url 地址。例如http://10.0.0.1:8100/status, 然后浏览器打开。如果出现一串JSON输出, 说明WDA安装成功了。如果没有反应, 是因为有些国产的 iPhone 机器通过手机的 IP 和端口还不能访问, 此时需要将手机的端口转发到 Mac 上。再执行以下命令:123brew intall usbmuxdbrew install libimobiledeviceiproxy 8100 8100 这时通过访问 http://localhost:8100/status 确认 WDA 是否运行成功。而 inspector 的地址是 http://localhost:8100/inspector, inspector 是用来查看 UI 的图层, 方便写测试脚本用的。 从 github 下载脚本 wechat_jump_game1git clone https://github.com/wangshub/wechat_jump_game.git 进入 wechat_jump_game 目录, 执行1pip install -r requirements.txt 把依赖装好, 用 PyCharm 打开 wechat_jump_game, 运行 wechat_jump_iOS_py3.py 文件 参考文档wechat_jump_game githubATX 文档 - iOS 真机如何安装 WebDriverAgent写给iOS开发的跳一跳秘籍]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>game</tag>
       </tags>
   </entry>
   <entry>
@@ -188,12 +260,64 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[ios segue 几种类型区别]]></title>
-    <url>%2F2017%2F12%2F25%2Fswift_segue%2F</url>
-    <content type="text"><![CDATA[segue 分为以下几种类型: Show Show Detail Present Modally Present as Popover Custom在 iPhone 中有 Show、Show Detail、Present Modally、Custom 四种不同类型, iPad中有 Show、Show Detail、Present Modally、Present as Popover、Custom 五种不同类型。 Show一般用在 UINavigationController 的视图控制器中。切换方式: 进入时由右向左, 退出时由左向右。新压入的视图控制器有返回按钮, 单击可以返回。 Show Detail只适用于嵌入在 UISplitViewController 对象内的视图控制器, 分割控制器用以替换详细控制器（DetailViewController)。不提供返回按钮。 Present as Popover在 iPad 中, 目标视图以浮动窗样式呈现, 点击目标视图以外区域, 目标视图消失; 在 iPhone 中, 默认目标视图以模态覆盖整个屏幕。 Custom自定义跳转方式。 Present Modally有多种不同呈现方式, 可根据需要设置。在 iPhone 中, 一般以动画的形式自下向上覆盖整个屏幕, 用户无法与上一个视图交互,除非关闭当前视图; 在iPad中, 常见呈现为一个中心框, 中心框以动画形式自下向上弹出, 同时使底层视图控制器变暗。不提供返回按钮。 其他概念: presenting view controller Vs presented view controller当我们在 view controller A 中模态显示 view controller B 的时候, A 就充当 presenting view controller（弹出VC），而 B 就是 presented view controller。 modal Presentation Styles（弹出风格）有四种风格: UIModalPresentationFullScreen UIModalPresentationPageSheet UIModalPresentationFormSheet UIModalPresentationCurrentContext这四种方式在 iPad 上面统统有效，但在 iPhone 和 iPod touch 上面系统始终以 UIModalPresentationFullScreen 模式显示 presented VC。 Modal Transition Style（弹出时的动画风格） UIModalTransitionStyleCoverVertical: 底部滑入 UIModalTransitionStyleFlipHorizontal: 水平翻转进入 UIModalTransitionStyleCrossDissolve: 交叉溶解 UIModalTransitionStylePartialCurl: 翻页 备注:实现点击领取新人优惠券图标弹窗效果。123456789101112131415func handleFreshUserCouponViewTapped() &#123; guard let vc = UIStoryboard.init(name: &quot;Homepage&quot;, bundle: nil).instantiateViewController(withIdentifier: &quot;FreshUserCouponViewController&quot;) as? FreshUserCouponViewController else &#123; return &#125; vc.modalPresentationStyle = .overFullScreen vc.modalTransitionStyle = .crossDissolve self.present(vc, animated: true, completion: nil)&#125;FreshUserCouponViewController: func viewInit() &#123; // 设置背景 self.view.backgroundColor = UIColor.black.withAlphaComponent(0.2)&#125;]]></content>
+    <title><![CDATA[个人网站搭建记录(一) -- 工具选择]]></title>
+    <url>%2F2017%2F12%2F25%2Fblog_create1%2F</url>
+    <content type="text"><![CDATA[以下是我搭建个人网站的简要记录, 电脑为 mac 系统。 静态网站与动态网站的选择网站可分为静态网站和动态网站, 静态网站非常适合专注于内容, 例如博客; 而动态网站以数据库技术为基础, 和用户的交互能力强, 动态网站有个很有名的 wordpress 的博客平台。 结合自己实际情况, 我选择功能较弱、较简单的静态网站。 静态网站生成工具的选择网上有很多有名的静态网站生成工具, 这些工具能从简单的纯文本文件生成一个网站。 常用的文本格式有 reStructuredText(rst) 和 Markdown。有人列举了网络上排名前十的工具, 排名并不一定准确, 仅做参考: Jekyll - GitHub Pages 的构建工具（Ruby 语言。 Octopress - 基于 Jekyll 的博客生成工具, 它简化了 Jekyll 的操作, 可以让你更舒服的创作。 Hexo - 用 Node.js 编写的博客框架, 支持所有的 GitHub Markdown 特性。 Hugo - 使用 go 语言编写, 并且使用 Markdown 语法。 Pelican - 使用Python编写的静态网站生成工具, 支持用 reStructuredText, Markdown, 和AsciiDoc 创作网站内容。 Middleman - 中间人, 一个使用 Ruby 编写的静态网站生成工具。 Metalsmith - 使用 Node.js 编写。 DocPad - 支持 CoffeeScript、Ruby、PHP、Stylus 等等。 Wintersmith - 使用 Node.js 编写。 Cactus - 使用 Python 和 Django 模版系统制作的静态网站生成工具。更多资料参考:top 10 排名。 因为熟悉一点 python 和 sphinx, 通过简单的筛选, 我最先选定的是用 Pelican+reStructuredText。 然后找到一个不错的 Pelican 主题(就是网站的整体风格) – elegant, 效果可参考孤逐王的博客。但是在找的过程中发现了更喜欢的 hexo 主题 - Next, 效果可参考XueCat的博客。 最终还是选用了 Hexo, 采用 Next 主题, markdown 写文档。 嗯, 怎么舒服怎么来。 另外, hexo 这两个主题我也很喜欢: yilia, 效果可参考Litten的博客。 raytaylorism, 效果可参考林寿山的博客。 总结我选择用静态网站搭建博客, Hexo + Next主题 + Markdown 文本格式。]]></content>
       <tags>
-        <tag>swift</tag>
-        <tag>ios</tag>
+        <tag>笔记</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[好听的歌(一)]]></title>
+    <url>%2F2017%2F12%2F25%2Fmusic_collection1%2F</url>
+    <content type="text"><![CDATA[var options = {"narrow":false,"autoplay":false,"showlrc":3,"mode":"random","music":[{"title":"随便 Cove","author":"Zinsin","url":"http://ac-ANdqGl5F.clouddn.com/79f099beb13d9f838ae6.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/e5b3d1e39a4428a53531.png","lrc":"http://ac-ANdqGl5F.clouddn.com/591b1a290c1b537058f9.txt"},{"title":"爱的华尔兹","author":"郑爽、俞灏明","url":"http://ac-ANdqGl5F.clouddn.com/932175e28daf143867df.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/ea572fa776fa6baaceb2.png","lrc":"http://ac-ANdqGl5F.clouddn.com/24d7e3950f733abbcf21.lrc"},{"title":"美丽新世界","author":"痛痒乐队","url":"http://ac-ANdqGl5F.clouddn.com/886d4a4838e57bfe87d0.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/b8d8c00dcf8da16cea9c.png"},{"title":"我要你","author":"任素汐","url":"http://ac-ANdqGl5F.clouddn.com/14bae372d1d17ebbd56d.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/6937370626da45e44b6c.png","lrc":"http://ac-ANdqGl5F.clouddn.com/90ec5c7ef9041dc61ecb.lrc"},{"title":"彩虹","author":"周杰伦","url":"http://ac-ANdqGl5F.clouddn.com/233b707250dd1ab07365.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/94bfc39f18025fa17af9.png","lrc":"http://ac-ANdqGl5F.clouddn.com/2561b1c2e42f19b5ec5d.txt"}]}; options.element = document.getElementById("aplayer0"); var ap = new APlayer(options); window.aplayers || (window.aplayers = []); window.aplayers.push(ap); 注:美丽新世界的歌词没找到]]></content>
+      <tags>
+        <tag>音乐</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[文字收集(一)]]></title>
+    <url>%2F2017%2F12%2F25%2Fnet_collection1%2F</url>
+    <content type="text"><![CDATA[来源于知乎李煜的个人简介: 若你赐我一道旖旎的风景我便为你翻山越岭 缘木求林一路上边走边停 边停边寻山空是我姓 湖静是你名若你赠我一弯悠长的天径我定为你驾雾腾云 采月摘星一路上且醉且歌 且歌且行云淡是我姓 风轻是你名若你贻我一方梦幻的仙境我必为你覆雨翻云 织云作锦一路上半雨半阴 半阴半晴雨过是我姓 天晴是你名这里李煜，略通诗词联赋。如若有幸相识，实乃缘分。 来源于知乎荏苒的回答: 所以这么多年一直有个心愿：想体验下什么叫摸头杀。听说最萌身高差15cm，所以麻烦159cm的小哥哥联系下我，不要害羞谢谢～^_^]]></content>
+      <tags>
+        <tag>文字</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[诗词收集(一)]]></title>
+    <url>%2F2017%2F12%2F25%2Fpoem1%2F</url>
+    <content type="text"><![CDATA[《说苑》越人歌 春秋 山有木兮木有枝, 心悦君兮君不知。 译文山上有树木啊树木有丫枝, 心中喜欢你啊你却不知此事。王子与渔夫的故事, 歌颂贵族与劳动人民情谊。 国风·郑风·山有扶苏 作者：佚名 山有扶苏, 隰有荷华。不见子都, 乃见狂且。山有乔松, 隰有游龙, 不见子充, 乃见狡童。 译文山上有茂盛的扶苏，池里有美艳的荷花。没见到子都美男子啊，偏遇见你这个小狂徒。山上有挺拔的青松，池里有丛生的水荭。没见到子充好男儿啊，偏遇见你这个小狡童。 九歌·湘夫人 作者: 屈原 帝子降兮北渚, 目眇眇兮愁予。袅袅兮秋风, 洞庭波兮木叶下。登白薠兮骋望, 与佳期兮夕张。鸟何萃兮苹中, 罾何为兮木上。沅有芷兮澧有兰, 思公子兮未敢言。荒忽兮远望, 观流水兮潺湲。麋何食兮庭中？蛟何为兮水裔？朝驰余马兮江皋, 夕济兮西澨。闻佳人兮召予, 将腾驾兮偕逝。筑室兮水中, 葺之兮荷盖；荪壁兮紫坛, 播芳椒兮成堂；桂栋兮兰橑, 辛夷楣兮药房；罔薜荔兮为帷, 擗蕙櫋兮既张；白玉兮为镇, 疏石兰兮为芳；芷葺兮荷屋, 缭之兮杜衡。合百草兮实庭, 建芳馨兮庑门。九嶷缤兮并迎, 灵之来兮如云。捐余袂兮江中, 遗余褋兮澧浦。搴汀洲兮杜若, 将以遗兮远者；时不可兮骤得, 聊逍遥兮容与！ 注解:沅水旁边有白芷，澧水旁边有泽兰，而我身边没有你。说的是湘夫人娥皇和女英对舜的朝思暮想, 悠悠江水, 芳香芷兰, 寄托着湘夫人无尽的思念和忧怨。为爱殉情的湘夫人最后投江自尽, 一番思念寄情于芷兰芳草, 忧怨和哀婉飘荡在潇湘之间。 修罗道 作者: 步非烟 我为玉树, 君为秋风。风来云动, 树泛秋声。今我思君, 君胡不行？ 无题 作者: littlesen 曲曲池边路, 春来少人行。含水芙蓉叶, 春去气犹清。夕岚分彩翠, 高树藏莺声。乍向风中看, 花落更分明。徘徊觉露冷, 清宵月影横。泠泠砭肌发, 疑是晓寒生。一望可相见, 一步如重城。所爱隔山海, 山海不可平。 临江仙 苏轼 夜饮东坡醒复醉, 归来仿佛三更。家童鼻息已雷鸣。敲门都不应, 倚杖听江声。长恨此身非我有, 何时忘却营营。夜阑风静縠纹平。小舟从此逝, 江海寄余生。 卜算子 苏轼 缺月挂疏桐, 漏断人初静。谁见幽人独往来? 缥缈孤鸿影。惊起却回头, 有恨无人省。拣尽寒枝不肯栖, 寂寞沙洲冷。]]></content>
+      <tags>
+        <tag>诗词</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[个人网站搭建记录(二) -- Hexo 安装与基础设置]]></title>
+    <url>%2F2017%2F12%2F24%2Fblog_create2%2F</url>
+    <content type="text"><![CDATA[Hexo 安装Hexo 是一个快速、简洁且高效的博客框架, 他使用 Markdown（或其他渲染引擎）解析文章。 安装 nvm1brew install nvm 安装完后, 需要在 .bash_profile 中加入以下这行命令:1source $(brew --prefix nvm)/nvm.sh 使设定生效1source ~/.bash_profile 安装 Node.js1curl https://raw.github.com/creationix/nvm/master/install.sh | sh 或者:1wget -qOhttps://raw.github.com/creationix/nvm/master/install.sh | sh 安装完成后，重启终端并执行下列命令即可安装 Node.js。1nvm install stable 安装 Git1brew install git 安装 Hexo1npm install -g hexo-cli 建站创建一个 hexo 项目, 命名为 hexo-doc123hexo init hexo-doccd hexo-docnpm install 新建完成后，指定文件夹的目录如下：12345678.├── _config.yml├── package.json├── scaffolds├── source| ├── _drafts| └── _posts└── themes 启动命令123hexo s (server) - 本地启动hexo g (generate) - 重新生成hexo d (deploy) - push 到 github Hexo 配置Git安装 hexo-deployer-git.1npm install hexo-deployer-git --save 在根目录下的 _configy.yml 文件找到 deploy 关键字更改设置:12345deploy: type: git repo: https://github.com/aojiang/aojiang.github.io.git branch: master message: 我的世界 更改主题为 Next进入 hexo-doc 目录1234cd hexo-docls_config.yml node_modules scaffolds themesdb.json package.json source 新建一个目录文件夹并下载 Next 主题12mkdir themes/nextcurl -s https://api.github.com/repos/iissnan/hexo-theme-next/releases/latest | grep tarball_url | cut -d &apos;&quot;&apos; -f 4 | wget -i -O| tar -zx -C themes/next --strip-components=1 在根目录下的 _configy.yml 文件找到 theme 关键字, 更改设置1theme: next next 主题又有几个不同设计风格, Muse、Mist、Pisces、Gemini, 我目前选择的 Mist, 可在 themes/next/_config.yml 中找到 scheme 关键字设置:1scheme: Mist 设置语言在 _config.yml 找到 language 关键字, 更改设置1language: zh-Hans 在菜单里增加标签栏在项目根目录下, 通过以下命令创建一个新的页面1hexo new page &quot;tags&quot; 在 tags/index.md 设置页面类型123title: All tagsdate: 2014-12-22 12:39:04type: &quot;tags&quot; 在 themes/next/_config.yml 增加 tags:1234menu: home: / archives: /archives tags: /tags 在菜单里增加分类栏在项目根目录下, 通过以下命令创建一个新的页面1hexo new page &quot;categories&quot; 在 tags/index.md 设置页面类型123title: All categoriesdate: 2014-12-22 12:39:04type: &quot;categories&quot; 在 themes/next/_config.yml 增加 “categories”:1234menu: home: / archives: /archives categories: /categories 增加搜索在站点的根目录下执行以下命令安装 hexo-generator-search:1npm install hexo-generator-search --save 在站点的根目录下执行以下命令安装 hexo-generator-searchdb:1npm install hexo-generator-searchdb --save 编辑站点配置文件，新增以下内容到任意位置启用搜索:1234search: path: search.xml field: all limit: 10000 使用 leancloud 进行页面访客统计在 leancloud官网 增加一个应用获取 app_id 和 app_key为该应用创建一个 class 名为 Counter打开/theme/next/_config.yml，在如下对应位置填入 app_id 和 app_key，并将 enable 设置为true。123456# Show number of visitors to each article.# You can visit https://leancloud.cn get AppID and AppKey.leancloud_visitors: enable: true app_id: # your app_id app_key: # your app_key 修改内容宽度编辑 themes/css/_variables/custom.styl 文件, 新增变量:1234// 修改成你期望的宽度content-desktop = 1000px// 当视窗超过 1600px 后的宽度content-desktop-large = 1200px 增加分享编辑根目录下的 _config.yml 文件, 新增变量:1jiathis: true 侧边栏增加社交链接编辑根目录下的 _config.yml，新增字段 social，然后添加社交站点名称与地址即可。例如：12345678910111213141516social: #GitHub: https://github.com/yourname || github E-Mail: mailto:aojiang.china@gmail.com || envelope #Google: https://plus.google.com/yourname || google #Twitter: https://twitter.com/yourname || twitter #FB Page: https://www.facebook.com/yourname || facebook #VK Group: https://vk.com/yourname || vk #StackOverflow: https://stackoverflow.com/yourname || stack-overflow #YouTube: https://youtube.com/yourname || youtube #Instagram: https://instagram.com/yourname || instagram #Skype: skype:yourname?call|chat || skypesocial_icons: enable: true // 是否使用图片 icons_only: false transition: false 图片名称参考 增加站点访问量统计在 themes/next/_config.yml 文件下, 找到 “busuanzi” 关键字设置:123456789101112131415busuanzi_count: # count values only if the other configs are false enable: true # custom uv span for the whole site site_uv: true site_uv_header: &lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt; 访问人数 site_uv_footer: # custom pv span for the whole site site_pv: true site_pv_header: &lt;i class=&quot;fa fa-eye&quot;&gt;&lt;/i&gt; 总访问量 site_pv_footer: 次 # custom pv span for one page only page_pv: true page_pv_header: &lt;i class=&quot;fa fa-file-o&quot;&gt;&lt;/i&gt; 浏览 page_pv_footer: 次 修改 footer将 “由 Hexo 强力驱动 主题 NexT.Pisces” 这些自带的内容修改1themes/next/layout/_pzartials/footer.swig 5.1.0:1thems/next/layout/_partials/footer.swig 参考文档:GitHub Next 主题Hexo 中文文档Hexo -Next 主题优化Hexo 博客添加站内搜索GitHub hexo-generator-search使用 leancloud 进行页面访客统计如何利用 github 打造博客专属域名footer 修改问题Hexo+Next主题 文章添加阅读次数，访问量等 总结安装: nvm+git+hexo。设置: 主题+语言+标签+分类+搜索+页面访客统计+搜索+分享+社交+footer。]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[图片并排参数选择]]></title>
+    <url>%2F2017%2F12%2F24%2Fimg_show_type%2F</url>
+    <content type="text"><![CDATA[把所有并排方式列下来, 3-1 好像不起作用。 /** 2-1* □ □*/ /** 2-2* □ □*/ /** 3-1* □ □ □*/ /** 3-2* □ □ □*/ /** 3-3* □ □ □*/ /** 4-1* □ □ □ □*/ /** 4-2* □ □ □ □*/ /** 4-3* □ □ □ □*/ /** 4-4* □ □ □ □*/ /** 5-1* □ □ □ □ □*/ /** 5-2* □ □ □ □ □*/ /** 5-3* □ □ □ □ □*/ /** 5-4* □ □ □ □ □*/ /** 6-1* □ □ □ □ □ □*/ /** 6-2* □ □ □ □ □ □*/ /** 6-3* □ □ □ □ □ □*/ /** 6-4* □ □ □ □ □ □*/ /** 6-5* □ □ □ □ □ □*/ /** 7-1* □ □ □ □ □ □ □*/ /** 7-2* □ □ □ □ □ □ □*/ /** 7-3* □ □ □ □ □ □ □*/ /** 7-4* □ □ □ □ □ □ □*/ /** 7-5* □ □ □ □ □ □ □*/ /** 8-1* □ □ □ □ □ □ □ □*/ /** 8-2* □ □ □ □ □ □ □ □*/ /** 8-3* □ □ □ □ □ □ □ □*/ /** 8-4* □ □ □ □ □ □ □ □*/ /** 8-5* □ □ □ □ □ □ □ □*/ /** 8-6* □ □ □ □ □ □ □ □*/ /** 8-7* □ □ □ □ □ □ □ □*/ /** 9-1* □ □ □ □ □ □ □ □ □*/ /** 9-2* □ □ □ □ □ □ □ □ □*/ /** 9-3* □ □ □ □ □ □ □ □ □*/ /** 9-4* □ □ □ □ □ □ □ □ □*/ /** 9-5* □ □ □ □ □ □ □ □ □*/ /** 9-6* □ □ □ □ □ □ □ □ □*/ /** 9-7* □ □ □ □ □ □ □ □ □*/ /** 10-1* □ □ □ □ □ □ □ □ □ □*/ /** 10-2* □ □ □ □ □ □ □ □ □ □*/ /** 10-3* □ □ □ □ □ □ □ □ □ □*/ /** 10-4* □ □ □ □ □ □ □ □ □ □*/ /** 10-5* □ □ □ □ □ □ □ □ □ □*/ /** 10-6* □ □ □ □ □ □ □ □ □ □*/ /** 10-7* □ □ □ □ □ □ □ □ □ □*/ /** Defaults Layout* □ □ □ □ □ □ …*/]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[购买海外云主机搭建服务器科学上网]]></title>
+    <url>%2F2017%2F12%2F24%2Fvpn1%2F</url>
+    <content type="text"><![CDATA[为什么要自己搭vpn 分免费和收费的两种, 免费的一般用的人都比较多, 网速也不快, 而且不稳定。收费的 vpn 的价格一般从几十元到数百元不等。而自己买个云主机的价格也就在十美金以内, 每个月送的流量基本用不完, 主机独享, 完爆收费VPN。 云主机的选择国内的主机商靠谱的是阿里、腾讯、ucloud三家, 海外节点的价格基本都要百元以上。美国比较便宜(因为延时大), 亚洲节点相对较贵, 新加坡和日本稍好, 香港因为延时最小, 价格也是最贵的。国外的云主机商有 linode, bandwagon, vultr这几家。最好的是 linode, 价格也相对贵点。 PPTP/L2TP/IPSEC/IKEV2PPTP 因为安全性原因已经被 iOS10 除去了。其他三个的跨平台支持能力都不错。 vultr 购买云主机搭建因为 vultr 支持支付宝付款, 购买云主机启动后, 在 mac 终端可直接用 ssh 登陆, 接着提示输入密码, 都可在 vultr 控制台查到。1ssh root@&lt;host&gt; 部署 Shadowsocks 服务器端12345wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.shchmod +x shadowsocks.sh./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log TCP Fast Open实际上已经可以在自己的任意设备上进行登录使用了。但是为了更好的连接速度，你还需要多做几步。 打开 rc.local 文件1nano /etc/rc.local 在 rc.local 文件末尾加上1echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen ctrl + x 退出, 输入 y 并回车确认退出。 打开 sysctl.conf 文件,1nano /etc/sysctl.conf 在 sysctl.conf 末尾加上1net.ipv4.tcp_fastopen = 3 再打开一个 Shadowsocks 配置文件,1nano /etc/shadowsocks.json 把其中 “fast_open” 一项的 false 替换成 true。12345678910&#123; &quot;server&quot;:&quot;0.0.0.0&quot;, &quot;server_port&quot;:8989, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;password&quot;:&quot;xxxx&quot;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;aes-256-cfb&quot;, &quot;fast_open&quot;:true&#125; 如果需要添加多用户的话,12345678910111213&#123; &quot;server&quot;:&quot;0.0.0.0&quot;, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;port_password&quot;: &#123; &quot;12345&quot;: &quot;xxx&quot;, &quot;8989&quot;: &quot;xxx&quot;, &quot;22345&quot;: &quot;xxx&quot; &#125;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;aes-256-cfb&quot;, &quot;fast_open&quot;:true&#125; 重启 Shadowsocks1/etc/init.d/shadowsocks restart 客户端安装 ShadowsocksMac 版客户端下载Win 版客户端下载 部署锐速完成上述步骤后，使用过程中可能会发现连接速度有时不太稳定。这就是「锐速」发挥功能的时候了。锐速 ServerSpeeder 是一个 TCP 加速软件，对 Shadowsocks 客户端和服务器端间的传输速度有显著提升。锐速」虽然已经停止注册和安装了，不过网上还是有不少「破解版」可用。123ssh root@&lt;host&gt;wget -N --no-check-certificate https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder-all.sh &amp;&amp; bash serverspeeder-all.sh 若运行中碰到提示说需要更换内核的话CentOS6 内核更换为： 2.6.32-504.3.3.el6.x86_6412rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-firmware-2.6.32-504.3.3.el6.noarch.rpmrpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-2.6.32-504.3.3.el6.x86_64.rpm --force CentOS7 内核更换为： 3.10.0-229.1.2.el7.x86_641rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-3.10.0-229.1.2.el7.x86_64.rpm --force 查看内核是否安装成功1rpm -qa | grep kernel 重启查看内核是否更换成功123ssh root@&lt;host&gt;rebootuname -r 参考文档海外云主机搭建IKEV2 VPN之经验总结 + 搭建证书服务器科学上网的终极姿势-在-vultr-vps-上搭建-shadowsocks教程：CentOS更换内核，提供锐速可用的内核下载]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>vpn</tag>
+        <tag>云主机</tag>
       </tags>
   </entry>
   <entry>
@@ -205,21 +329,12 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[少年不识愁滋味]]></title>
-    <url>%2F2017%2F12%2F23%2Ftalk1%2F</url>
-    <content type="text"><![CDATA[丑奴儿·书博山道中壁【作者】辛弃疾 【朝代】宋少年不识愁滋味, 爱上层楼。爱上层楼。为赋新词强说愁。而今识尽愁滋味, 欲说还休。欲说还休。却道天凉好个秋。]]></content>
-      <tags>
-        <tag>说说</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[购买海外云主机搭建服务器科学上网]]></title>
-    <url>%2F2017%2F12%2F23%2Fvpn1%2F</url>
-    <content type="text"><![CDATA[为什么要自己搭vpn 分免费和收费的两种, 免费的一般用的人都比较多, 网速也不快, 而且不稳定。收费的 vpn 的价格一般从几十元到数百元不等。而自己买个云主机的价格也就在十美金以内, 每个月送的流量基本用不完, 主机独享, 完爆收费VPN。 云主机的选择国内的主机商靠谱的是阿里、腾讯、ucloud三家, 海外节点的价格基本都要百元以上。美国比较便宜(因为延时大), 亚洲节点相对较贵, 新加坡和日本稍好, 香港因为延时最小, 价格也是最贵的。国外的云主机商有 linode, bandwagon, vultr这几家。最好的是 linode, 价格也相对贵点。 PPTP/L2TP/IPSEC/IKEV2PPTP 因为安全性原因已经被 iOS10 除去了。其他三个的跨平台支持能力都不错。 vultr 购买云主机搭建因为 vultr 支持支付宝付款, 购买云主机启动后, 在 mac 终端可直接用 ssh 登陆, 接着提示输入密码, 都可在 vultr 控制台查到。1ssh root@&lt;host&gt; 部署 Shadowsocks 服务器端12345wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.shchmod +x shadowsocks.sh./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log TCP Fast Open实际上已经可以在自己的任意设备上进行登录使用了。但是为了更好的连接速度，你还需要多做几步。 打开 rc.local 文件1nano /etc/rc.local 在 rc.local 文件末尾加上1echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen ctrl + x 退出, 输入 y 并回车确认退出。 打开 sysctl.conf 文件,1nano /etc/sysctl.conf 在 sysctl.conf 末尾加上1net.ipv4.tcp_fastopen = 3 再打开一个 Shadowsocks 配置文件,1nano /etc/shadowsocks.json 把其中 “fast_open” 一项的 false 替换成 true。12345678910&#123; &quot;server&quot;:&quot;0.0.0.0&quot;, &quot;server_port&quot;:8989, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;password&quot;:&quot;xxxx&quot;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;aes-256-cfb&quot;, &quot;fast_open&quot;:true&#125; 如果需要添加多用户的话,12345678910111213&#123; &quot;server&quot;:&quot;0.0.0.0&quot;, &quot;local_address&quot;:&quot;127.0.0.1&quot;, &quot;local_port&quot;:1080, &quot;port_password&quot;: &#123; &quot;12345&quot;: &quot;xxx&quot;, &quot;8989&quot;: &quot;xxx&quot;, &quot;22345&quot;: &quot;xxx&quot; &#125;, &quot;timeout&quot;:300, &quot;method&quot;:&quot;aes-256-cfb&quot;, &quot;fast_open&quot;:true&#125; 重启 Shadowsocks1/etc/init.d/shadowsocks restart 客户端安装 ShadowsocksMac 版客户端下载Win 版客户端下载 部署锐速完成上述步骤后，使用过程中可能会发现连接速度有时不太稳定。这就是「锐速」发挥功能的时候了。锐速 ServerSpeeder 是一个 TCP 加速软件，对 Shadowsocks 客户端和服务器端间的传输速度有显著提升。锐速」虽然已经停止注册和安装了，不过网上还是有不少「破解版」可用。123ssh root@&lt;host&gt;wget -N --no-check-certificate https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder-all.sh &amp;&amp; bash serverspeeder-all.sh 若运行中碰到提示说需要更换内核的话CentOS6 内核更换为： 2.6.32-504.3.3.el6.x86_6412rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-firmware-2.6.32-504.3.3.el6.noarch.rpmrpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-2.6.32-504.3.3.el6.x86_64.rpm --force CentOS7 内核更换为： 3.10.0-229.1.2.el7.x86_641rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-3.10.0-229.1.2.el7.x86_64.rpm --force 查看内核是否安装成功1rpm -qa | grep kernel 重启查看内核是否更换成功123ssh root@&lt;host&gt;rebootuname -r 参考文档海外云主机搭建IKEV2 VPN之经验总结 + 搭建证书服务器科学上网的终极姿势-在-vultr-vps-上搭建-shadowsocks教程：CentOS更换内核，提供锐速可用的内核下载]]></content>
+    <title><![CDATA[个人网站搭建记录(三) -- Hexo Next 其他设置]]></title>
+    <url>%2F2017%2F12%2F23%2Fblog_create3%2F</url>
+    <content type="text"><![CDATA[侧边栏设置在 themes/next/_config.yml 找到 avatar 关键字, 设置头像1avatar: /images/avatar_blog.png 在 themes/next/source/css/_common/components/sidebar/sidebar-author.styl 的 .site-author-image 属性中添加以下设置使用圆形头像123border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%; 在 themes/next/_config.yml 找到 sidebar 关键字, 设置头像, 使侧边栏不自动出现12sidebar: display: hide 添加音乐方法一: 用网易云音乐网页版生成外链, 粘贴过来就行1&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=330 height=86 src=&quot;//music.163.com/outchain/player?type=2&amp;id=437292675&amp;auto=0&amp;height=66&quot;&gt;&lt;/iframe&gt; 方法二: 用 Aplayer html 音乐播放器, 首先安装 hexo-tag-aplayer 插件, 在根目录下执行:1npm install --save hexo-tag-aplayer 安装完成后，在需要添加音乐的地方加上下面这段就行, 音乐 url 图片 url 我都是把音乐下载下来传到 leancloud 获取 url。1&#123;% aplayer &quot;歌曲名称&quot; &quot;作者&quot; &quot;音乐_url&quot; &quot;封面图片_url&quot; &quot;autoplay&quot; %&#125; 也可是一个歌单:12345678910111213141516&#123;% aplayerlist %&#125;&#123; &quot;narrow&quot;: false, &quot;autoplay&quot;: true, &quot;showlrc&quot;: 3, &quot;mode&quot;: &quot;random&quot;, &quot;music&quot;: [ &#123; &quot;title&quot;: &quot;我要你&quot;, &quot;author&quot;: &quot;任素汐&quot;, &quot;url&quot;: &quot;http://ac-ANdqGl5F.clouddn.com/14bae372d1d17ebbd56d.mp3&quot;, &quot;pic&quot;: &quot;http://ac-ANdqGl5F.clouddn.com/6937370626da45e44b6c.png&quot;,&quot;lrc&quot;:&quot;http://ac-ANdqGl5F.clouddn.com/90ec5c7ef9041dc61ecb.lrc&quot; &#125; ]&#125;&#123;% endaplayerlist %&#125; 添加视频安装hexo-tag-dplayer, 详见hexo-tag-dplayer1npm install hexo-tag-dplayer --save 然后通过以下格式添加:1234567&#123;% dplayer &quot;url=http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4&quot; &quot;pic=http://ac-ANdqGl5F.clouddn.com/7fef2ae0f152f559b1cb.jpg&quot; &quot;loop=yes&quot; &quot;theme=#FADFA3&quot; &quot;autoplay=false&quot; &quot;token=tokendemo&quot; %&#125; 设置主页内容高度写文章时插入, 文章会自动从插入的位置截断, 点击阅读全文之后会显示所有内容。 自动创建文件夹存放图片首先确认根目录下的 _config.yml 中有 post_asset_folder:true, 然后在根目录执行。1npm install https://github.com/CodeFalling/hexo-asset-image --save 之后再使用 hexo new ‘new’ 创建新博客的时候，会在source/_posts里面创建.md文件的同时生成一个相同的名字的文件夹。把该文章中需要使用的图片放在该文件夹下即可。123![“图片描述”（可以不写）](/文件夹名/你的图片名字.JPG)例如：！[ ] (new/text.jpg) 增加加密功能安装 hexo-blog-encrypt12cd hexonpm install hexo-blog-encrypt --save 配置插件参考资料: 官网说明 绑定个人域名, github pages先安装插件12npm install hexo -server --savenpm install hexo-deployer-git --save 再检查下根目录下的 _config.yml 找到 deploy 关键字设置12345deploy: type: git repo: xxx branch: xxx message: xxx 在 source/ 目录下新建 CNAME(无后缀) 文件, 输入自己的域名假设你的域名与 github pages 已绑定, 用下面命令 push 到 github 上啦12hexo cleanhexo d -g 其他参考文档APlayerHexo博客中插入音乐为Hexo Next主题添加音乐播放器功能（二）]]></content>
       <tags>
         <tag>笔记</tag>
-        <tag>vpn</tag>
-        <tag>云主机</tag>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -231,53 +346,11 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[图片并排参数选择]]></title>
-    <url>%2F2017%2F12%2F23%2Fimg_show_type%2F</url>
-    <content type="text"><![CDATA[把所有并排方式列下来, 3-1 好像不起作用。 /** 2-1* □ □*/ /** 2-2* □ □*/ /** 3-1* □ □ □*/ /** 3-2* □ □ □*/ /** 3-3* □ □ □*/ /** 4-1* □ □ □ □*/ /** 4-2* □ □ □ □*/ /** 4-3* □ □ □ □*/ /** 4-4* □ □ □ □*/ /** 5-1* □ □ □ □ □*/ /** 5-2* □ □ □ □ □*/ /** 5-3* □ □ □ □ □*/ /** 5-4* □ □ □ □ □*/ /** 6-1* □ □ □ □ □ □*/ /** 6-2* □ □ □ □ □ □*/ /** 6-3* □ □ □ □ □ □*/ /** 6-4* □ □ □ □ □ □*/ /** 6-5* □ □ □ □ □ □*/ /** 7-1* □ □ □ □ □ □ □*/ /** 7-2* □ □ □ □ □ □ □*/ /** 7-3* □ □ □ □ □ □ □*/ /** 7-4* □ □ □ □ □ □ □*/ /** 7-5* □ □ □ □ □ □ □*/ /** 8-1* □ □ □ □ □ □ □ □*/ /** 8-2* □ □ □ □ □ □ □ □*/ /** 8-3* □ □ □ □ □ □ □ □*/ /** 8-4* □ □ □ □ □ □ □ □*/ /** 8-5* □ □ □ □ □ □ □ □*/ /** 8-6* □ □ □ □ □ □ □ □*/ /** 8-7* □ □ □ □ □ □ □ □*/ /** 9-1* □ □ □ □ □ □ □ □ □*/ /** 9-2* □ □ □ □ □ □ □ □ □*/ /** 9-3* □ □ □ □ □ □ □ □ □*/ /** 9-4* □ □ □ □ □ □ □ □ □*/ /** 9-5* □ □ □ □ □ □ □ □ □*/ /** 9-6* □ □ □ □ □ □ □ □ □*/ /** 9-7* □ □ □ □ □ □ □ □ □*/ /** 10-1* □ □ □ □ □ □ □ □ □ □*/ /** 10-2* □ □ □ □ □ □ □ □ □ □*/ /** 10-3* □ □ □ □ □ □ □ □ □ □*/ /** 10-4* □ □ □ □ □ □ □ □ □ □*/ /** 10-5* □ □ □ □ □ □ □ □ □ □*/ /** 10-6* □ □ □ □ □ □ □ □ □ □*/ /** 10-7* □ □ □ □ □ □ □ □ □ □*/ /** Defaults Layout* □ □ □ □ □ □ …*/]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[个人网站搭建记录(四) -- 图片设置]]></title>
-    <url>%2F2017%2F12%2F23%2Fblog_create4%2F</url>
-    <content type="text"><![CDATA[图片并排新建博文, 设置 type: “picture”, 使用 {\% gp x-x \%} … {\% endgp \%} 标签引用要展示的图片地址,如下所示, 图片展示效果，参考 theme/next/scripts/tags/group-pictures.js 注释示意图。123456789101112131415161718&#123;% gp 5-3 %&#125;---title: Naruto-Picturescategories: [图片]tags: [picture,naruto]date: 2016-09-02 14:36:04keywords: picture,narutotype: &quot;picture&quot;top: 999---&#123;% gp 5-3 %&#125;![](/images/post/18210.jpg)![](/images/post/196232.jpg)![](/images/post/224147.jpg)![](/images/post/199301.jpg)![](/images/post/213318.jpg)&#123;% endgp %&#125;&#123;% endgp %&#125; 修复图片展示设置图片并排后, 首页可以正常显示, 但点击查看博文时显示效果丢失, 在 themes\next\source\css_common\components\tags\group-pictures.styl 中设置可解决。123456.page-post-detail .post-body .group-picture-column &#123; // float: none; margin-top: 10px; width: auto !important; (这行可注释可不注释) img &#123; margin: 0 auto; &#125;&#125; 设置图片大小hexo 主题支持以下方式设置。1&lt;img src=&quot;http://ac-ANdqGl5F.clouddn.com/5cc2ff61134f1f923571.png&quot; width=&quot;142&quot; height=&quot;200&quot; alt=&quot;卡通少女1&quot;/&gt; 设置图片能够点击放大图片并排以后, 失去点击放大效果, 可在 themes/next/source/js/src/utils.js 中修改代码如下, 注释一行代码即可解决。12345wrapImageWithFancyBox: function() &#123; $(&apos;.content img&apos;) .not(&apos;[hidden]&apos;) // .not(&apos;.group-picture img, .post-gallery img&apos;) .each(function() &#123; 创建文件同时创建一个同名的图片文件夹在根目录的 _config.yml 中找到 post_asset_folder 关键字, 设为 true。在hexo的目录下执行1pm install https://github.com/CodeFalling/hexo-asset-image --save 参考文档多图功能 图片不能放大图片模式]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[图片收集(一)]]></title>
     <url>%2F2017%2F12%2F23%2Fimg_collection1%2F</url>
     <content type="text"><![CDATA[火影油女志乃摘下眼睛会是什么样呢 哈哈]]></content>
       <tags>
         <tag>图片</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[文字收集(一)]]></title>
-    <url>%2F2017%2F12%2F23%2Fnet_collection1%2F</url>
-    <content type="text"><![CDATA[来源于知乎李煜的个人简介: 若你赐我一道旖旎的风景我便为你翻山越岭 缘木求林一路上边走边停 边停边寻山空是我姓 湖静是你名若你赠我一弯悠长的天径我定为你驾雾腾云 采月摘星一路上且醉且歌 且歌且行云淡是我姓 风轻是你名若你贻我一方梦幻的仙境我必为你覆雨翻云 织云作锦一路上半雨半阴 半阴半晴雨过是我姓 天晴是你名这里李煜，略通诗词联赋。如若有幸相识，实乃缘分。 来源于知乎荏苒的回答: 所以这么多年一直有个心愿：想体验下什么叫摸头杀。听说最萌身高差15cm，所以麻烦159cm的小哥哥联系下我，不要害羞谢谢～^_^]]></content>
-      <tags>
-        <tag>文字</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[诗词收集(一)]]></title>
-    <url>%2F2017%2F12%2F22%2Fpoem1%2F</url>
-    <content type="text"><![CDATA[《说苑》越人歌 春秋 山有木兮木有枝, 心悦君兮君不知。 译文山上有树木啊树木有丫枝, 心中喜欢你啊你却不知此事。王子与渔夫的故事, 歌颂贵族与劳动人民情谊。 国风·郑风·山有扶苏 作者：佚名 山有扶苏, 隰有荷华。不见子都, 乃见狂且。山有乔松, 隰有游龙, 不见子充, 乃见狡童。 译文山上有茂盛的扶苏，池里有美艳的荷花。没见到子都美男子啊，偏遇见你这个小狂徒。山上有挺拔的青松，池里有丛生的水荭。没见到子充好男儿啊，偏遇见你这个小狡童。 九歌·湘夫人 作者: 屈原 帝子降兮北渚, 目眇眇兮愁予。袅袅兮秋风, 洞庭波兮木叶下。登白薠兮骋望, 与佳期兮夕张。鸟何萃兮苹中, 罾何为兮木上。沅有芷兮澧有兰, 思公子兮未敢言。荒忽兮远望, 观流水兮潺湲。麋何食兮庭中？蛟何为兮水裔？朝驰余马兮江皋, 夕济兮西澨。闻佳人兮召予, 将腾驾兮偕逝。筑室兮水中, 葺之兮荷盖；荪壁兮紫坛, 播芳椒兮成堂；桂栋兮兰橑, 辛夷楣兮药房；罔薜荔兮为帷, 擗蕙櫋兮既张；白玉兮为镇, 疏石兰兮为芳；芷葺兮荷屋, 缭之兮杜衡。合百草兮实庭, 建芳馨兮庑门。九嶷缤兮并迎, 灵之来兮如云。捐余袂兮江中, 遗余褋兮澧浦。搴汀洲兮杜若, 将以遗兮远者；时不可兮骤得, 聊逍遥兮容与！ 注解:沅水旁边有白芷，澧水旁边有泽兰，而我身边没有你。说的是湘夫人娥皇和女英对舜的朝思暮想, 悠悠江水, 芳香芷兰, 寄托着湘夫人无尽的思念和忧怨。为爱殉情的湘夫人最后投江自尽, 一番思念寄情于芷兰芳草, 忧怨和哀婉飘荡在潇湘之间。 修罗道 作者: 步非烟 我为玉树, 君为秋风。风来云动, 树泛秋声。今我思君, 君胡不行？ 无题 作者: littlesen 曲曲池边路, 春来少人行。含水芙蓉叶, 春去气犹清。夕岚分彩翠, 高树藏莺声。乍向风中看, 花落更分明。徘徊觉露冷, 清宵月影横。泠泠砭肌发, 疑是晓寒生。一望可相见, 一步如重城。所爱隔山海, 山海不可平。 临江仙 苏轼 夜饮东坡醒复醉, 归来仿佛三更。家童鼻息已雷鸣。敲门都不应, 倚杖听江声。长恨此身非我有, 何时忘却营营。夜阑风静縠纹平。小舟从此逝, 江海寄余生。 卜算子 苏轼 缺月挂疏桐, 漏断人初静。谁见幽人独往来? 缥缈孤鸿影。惊起却回头, 有恨无人省。拣尽寒枝不肯栖, 寂寞沙洲冷。]]></content>
-      <tags>
-        <tag>诗词</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[视频收集(一)]]></title>
-    <url>%2F2017%2F12%2F22%2Fmv_collection1%2F</url>
-    <content type="text"><![CDATA[爱的华尔兹, 甜爆了, = = (function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"theme":"#FADFA3","loop":true,"video":{"url":"http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4","pic":"http://ac-ANdqGl5F.clouddn.com/80b9a1da703de72187a2.png"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()]]></content>
-      <tags>
-        <tag>视频</tag>
       </tags>
   </entry>
   <entry>
@@ -291,47 +364,12 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[好听的歌(一)]]></title>
-    <url>%2F2017%2F12%2F22%2Fmusic_collection1%2F</url>
-    <content type="text"><![CDATA[var options = {"narrow":false,"autoplay":false,"showlrc":3,"mode":"random","music":[{"title":"随便 Cove","author":"Zinsin","url":"http://ac-ANdqGl5F.clouddn.com/79f099beb13d9f838ae6.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/e5b3d1e39a4428a53531.png","lrc":"http://ac-ANdqGl5F.clouddn.com/591b1a290c1b537058f9.txt"},{"title":"爱的华尔兹","author":"郑爽、俞灏明","url":"http://ac-ANdqGl5F.clouddn.com/932175e28daf143867df.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/ea572fa776fa6baaceb2.png","lrc":"http://ac-ANdqGl5F.clouddn.com/24d7e3950f733abbcf21.lrc"},{"title":"美丽新世界","author":"痛痒乐队","url":"http://ac-ANdqGl5F.clouddn.com/886d4a4838e57bfe87d0.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/b8d8c00dcf8da16cea9c.png"},{"title":"我要你","author":"任素汐","url":"http://ac-ANdqGl5F.clouddn.com/14bae372d1d17ebbd56d.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/6937370626da45e44b6c.png","lrc":"http://ac-ANdqGl5F.clouddn.com/90ec5c7ef9041dc61ecb.lrc"},{"title":"彩虹","author":"周杰伦","url":"http://ac-ANdqGl5F.clouddn.com/233b707250dd1ab07365.mp3","pic":"http://ac-ANdqGl5F.clouddn.com/94bfc39f18025fa17af9.png","lrc":"http://ac-ANdqGl5F.clouddn.com/2561b1c2e42f19b5ec5d.txt"}]}; options.element = document.getElementById("aplayer0"); var ap = new APlayer(options); window.aplayers || (window.aplayers = []); window.aplayers.push(ap); 注:美丽新世界的歌词没找到]]></content>
-      <tags>
-        <tag>音乐</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[markdown 语法记录]]></title>
     <url>%2F2017%2F12%2F22%2Fmarkdown_guide%2F</url>
     <content type="text"><![CDATA[以下是一些常用简单的 markdown 语法。 标题在 Markdown 中, 总共六级标题，只需要增加 # 即可，标题字号相应降低。123456# 一级标题## 二级标题### 三级标题#### 四级标题##### 五级标题###### 六级标题 列表列表格式也很常用, 你只需要在文字前面加上 - 就可以了, 例如:123- 文本1- 文本2- 文本3 如果希望有序, 在文字前面加上 1. 2. 3. 就可以了, 例如:1231. 文本12. 文本23. 文本3 链接网页链接:1[我的世界](http://www.min92.com) 展示效果:我的世界 图片链接1![](https://dn-wbwvsbqb.qbox.me/jyRDorMAEcOdfQYpKcG9NdB.jpg) 展示效果: 引用1&gt; 心中无敌, 则无敌于天下。 展示效果 心中无敌, 则无敌于天下。 粗体与斜体用 * 包含一段文本就是粗体的语法，用 包含一段文本就是斜体的语法。 1*心中无敌*, **无敌于天下**。 展示效果: 心中无敌, 无敌于天下。 表格12345dog | bird | cat----|------|----foo | foo | foobar | bar | barbaz | baz | baz 显示效果: dog bird cat foo foo foo bar bar bar baz baz baz]]></content>
       <tags>
         <tag>笔记</tag>
         <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[个人网站搭建记录(三) -- Hexo Next 其他设置]]></title>
-    <url>%2F2017%2F12%2F21%2Fblog_create3%2F</url>
-    <content type="text"><![CDATA[侧边栏设置在 themes/next/_config.yml 找到 avatar 关键字, 设置头像1avatar: /images/avatar_blog.png 在 themes/next/source/css/_common/components/sidebar/sidebar-author.styl 的 .site-author-image 属性中添加以下设置使用圆形头像123border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%; 在 themes/next/_config.yml 找到 sidebar 关键字, 设置头像, 使侧边栏不自动出现12sidebar: display: hide 添加音乐方法一: 用网易云音乐网页版生成外链, 粘贴过来就行1&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=330 height=86 src=&quot;//music.163.com/outchain/player?type=2&amp;id=437292675&amp;auto=0&amp;height=66&quot;&gt;&lt;/iframe&gt; 方法二: 用 Aplayer html 音乐播放器, 首先安装 hexo-tag-aplayer 插件, 在根目录下执行:1npm install --save hexo-tag-aplayer 安装完成后，在需要添加音乐的地方加上下面这段就行, 音乐 url 图片 url 我都是把音乐下载下来传到 leancloud 获取 url。1&#123;% aplayer &quot;歌曲名称&quot; &quot;作者&quot; &quot;音乐_url&quot; &quot;封面图片_url&quot; &quot;autoplay&quot; %&#125; 也可是一个歌单:12345678910111213141516&#123;% aplayerlist %&#125;&#123; &quot;narrow&quot;: false, &quot;autoplay&quot;: true, &quot;showlrc&quot;: 3, &quot;mode&quot;: &quot;random&quot;, &quot;music&quot;: [ &#123; &quot;title&quot;: &quot;我要你&quot;, &quot;author&quot;: &quot;任素汐&quot;, &quot;url&quot;: &quot;http://ac-ANdqGl5F.clouddn.com/14bae372d1d17ebbd56d.mp3&quot;, &quot;pic&quot;: &quot;http://ac-ANdqGl5F.clouddn.com/6937370626da45e44b6c.png&quot;,&quot;lrc&quot;:&quot;http://ac-ANdqGl5F.clouddn.com/90ec5c7ef9041dc61ecb.lrc&quot; &#125; ]&#125;&#123;% endaplayerlist %&#125; 添加视频安装hexo-tag-dplayer, 详见hexo-tag-dplayer1npm install hexo-tag-dplayer --save 然后通过以下格式添加:1234567&#123;% dplayer &quot;url=http://ac-ANdqGl5F.clouddn.com/09c42372a4347ab48756.mp4&quot; &quot;pic=http://ac-ANdqGl5F.clouddn.com/7fef2ae0f152f559b1cb.jpg&quot; &quot;loop=yes&quot; &quot;theme=#FADFA3&quot; &quot;autoplay=false&quot; &quot;token=tokendemo&quot; %&#125; 设置主页内容高度写文章时插入, 文章会自动从插入的位置截断, 点击阅读全文之后会显示所有内容。 自动创建文件夹存放图片首先确认根目录下的 _config.yml 中有 post_asset_folder:true, 然后在根目录执行。1npm install https://github.com/CodeFalling/hexo-asset-image --save 之后再使用 hexo new ‘new’ 创建新博客的时候，会在source/_posts里面创建.md文件的同时生成一个相同的名字的文件夹。把该文章中需要使用的图片放在该文件夹下即可。123![“图片描述”（可以不写）](/文件夹名/你的图片名字.JPG)例如：！[ ] (new/text.jpg) 增加加密功能安装 hexo-blog-encrypt12cd hexonpm install hexo-blog-encrypt --save 配置插件参考资料: 官网说明 绑定个人域名, github pages先安装插件12npm install hexo -server --savenpm install hexo-deployer-git --save 再检查下根目录下的 _config.yml 找到 deploy 关键字设置12345deploy: type: git repo: xxx branch: xxx message: xxx 在 source/ 目录下新建 CNAME(无后缀) 文件, 输入自己的域名假设你的域名与 github pages 已绑定, 用下面命令 push 到 github 上啦12hexo cleanhexo d -g 其他参考文档APlayerHexo博客中插入音乐为Hexo Next主题添加音乐播放器功能（二）]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[个人网站搭建记录(二) -- Hexo 安装与基础设置]]></title>
-    <url>%2F2017%2F12%2F21%2Fblog_create2%2F</url>
-    <content type="text"><![CDATA[Hexo 安装Hexo 是一个快速、简洁且高效的博客框架, 他使用 Markdown（或其他渲染引擎）解析文章。 安装 nvm1brew install nvm 安装完后, 需要在 .bash_profile 中加入以下这行命令:1source $(brew --prefix nvm)/nvm.sh 使设定生效1source ~/.bash_profile 安装 Node.js1curl https://raw.github.com/creationix/nvm/master/install.sh | sh 或者:1wget -qOhttps://raw.github.com/creationix/nvm/master/install.sh | sh 安装完成后，重启终端并执行下列命令即可安装 Node.js。1nvm install stable 安装 Git1brew install git 安装 Hexo1npm install -g hexo-cli 建站创建一个 hexo 项目, 命名为 hexo-doc123hexo init hexo-doccd hexo-docnpm install 新建完成后，指定文件夹的目录如下：12345678.├── _config.yml├── package.json├── scaffolds├── source| ├── _drafts| └── _posts└── themes 启动命令123hexo s (server) - 本地启动hexo g (generate) - 重新生成hexo d (deploy) - push 到 github Hexo 配置Git安装 hexo-deployer-git.1npm install hexo-deployer-git --save 在根目录下的 _configy.yml 文件找到 deploy 关键字更改设置:12345deploy: type: git repo: https://github.com/aojiang/aojiang.github.io.git branch: master message: 我的世界 更改主题为 Next进入 hexo-doc 目录1234cd hexo-docls_config.yml node_modules scaffolds themesdb.json package.json source 新建一个目录文件夹并下载 Next 主题12mkdir themes/nextcurl -s https://api.github.com/repos/iissnan/hexo-theme-next/releases/latest | grep tarball_url | cut -d &apos;&quot;&apos; -f 4 | wget -i -O| tar -zx -C themes/next --strip-components=1 在根目录下的 _configy.yml 文件找到 theme 关键字, 更改设置1theme: next next 主题又有几个不同设计风格, Muse、Mist、Pisces、Gemini, 我目前选择的 Mist, 可在 themes/next/_config.yml 中找到 scheme 关键字设置:1scheme: Mist 设置语言在 _config.yml 找到 language 关键字, 更改设置1language: zh-Hans 在菜单里增加标签栏在项目根目录下, 通过以下命令创建一个新的页面1hexo new page &quot;tags&quot; 在 tags/index.md 设置页面类型123title: All tagsdate: 2014-12-22 12:39:04type: &quot;tags&quot; 在 themes/next/_config.yml 增加 tags:1234menu: home: / archives: /archives tags: /tags 在菜单里增加分类栏在项目根目录下, 通过以下命令创建一个新的页面1hexo new page &quot;categories&quot; 在 tags/index.md 设置页面类型123title: All categoriesdate: 2014-12-22 12:39:04type: &quot;categories&quot; 在 themes/next/_config.yml 增加 “categories”:1234menu: home: / archives: /archives categories: /categories 增加搜索在站点的根目录下执行以下命令安装 hexo-generator-search:1npm install hexo-generator-search --save 在站点的根目录下执行以下命令安装 hexo-generator-searchdb:1npm install hexo-generator-searchdb --save 编辑站点配置文件，新增以下内容到任意位置启用搜索:1234search: path: search.xml field: all limit: 10000 使用 leancloud 进行页面访客统计在 leancloud官网 增加一个应用获取 app_id 和 app_key为该应用创建一个 class 名为 Counter打开/theme/next/_config.yml，在如下对应位置填入 app_id 和 app_key，并将 enable 设置为true。123456# Show number of visitors to each article.# You can visit https://leancloud.cn get AppID and AppKey.leancloud_visitors: enable: true app_id: # your app_id app_key: # your app_key 修改内容宽度编辑 themes/css/_variables/custom.styl 文件, 新增变量:1234// 修改成你期望的宽度content-desktop = 1000px// 当视窗超过 1600px 后的宽度content-desktop-large = 1200px 增加分享编辑根目录下的 _config.yml 文件, 新增变量:1jiathis: true 侧边栏增加社交链接编辑根目录下的 _config.yml，新增字段 social，然后添加社交站点名称与地址即可。例如：12345678910111213141516social: #GitHub: https://github.com/yourname || github E-Mail: mailto:aojiang.china@gmail.com || envelope #Google: https://plus.google.com/yourname || google #Twitter: https://twitter.com/yourname || twitter #FB Page: https://www.facebook.com/yourname || facebook #VK Group: https://vk.com/yourname || vk #StackOverflow: https://stackoverflow.com/yourname || stack-overflow #YouTube: https://youtube.com/yourname || youtube #Instagram: https://instagram.com/yourname || instagram #Skype: skype:yourname?call|chat || skypesocial_icons: enable: true // 是否使用图片 icons_only: false transition: false 图片名称参考 增加站点访问量统计在 themes/next/_config.yml 文件下, 找到 “busuanzi” 关键字设置:123456789101112131415busuanzi_count: # count values only if the other configs are false enable: true # custom uv span for the whole site site_uv: true site_uv_header: &lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt; 访问人数 site_uv_footer: # custom pv span for the whole site site_pv: true site_pv_header: &lt;i class=&quot;fa fa-eye&quot;&gt;&lt;/i&gt; 总访问量 site_pv_footer: 次 # custom pv span for one page only page_pv: true page_pv_header: &lt;i class=&quot;fa fa-file-o&quot;&gt;&lt;/i&gt; 浏览 page_pv_footer: 次 修改 footer将 “由 Hexo 强力驱动 主题 NexT.Pisces” 这些自带的内容修改1themes/next/layout/_pzartials/footer.swig 5.1.0:1thems/next/layout/_partials/footer.swig 参考文档:GitHub Next 主题Hexo 中文文档Hexo -Next 主题优化Hexo 博客添加站内搜索GitHub hexo-generator-search使用 leancloud 进行页面访客统计如何利用 github 打造博客专属域名footer 修改问题Hexo+Next主题 文章添加阅读次数，访问量等 总结安装: nvm+git+hexo。设置: 主题+语言+标签+分类+搜索+页面访客统计+搜索+分享+社交+footer。]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[个人网站搭建记录(一) -- 工具选择]]></title>
-    <url>%2F2017%2F12%2F21%2Fblog_create1%2F</url>
-    <content type="text"><![CDATA[以下是我搭建个人网站的简要记录, 电脑为 mac 系统。 静态网站与动态网站的选择网站可分为静态网站和动态网站, 静态网站非常适合专注于内容, 例如博客; 而动态网站以数据库技术为基础, 和用户的交互能力强, 动态网站有个很有名的 wordpress 的博客平台。 结合自己实际情况, 我选择功能较弱、较简单的静态网站。 静态网站生成工具的选择网上有很多有名的静态网站生成工具, 这些工具能从简单的纯文本文件生成一个网站。 常用的文本格式有 reStructuredText(rst) 和 Markdown。有人列举了网络上排名前十的工具, 排名并不一定准确, 仅做参考: Jekyll - GitHub Pages 的构建工具（Ruby 语言。 Octopress - 基于 Jekyll 的博客生成工具, 它简化了 Jekyll 的操作, 可以让你更舒服的创作。 Hexo - 用 Node.js 编写的博客框架, 支持所有的 GitHub Markdown 特性。 Hugo - 使用 go 语言编写, 并且使用 Markdown 语法。 Pelican - 使用Python编写的静态网站生成工具, 支持用 reStructuredText, Markdown, 和AsciiDoc 创作网站内容。 Middleman - 中间人, 一个使用 Ruby 编写的静态网站生成工具。 Metalsmith - 使用 Node.js 编写。 DocPad - 支持 CoffeeScript、Ruby、PHP、Stylus 等等。 Wintersmith - 使用 Node.js 编写。 Cactus - 使用 Python 和 Django 模版系统制作的静态网站生成工具。更多资料参考:top 10 排名。 因为熟悉一点 python 和 sphinx, 通过简单的筛选, 我最先选定的是用 Pelican+reStructuredText。 然后找到一个不错的 Pelican 主题(就是网站的整体风格) – elegant, 效果可参考孤逐王的博客。但是在找的过程中发现了更喜欢的 hexo 主题 - Next, 效果可参考XueCat的博客。 最终还是选用了 Hexo, 采用 Next 主题, markdown 写文档。 嗯, 怎么舒服怎么来。 另外, hexo 这两个主题我也很喜欢: yilia, 效果可参考Litten的博客。 raytaylorism, 效果可参考林寿山的博客。 总结我选择用静态网站搭建博客, Hexo + Next主题 + Markdown 文本格式。]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
