@@ -301,7 +301,7 @@
   <entry>
     <title><![CDATA[markdown 语法记录]]></title>
     <url>%2F2017%2F12%2F22%2Fmarkdown_guide%2F</url>
-    <content type="text"><![CDATA[以下是一些常用简单的 markdown 语法。 标题在 Markdown 中, 总共六级标题，只需要增加 # 即可，标题字号相应降低。123456# 一级标题## 二级标题### 三级标题#### 四级标题##### 五级标题###### 六级标题 列表列表格式也很常用, 你只需要在文字前面加上 - 就可以了, 例如:123- 文本1- 文本2- 文本3 如果希望有序, 在文字前面加上 1. 2. 3. 就可以了, 例如:1231. 文本12. 文本23. 文本3 链接网页链接:1[我的世界](http://www.ao233.com) 展示效果:我的世界 图片链接1![](https://dn-wbwvsbqb.qbox.me/jyRDorMAEcOdfQYpKcG9NdB.jpg) 展示效果: 引用1&gt; 心中无敌, 则无敌于天下。 展示效果 心中无敌, 则无敌于天下。 粗体与斜体用 * 包含一段文本就是粗体的语法，用 包含一段文本就是斜体的语法。 1*心中无敌*, **无敌于天下**。 展示效果: 心中无敌, 无敌于天下。 表格12345dog | bird | cat----|------|----foo | foo | foobar | bar | barbaz | baz | baz 显示效果: dog bird cat foo foo foo bar bar bar baz baz baz]]></content>
+    <content type="text"><![CDATA[以下是一些常用简单的 markdown 语法。 标题在 Markdown 中, 总共六级标题，只需要增加 # 即可，标题字号相应降低。123456# 一级标题## 二级标题### 三级标题#### 四级标题##### 五级标题###### 六级标题 列表列表格式也很常用, 你只需要在文字前面加上 - 就可以了, 例如:123- 文本1- 文本2- 文本3 如果希望有序, 在文字前面加上 1. 2. 3. 就可以了, 例如:1231. 文本12. 文本23. 文本3 链接网页链接:1[我的世界](http://www.min92.com) 展示效果:我的世界 图片链接1![](https://dn-wbwvsbqb.qbox.me/jyRDorMAEcOdfQYpKcG9NdB.jpg) 展示效果: 引用1&gt; 心中无敌, 则无敌于天下。 展示效果 心中无敌, 则无敌于天下。 粗体与斜体用 * 包含一段文本就是粗体的语法，用 包含一段文本就是斜体的语法。 1*心中无敌*, **无敌于天下**。 展示效果: 心中无敌, 无敌于天下。 表格12345dog | bird | cat----|------|----foo | foo | foobar | bar | barbaz | baz | baz 显示效果: dog bird cat foo foo foo bar bar bar baz baz baz]]></content>
       <tags>
         <tag>笔记</tag>
         <tag>markdown</tag>
