@@ -104,4 +104,4 @@ theme: landscape
 deploy:
   type: 'git'
   repo: https://github.com/JiangXiaotian/aojiang.github.io
-  branch: main
+  branch: master
