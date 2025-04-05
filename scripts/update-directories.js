@@ -6,14 +6,23 @@ const { execSync } = require('child_process');
 const assetsDirPath = path.join(__dirname, '../source/assets');
 const configFilePath = path.join(assetsDirPath, 'directories.json');
 
-// Hexo运行时会自动执行此方法
-hexo.extend.filter.register('before_generate', function() {
-  console.log('开始更新assets目录配置...');
+// 检查目录列表是否有变化
+function directoriesChanged(oldDirs, newDirs) {
+  if (oldDirs.length !== newDirs.length) return true;
   
+  for (let i = 0; i < oldDirs.length; i++) {
+    if (oldDirs[i] !== newDirs[i]) return true;
+  }
+  
+  return false;
+}
+
+// 查找和更新目录配置
+function updateDirectoryConfig(verbose = false) {
   try {
     // 确保assets目录存在
     if (!fs.existsSync(assetsDirPath)) {
-      console.log('assets目录不存在，创建目录');
+      if (verbose) console.log('assets目录不存在，创建目录');
       fs.mkdirSync(assetsDirPath, { recursive: true });
     }
     
@@ -24,20 +33,56 @@ hexo.extend.filter.register('before_generate', function() {
       .map(dirent => dirent.name)
       .sort();
     
-    console.log(`找到以下子目录: ${directories.join(', ')}`);
+    // 读取现有配置
+    let configChanged = false;
+    let existingConfig = { directories: [] };
     
-    // 准备配置数据
-    const configData = {
-      directories: directories,
-      lastUpdated: new Date().toISOString()
-    };
+    if (fs.existsSync(configFilePath)) {
+      try {
+        existingConfig = JSON.parse(fs.readFileSync(configFilePath, 'utf8'));
+      } catch (e) {
+        if (verbose) console.log('配置文件解析失败，将创建新配置');
+        configChanged = true;
+      }
+    } else {
+      if (verbose) console.log('配置文件不存在，将创建新配置');
+      configChanged = true;
+    }
     
-    // 写入配置文件
-    fs.writeFileSync(configFilePath, JSON.stringify(configData, null, 2));
-    console.log(`配置文件已更新: ${configFilePath}`);
+    // 检查目录列表是否变化
+    if (configChanged || directoriesChanged(existingConfig.directories || [], directories)) {
+      if (verbose) console.log(`找到以下子目录: ${directories.join(', ')}`);
+      
+      // 准备配置数据
+      const configData = {
+        directories: directories,
+        lastUpdated: new Date().toISOString()
+      };
+      
+      // 写入配置文件
+      fs.writeFileSync(configFilePath, JSON.stringify(configData, null, 2));
+      if (verbose) console.log(`配置文件已更新: ${configFilePath}`);
+      return directories;
+    } else if (verbose) {
+      console.log('目录结构未变化，保持配置不变');
+    }
     
+    return existingConfig.directories || [];
   } catch (error) {
-    console.error('更新目录配置时出错:', error);
+    if (verbose) console.error('更新目录配置时出错:', error);
+    return [];
+  }
+}
+
+// 只在生成时执行一次目录更新，开发服务器模式下不执行
+// 通过检测命令参数区分是开发模式还是生产模式
+hexo.extend.filter.register('before_generate', function() {
+  // 如果是server命令（开发模式）则不更新目录
+  const isServerMode = process.argv.includes('server') || process.argv.includes('s');
+  
+  if (!isServerMode) {
+    console.log('生产模式生成站点，更新目录配置...');
+    updateDirectoryConfig(true);
   }
 });
 
@@ -53,18 +98,7 @@ hexo.extend.console.register('rebuild', '清理缓存、更新目录并重新生
     
     // 更新目录配置
     console.log('更新目录配置...');
-    const dirents = fs.readdirSync(assetsDirPath, { withFileTypes: true });
-    const directories = dirents
-      .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.'))
-      .map(dirent => dirent.name)
-      .sort();
-    
-    const configData = {
-      directories: directories,
-      lastUpdated: new Date().toISOString()
-    };
-    
-    fs.writeFileSync(configFilePath, JSON.stringify(configData, null, 2));
+    const directories = updateDirectoryConfig(true);
     console.log(`找到并更新了 ${directories.length} 个子目录`);
     
     // 重新生成站点
@@ -76,4 +110,4 @@ hexo.extend.console.register('rebuild', '清理缓存、更新目录并重新生
     console.error('站点重建过程中出错:', error);
     process.exit(1);
   }
-}); 
+});
