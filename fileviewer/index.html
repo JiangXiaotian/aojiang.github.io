@@ -1,9 +1,12 @@
+---
+layout: false
+---
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文件预览器 - LFS.baby</title>
+    <title>文件预览器</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -41,32 +44,51 @@
             margin: 0 5px;
             background-color: #f9f9f9;
             border-radius: 4px;
+            height: 400px; /* 固定单元格高度 */
+            display: flex;
+            flex-direction: column;
         }
         .file-name {
             font-weight: bold;
             margin-bottom: 5px;
+            flex-shrink: 0; /* 防止文件名被压缩 */
         }
-        img {
+        .file-content {
+            flex: 1; /* 让内容区域占据剩余空间 */
+            position: relative;
+            overflow: hidden;
+        }
+        .file-content img {
             max-width: 100%;
+            max-height: 350px; /* 图片最大高度 */
+            width: auto;
             height: auto;
-            display: block;
-            margin: 0 auto;
+            object-fit: contain; /* 保持宽高比 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         .text-content {
             white-space: pre-wrap;
             overflow-x: auto;
-            max-height: 200px;
-            overflow-y: auto;
+            height: 350px; /* 固定文本区域高度 */
             padding: 8px;
             background-color: #fff;
             border: 1px solid #eee;
             border-radius: 4px;
+            overflow-y: auto; /* 允许垂直滚动 */
         }
-        video {
+        .file-content video {
             max-width: 100%;
+            max-height: 350px; /* 视频最大高度 */
+            width: auto;
             height: auto;
-            display: block;
-            margin: 0 auto;
+            object-fit: contain; /* 保持宽高比 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         .no-files {
             text-align: center;
@@ -77,112 +99,302 @@
         .file-list {
             margin-top: 20px;
         }
+        .dir-selector {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .dir-selector select {
+            padding: 8px 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            min-width: 200px;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+        }
+        .video-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            font-size: 12px;
+            padding: 2px 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>文件对齐预览器</h1>
         <p class="description">
-            本页面展示同名的图片、文本和视频文件。文件存储在GitHub仓库中的assets目录下。
+            本页面展示同名的图片、文本和视频文件。请选择要查看的目录。
         </p>
         
-        <div id="file-list" class="file-list"></div>
+        <!-- 目录选择器 -->
+        <div class="dir-selector">
+            <select id="dir-select">
+                <option value="">请选择目录...</option>
+                <!-- 目录选项会在JavaScript中动态加载 -->
+            </select>
+        </div>
+        
+        <div id="file-list" class="file-list">
+            <div class="loading">加载目录列表中...</div>
+        </div>
     </div>
 
     <script>
         // 基础目录路径
         const basePath = '/assets';
-        const imageDir = `${basePath}/images`;
-        const textDir = `${basePath}/texts`;
-        const videoDir = `${basePath}/videos`;
-        
-        // 文件列表 - 这里需要手动更新或从文件中读取
-        // 在实际使用中，您需要在每次添加新文件后更新这个列表
-        const fileNames = [
-            '1', '2', '3', '4', '5'
-            // 添加更多文件名...
-        ];
         
         // 支持的文件扩展名
         const imageExts = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
         const textExts = ['.txt', '.md', '.json', '.csv'];
         const videoExts = ['.mp4', '.webm', '.ogg', '.mov'];
         
-        // 文件格式检测函数
-        function getImageExt(baseName) {
-            return imageExts.find(ext => fileExists(`${imageDir}/${baseName}${ext}`)) || null;
+        // 选择目录下拉框
+        const dirSelect = document.getElementById('dir-select');
+        
+        // 文件列表元素
+        const fileListElement = document.getElementById('file-list');
+        
+        // 当前已检测到存在的文件基本名称集合
+        let foundFileNames = new Set();
+        
+        // 加载子目录列表
+        async function loadDirectories() {
+            try {
+                // 尝试从配置文件获取目录列表
+                const response = await fetch(`${basePath}/directories.json`);
+                
+                if (response.ok) {
+                    const config = await response.json();
+                    const directories = config.directories || [];
+                    
+                    if (directories.length > 0) {
+                        populateDirectorySelect(directories);
+                        console.log(`从配置加载了 ${directories.length} 个目录`);
+                    } else {
+                        // 如果配置文件中没有目录，使用已知目录
+                        const knownSubdirs = ['040501']; 
+                        populateDirectorySelect(knownSubdirs);
+                        console.log('配置文件中没有目录，使用默认目录');
+                    }
+                } else {
+                    // 配置文件不存在，使用已知目录
+                    const knownSubdirs = ['040501'];
+                    populateDirectorySelect(knownSubdirs);
+                    console.log('配置文件不存在，使用默认目录');
+                }
+            } catch (error) {
+                console.error('加载目录列表失败:', error);
+                // 出错时使用已知目录
+                const knownSubdirs = ['040501']; 
+                populateDirectorySelect(knownSubdirs);
+            }
         }
         
-        function getTextExt(baseName) {
-            return textExts.find(ext => fileExists(`${textDir}/${baseName}${ext}`)) || null;
-        }
-        
-        function getVideoExt(baseName) {
-            return videoExts.find(ext => fileExists(`${videoDir}/${baseName}${ext}`)) || null;
-        }
-        
-        // 简单的文件存在检测（仅用于简化示例，实际上这只能在服务器端进行）
-        // 在GitHub Pages中，我们假设文件存在并尝试加载
-        function fileExists(path) {
-            // 在纯静态环境中无法真正检查文件是否存在
-            // 这里我们总是返回true，实际显示时会处理加载失败的情况
-            return true;
-        }
-        
-        // 初始化页面
-        function initPage() {
-            const fileListElement = document.getElementById('file-list');
-            
-            if (fileNames.length === 0) {
-                fileListElement.innerHTML = '<div class="no-files">没有找到文件</div>';
+        // 填充目录选择下拉框
+        function populateDirectorySelect(directories) {
+            if (directories.length === 0) {
+                fileListElement.innerHTML = '<div class="no-files">找不到有效的子目录</div>';
                 return;
             }
             
-            fileNames.forEach(baseName => {
-                const row = document.createElement('div');
-                row.className = 'file-row';
-                
-                // 图片单元格
-                const imageCell = createImageCell(baseName);
-                row.appendChild(imageCell);
-                
-                // 文本单元格
-                const textCell = createTextCell(baseName);
-                row.appendChild(textCell);
-                
-                // 视频单元格
-                const videoCell = createVideoCell(baseName);
-                row.appendChild(videoCell);
-                
-                fileListElement.appendChild(row);
+            // 清除加载选项并排序目录
+            directories.sort();
+            
+            // 保留第一个默认选项
+            while (dirSelect.options.length > 1) {
+                dirSelect.remove(1);
+            }
+            
+            // 添加目录选项
+            directories.forEach(dir => {
+                const option = document.createElement('option');
+                option.value = dir;
+                option.textContent = dir;
+                dirSelect.appendChild(option);
             });
+            
+            fileListElement.innerHTML = '<div class="loading">请选择一个目录查看文件</div>';
+        }
+        
+        // 监听目录选择变化
+        dirSelect.addEventListener('change', function() {
+            const selectedDir = this.value;
+            
+            if (!selectedDir) {
+                fileListElement.innerHTML = '<div class="loading">请选择一个目录查看文件</div>';
+                return;
+            }
+            
+            fileListElement.innerHTML = '<div class="loading">加载中...</div>';
+            foundFileNames.clear();
+            
+            // 设置当前选择的目录路径
+            const currentImageDir = `${basePath}/${selectedDir}/images`;
+            const currentTextDir = `${basePath}/${selectedDir}/texts`;
+            const currentVideoDir = `${basePath}/${selectedDir}/videos`;
+            
+            // 预定义的文件基本名称（假设1-20的文件）
+            const potentialFileNames = Array.from({length: 20}, (_, i) => String(i + 1));
+            
+            // 检查每个可能的文件名
+            Promise.all(potentialFileNames.map(baseName => {
+                return checkFilesExist(baseName, currentImageDir, currentTextDir, currentVideoDir);
+            }))
+            .then(() => {
+                if (foundFileNames.size === 0) {
+                    fileListElement.innerHTML = '<div class="no-files">当前目录没有找到文件</div>';
+                    return;
+                }
+                
+                // 清空文件列表区域
+                fileListElement.innerHTML = '';
+                
+                // 对找到的文件名排序并创建行
+                Array.from(foundFileNames).sort().forEach(baseName => {
+                    const row = document.createElement('div');
+                    row.className = 'file-row';
+                    
+                    // 图片单元格
+                    const imageCell = createImageCell(baseName, currentImageDir);
+                    row.appendChild(imageCell);
+                    
+                    // 文本单元格
+                    const textCell = createTextCell(baseName, currentTextDir);
+                    row.appendChild(textCell);
+                    
+                    // 视频单元格 - 注意这里改为支持名称_数字格式
+                    const videoCell = createVideoCell(baseName, currentVideoDir);
+                    row.appendChild(videoCell);
+                    
+                    fileListElement.appendChild(row);
+                });
+            });
+        });
+        
+        // 检查文件是否存在，如果存在，添加到foundFileNames集合
+        async function checkFilesExist(baseName, imageDir, textDir, videoDir) {
+            const promises = [];
+            
+            // 检查图片
+            promises.push(checkImage(baseName, imageDir));
+            
+            // 检查文本
+            promises.push(checkText(baseName, textDir));
+            
+            // 检查视频 (基本名称加_数字格式)
+            promises.push(checkVideo(baseName, videoDir));
+            
+            const results = await Promise.all(promises);
+            
+            // 如果任何一种文件存在，添加到foundFileNames集合
+            if (results.some(result => result)) {
+                foundFileNames.add(baseName);
+            }
+        }
+        
+        // 检查图片是否存在
+        async function checkImage(baseName, imageDir) {
+            // 尝试每个支持的图片扩展名
+            for (const ext of imageExts) {
+                try {
+                    const response = await fetch(`${imageDir}/${baseName}${ext}`, { method: 'HEAD' });
+                    if (response.ok) {
+                        return true;
+                    }
+                } catch (error) {
+                    // 忽略错误，继续检查下一个扩展名
+                }
+            }
+            return false;
+        }
+        
+        // 检查文本是否存在
+        async function checkText(baseName, textDir) {
+            // 尝试每个支持的文本扩展名
+            for (const ext of textExts) {
+                try {
+                    const response = await fetch(`${textDir}/${baseName}${ext}`, { method: 'HEAD' });
+                    if (response.ok) {
+                        return true;
+                    }
+                } catch (error) {
+                    // 忽略错误，继续检查下一个扩展名
+                }
+            }
+            return false;
+        }
+        
+        // 检查视频是否存在 (支持基本名称_数字格式)
+        async function checkVideo(baseName, videoDir) {
+            // 尝试基本名称加_0, _1, _2等后缀
+            for (let i = 0; i < 10; i++) {
+                const videoBaseName = `${baseName}_${i}`;
+                
+                // 尝试每个支持的视频扩展名
+                for (const ext of videoExts) {
+                    try {
+                        const response = await fetch(`${videoDir}/${videoBaseName}${ext}`, { method: 'HEAD' });
+                        if (response.ok) {
+                            return true;
+                        }
+                    } catch (error) {
+                        // 忽略错误，继续检查下一个
+                    }
+                }
+            }
+            
+            // 也检查不带_数字的原始名称
+            for (const ext of videoExts) {
+                try {
+                    const response = await fetch(`${videoDir}/${baseName}${ext}`, { method: 'HEAD' });
+                    if (response.ok) {
+                        return true;
+                    }
+                } catch (error) {
+                    // 忽略错误，继续检查下一个
+                }
+            }
+            
+            return false;
         }
         
         // 创建图片单元格
-        function createImageCell(baseName) {
+        function createImageCell(baseName, imageDir) {
             const cell = document.createElement('div');
             cell.className = 'file-cell';
-            
-            // 我们尝试所有可能的扩展名
-            const possibleExts = imageExts.slice();
             
             const fileNameHeader = document.createElement('div');
             fileNameHeader.className = 'file-name';
             fileNameHeader.textContent = `${baseName}.*`;
             
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'file-content';
+            
             const img = document.createElement('img');
             
-            // 尝试加载第一个扩展名
-            loadImageWithFallback(img, baseName, possibleExts, 0);
+            // 尝试加载图片
+            loadImageWithFallback(img, baseName, imageExts.slice(), 0, imageDir);
             
+            contentDiv.appendChild(img);
             cell.appendChild(fileNameHeader);
-            cell.appendChild(img);
+            cell.appendChild(contentDiv);
             
             return cell;
         }
         
         // 递归尝试不同扩展名的图片
-        function loadImageWithFallback(imgElement, baseName, extensions, index) {
+        function loadImageWithFallback(imgElement, baseName, extensions, index, imageDir) {
             if (index >= extensions.length) {
                 // 所有扩展名都尝试失败，显示占位符
                 imgElement.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IiM5OTkiPuWbvueJh+aXoOazlOaYvuekujwvdGV4dD48L3N2Zz4=';
@@ -194,7 +406,7 @@
             
             imgElement.onerror = function() {
                 // 当前扩展名加载失败，尝试下一个
-                loadImageWithFallback(imgElement, baseName, extensions, index + 1);
+                loadImageWithFallback(imgElement, baseName, extensions, index + 1, imageDir);
             };
             
             imgElement.src = src;
@@ -202,12 +414,9 @@
         }
         
         // 创建文本单元格
-        function createTextCell(baseName) {
+        function createTextCell(baseName, textDir) {
             const cell = document.createElement('div');
             cell.className = 'file-cell';
-            
-            // 我们尝试所有可能的扩展名
-            const possibleExts = textExts.slice();
             
             const fileNameHeader = document.createElement('div');
             fileNameHeader.className = 'file-name';
@@ -220,14 +429,14 @@
             cell.appendChild(fileNameHeader);
             cell.appendChild(textContent);
             
-            // 尝试加载第一个扩展名
-            loadTextWithFallback(textContent, baseName, possibleExts, 0);
+            // 尝试加载文本
+            loadTextWithFallback(textContent, baseName, textExts.slice(), 0, textDir);
             
             return cell;
         }
         
         // 递归尝试不同扩展名的文本
-        function loadTextWithFallback(textElement, baseName, extensions, index) {
+        function loadTextWithFallback(textElement, baseName, extensions, index, textDir) {
             if (index >= extensions.length) {
                 // 所有扩展名都尝试失败
                 textElement.textContent = '未找到文本文件';
@@ -249,59 +458,115 @@
                 })
                 .catch(error => {
                     // 当前扩展名加载失败，尝试下一个
-                    loadTextWithFallback(textElement, baseName, extensions, index + 1);
+                    loadTextWithFallback(textElement, baseName, extensions, index + 1, textDir);
                 });
         }
         
         // 创建视频单元格
-        function createVideoCell(baseName) {
+        function createVideoCell(baseName, videoDir) {
             const cell = document.createElement('div');
             cell.className = 'file-cell';
             
-            // 我们尝试所有可能的扩展名
-            const possibleExts = videoExts.slice();
-            
             const fileNameHeader = document.createElement('div');
             fileNameHeader.className = 'file-name';
-            fileNameHeader.textContent = `${baseName}.*`;
+            fileNameHeader.textContent = `${baseName}_*.*`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'file-content';
             
             cell.appendChild(fileNameHeader);
+            cell.appendChild(contentDiv);
             
-            // 尝试加载第一个扩展名
-            loadVideoWithFallback(cell, baseName, possibleExts, 0);
+            // 尝试加载带_数字的视频文件
+            loadVideoWithSuffixFallback(contentDiv, baseName, videoDir);
             
             return cell;
         }
         
-        // 递归尝试不同扩展名的视频
-        function loadVideoWithFallback(cellElement, baseName, extensions, index) {
+        // 尝试加载带_数字的视频文件
+        function loadVideoWithSuffixFallback(cellElement, baseName, videoDir) {
+            // 首先尝试带_数字的格式
+            let found = false;
+            let loadedCount = 0;
+            
+            // 尝试_0到_9的后缀
+            for (let i = 0; i < 10 && loadedCount < 3; i++) {
+                const videoBaseName = `${baseName}_${i}`;
+                // 为每个可能的后缀尝试所有视频扩展名
+                tryLoadVideo(cellElement, videoBaseName, videoExts.slice(), 0, videoDir, () => {
+                    found = true;
+                    loadedCount++;
+                });
+            }
+            
+            // 如果没有找到带_数字的视频，尝试原始名称
+            if (!found) {
+                tryLoadVideo(cellElement, baseName, videoExts.slice(), 0, videoDir, () => {
+                    found = true;
+                });
+            }
+            
+            // 设置一个延迟，如果没有找到任何视频则显示消息
+            setTimeout(() => {
+                if (!found) {
+                    const message = document.createElement('div');
+                    message.textContent = '未找到视频文件';
+                    cellElement.appendChild(message);
+                }
+            }, 1000);
+        }
+        
+        // 尝试加载视频
+        function tryLoadVideo(cellElement, videoBaseName, extensions, index, videoDir, onSuccess) {
             if (index >= extensions.length) {
-                // 所有扩展名都尝试失败
-                const message = document.createElement('div');
-                message.textContent = '未找到视频文件';
-                cellElement.appendChild(message);
-                return;
+                return; // 所有扩展名都尝试失败
             }
             
             const ext = extensions[index];
-            const src = `${videoDir}/${baseName}${ext}`;
+            const src = `${videoDir}/${videoBaseName}${ext}`;
             
-            const video = document.createElement('video');
-            video.controls = true;
-            video.preload = 'metadata';
-            
-            video.onerror = function() {
-                cellElement.removeChild(video);
-                // 当前扩展名加载失败，尝试下一个
-                loadVideoWithFallback(cellElement, baseName, extensions, index + 1);
-            };
-            
-            video.src = src;
-            cellElement.appendChild(video);
+            // 先检查文件是否存在
+            fetch(src, { method: 'HEAD' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('文件不存在');
+                    }
+                    
+                    // 文件存在，创建视频元素
+                    const video = document.createElement('video');
+                    video.controls = true;
+                    video.preload = 'metadata';
+                    video.src = src;
+                    
+                    // 添加加载事件以获取视频尺寸
+                    video.addEventListener('loadedmetadata', function() {
+                        const ratio = this.videoWidth / this.videoHeight;
+                        const infoText = document.createElement('div');
+                        infoText.className = 'video-info';
+                        infoText.textContent = `${this.videoWidth}×${this.videoHeight}`;
+                        cellElement.appendChild(infoText);
+                    });
+                    
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'file-name';
+                    nameDiv.style.marginTop = '10px';
+                    nameDiv.textContent = videoBaseName + ext;
+                    
+                    cellElement.appendChild(nameDiv);
+                    cellElement.appendChild(video);
+                    
+                    if (onSuccess) onSuccess();
+                })
+                .catch(error => {
+                    // 当前扩展名加载失败，尝试下一个
+                    tryLoadVideo(cellElement, videoBaseName, extensions, index + 1, videoDir, onSuccess);
+                });
         }
         
-        // 页面加载时初始化
-        window.onload = initPage;
+        // 页面加载时调用
+        window.onload = function() {
+            loadDirectories();
+        };
     </script>
 </body>
 </html> 
