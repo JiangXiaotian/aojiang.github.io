@@ -3,13 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
-description: ''
-keywords:
-author: John Doe
+title: LFS Baby
+subtitle: '轻松浏览你的文件'
+description: '一个简单的文件浏览网站'
+keywords: 文件,浏览,图片,视频,文本
+author: LFS
 language: zh-CN
-timezone: ''
+timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
@@ -29,8 +29,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
-  - '**/*.*'
-  - '!fileviewer/**/*'
+  - 'fileviewer/**' # 不渲染文件浏览器页面
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -98,12 +97,11 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: empty
-#theme_dir: node_modules/hexo-theme-landscape
+theme: landscape
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: git
-  repo: https://github.com/JiangXiaotian/aojiang.github.io.git
-  branch: master
+  type: 'git'
+  repo: https://github.com/JiangXiaotian/aojiang.github.io
+  branch: main
