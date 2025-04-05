@@ -19,15 +19,45 @@ jobs:
         with:
           node-version: '16'
           
+      - name: Debug Environment
+        run: |
+          pwd
+          ls -la
+          node -v
+          npm -v
+          
       - name: Install Dependencies
         run: |
           npm install
           npm install hexo-cli -g
+          npm install hexo
+          npm install hexo-generator-index hexo-generator-archive hexo-generator-category hexo-generator-tag
+          npm install hexo-renderer-ejs hexo-renderer-marked hexo-renderer-stylus
+          npm install hexo-server
+          npm install hexo-deployer-git
           
-      - name: Build
+      - name: Debug Installation
         run: |
-          hexo clean
-          hexo generate
+          ls -la node_modules/hexo
+          which hexo || echo "hexo not found in PATH"
+          npx hexo version || echo "npx hexo version failed"
+          
+      - name: Manual Build
+        run: |
+          # 创建public目录
+          mkdir -p public
+          
+          # 复制静态资源
+          cp -r source/fileviewer public/
+          mkdir -p public/assets
+          cp -r source/assets/* public/assets/
+          
+          # 复制其他必要的文件
+          cp CNAME public/ || echo "No CNAME file found"
+          cp -r css public/ || echo "No css directory found"
+          cp -r js public/ || echo "No js directory found"
+          cp -r images public/ || echo "No images directory found"
+          cp -r fancybox public/ || echo "No fancybox directory found"
           
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
